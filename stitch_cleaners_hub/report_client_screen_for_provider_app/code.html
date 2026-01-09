@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Report Client - Provider App</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#42b0f0",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101b22",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+            boxShadow: {
+              'glow': '0 0 20px -5px rgba(66, 176, 240, 0.3)',
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        /* Custom scrollbar hiding for cleaner mobile look */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Select arrow fix */
+        select {
+            background-image: none !important;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display antialiased">
+<!-- App Container -->
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-white dark:bg-background-dark max-w-[480px] mx-auto shadow-2xl">
+<!-- Top App Bar -->
+<header class="flex items-center justify-between p-4 sticky top-0 bg-white/95 dark:bg-background-dark/95 backdrop-blur-sm z-20 border-b border-gray-100 dark:border-gray-800">
+<button class="flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-slate-900 dark:text-white transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] text-center">Report Client</h2>
+<div class="size-10"></div> <!-- Spacer for balance -->
+</header>
+<!-- Main Content Scrollable Area -->
+<main class="flex-1 flex flex-col px-5 pt-4 pb-28 space-y-8">
+<!-- Booking Selection -->
+<div class="space-y-3">
+<label class="block text-slate-900 dark:text-white text-base font-semibold leading-normal">
+                    Related Booking <span class="text-gray-400 font-normal text-sm ml-1">(Optional)</span>
+</label>
+<div class="relative group">
+<div class="absolute left-4 top-1/2 -translate-y-1/2 text-primary">
+<span class="material-symbols-outlined">calendar_today</span>
+</div>
+<select class="flex w-full appearance-none rounded-2xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-[#1A2630] h-14 pl-12 pr-10 text-base text-slate-900 dark:text-white focus:border-primary focus:ring-0 focus:outline-none transition-all cursor-pointer">
+<option disabled="" selected="" value="">Select a recent booking...</option>
+<option value="1">Oct 24 • Standard Cleaning • Sarah J.</option>
+<option value="2">Oct 20 • Meal Prep • Mike R.</option>
+<option value="3">Oct 15 • Deep Clean • Emily W.</option>
+</select>
+<div class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Reason Selection -->
+<div class="space-y-4">
+<h3 class="text-slate-900 dark:text-white text-xl font-bold leading-tight">What went wrong?</h3>
+<div class="flex flex-wrap gap-3">
+<!-- Active State -->
+<label class="cursor-pointer group">
+<input class="peer sr-only" name="reason" type="radio"/>
+<div class="flex h-10 items-center justify-center px-5 rounded-full bg-primary text-white shadow-glow transition-all scale-105 font-medium text-sm">
+<span class="material-symbols-outlined text-[18px] mr-2">payments</span>
+                            Payment Issue
+                        </div>
+</label>
+<!-- Inactive States -->
+<label class="cursor-pointer group">
+<input class="peer sr-only" name="reason" type="radio"/>
+<div class="flex h-10 items-center justify-center px-5 rounded-full bg-background-light dark:bg-[#1A2630] text-slate-600 dark:text-gray-300 border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition-all font-medium text-sm peer-checked:bg-primary peer-checked:text-white peer-checked:shadow-glow">
+                            Misconduct
+                        </div>
+</label>
+<label class="cursor-pointer group">
+<input class="peer sr-only" name="reason" type="radio"/>
+<div class="flex h-10 items-center justify-center px-5 rounded-full bg-background-light dark:bg-[#1A2630] text-slate-600 dark:text-gray-300 border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition-all font-medium text-sm peer-checked:bg-primary peer-checked:text-white peer-checked:shadow-glow">
+                            Safety Concern
+                        </div>
+</label>
+<label class="cursor-pointer group">
+<input class="peer sr-only" name="reason" type="radio"/>
+<div class="flex h-10 items-center justify-center px-5 rounded-full bg-background-light dark:bg-[#1A2630] text-slate-600 dark:text-gray-300 border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition-all font-medium text-sm peer-checked:bg-primary peer-checked:text-white peer-checked:shadow-glow">
+                            Property Damage
+                        </div>
+</label>
+<label class="cursor-pointer group">
+<input class="peer sr-only" name="reason" type="radio"/>
+<div class="flex h-10 items-center justify-center px-5 rounded-full bg-background-light dark:bg-[#1A2630] text-slate-600 dark:text-gray-300 border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition-all font-medium text-sm peer-checked:bg-primary peer-checked:text-white peer-checked:shadow-glow">
+                            Other
+                        </div>
+</label>
+</div>
+</div>
+<!-- Incident Details -->
+<div class="space-y-3">
+<label class="block text-slate-900 dark:text-white text-base font-semibold leading-normal">
+                    Incident Details
+                </label>
+<textarea class="flex w-full min-h-[180px] resize-none rounded-2xl border border-gray-200 dark:border-gray-700 bg-background-light dark:bg-[#1A2630] p-4 text-base text-slate-900 dark:text-white placeholder:text-gray-400 focus:border-primary focus:ring-0 focus:outline-none transition-all" placeholder="Please describe exactly what happened. Be as specific as possible..."></textarea>
+</div>
+<!-- Evidence Upload -->
+<div class="space-y-3">
+<label class="block text-slate-900 dark:text-white text-base font-semibold leading-normal">
+                    Evidence <span class="text-gray-400 font-normal text-sm ml-1">(Optional)</span>
+</label>
+<div class="group relative flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-2xl bg-background-light/50 dark:bg-[#1A2630]/50 hover:bg-primary/5 dark:hover:bg-primary/10 hover:border-primary/50 transition-all cursor-pointer">
+<div class="flex flex-col items-center justify-center pt-5 pb-6">
+<div class="p-2 rounded-full bg-white dark:bg-gray-700 shadow-sm mb-2 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary">add_a_photo</span>
+</div>
+<p class="mb-1 text-sm text-gray-500 dark:text-gray-400 font-medium">Upload photos or video</p>
+</div>
+</div>
+</div>
+<!-- Privacy Notice & Submit -->
+<div class="pt-4">
+<div class="flex items-start gap-2 mb-6 px-1">
+<span class="material-symbols-outlined text-gray-400 text-lg mt-0.5">lock</span>
+<p class="text-xs text-gray-500 dark:text-gray-400 leading-tight">
+                        This report is confidential. It will be reviewed by our Trust &amp; Safety team and will not be shared directly with the client.
+                    </p>
+</div>
+<button class="w-full h-14 bg-primary hover:bg-[#3aa0da] active:bg-[#3290c5] text-white text-base font-bold rounded-full shadow-lg shadow-primary/30 transition-all transform active:scale-[0.98] flex items-center justify-center gap-2">
+                    Submit Report
+                </button>
+</div>
+</main>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-[#101b22] border-t border-gray-100 dark:border-gray-800 pb-safe max-w-[480px] mx-auto">
+<div class="flex justify-around items-center h-16 px-2">
+<a class="flex flex-col items-center justify-center w-full h-full space-y-1 text-gray-400 hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined group-hover:animate-bounce">calendar_month</span>
+<span class="text-[10px] font-medium">Bookings</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full h-full space-y-1 text-gray-400 hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="text-[10px] font-medium">Messages</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full h-full space-y-1 text-primary transition-colors" href="#">
+<!-- Active indicator -->
+<div class="absolute top-0 w-12 h-0.5 bg-primary rounded-b-full"></div>
+<span class="material-symbols-outlined fill-1">shield</span>
+<span class="text-[10px] font-medium">Report</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full h-full space-y-1 text-gray-400 hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-medium">Profile</span>
+</a>
+</div>
+<!-- iOS Home Indicator spacing -->
+<div class="h-5 w-full bg-white dark:bg-[#101b22]"></div>
+</nav>
+</div>
+</body></html>

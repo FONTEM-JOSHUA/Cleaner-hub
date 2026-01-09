@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Family Sharing</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#1392ec",
+                "background-light": "#f6f7f8",
+                "background-dark": "#101a22",
+                "surface-light": "#ffffff",
+                "surface-dark": "#1c2630",
+              },
+              fontFamily: {
+                "display": ["Inter", "sans-serif"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+            },
+          },
+        }
+      </script>
+<style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .material-symbols-filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111518] dark:text-white antialiased">
+<div class="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden pb-[90px]">
+<!-- Header -->
+<div class="flex items-center bg-surface-light dark:bg-surface-dark p-4 pb-2 justify-between sticky top-0 z-20 border-b border-gray-100 dark:border-gray-800/50 shadow-sm">
+<div class="text-[#111518] dark:text-white flex size-12 shrink-0 items-center justify-center cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</div>
+<h2 class="text-[#111518] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12">Family Sharing</h2>
+</div>
+<!-- Hero Section -->
+<div class="flex w-full flex-col items-center pt-6 px-5">
+<div class="w-full max-w-sm aspect-[3/2] rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 relative mb-5 shadow-sm">
+<div class="w-full h-full bg-center bg-no-repeat bg-cover transform hover:scale-105 transition-transform duration-700" data-alt="Warm and bright illustration or photo of a happy family relaxing in a clean living room together" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB7qoQbZa3FnH2GiEtmZ34Ns58dsndnPcCm2V99n9fBRF9Ou0Msz4EDTRSTWtU5rMMjyDiPQCAMAZSM3txx8hZUmbF-cBh7Gwk7427mmaz30j9a3Z3EfA3KhdiEYLBLYgQrvckfL0AvStCf4B-Vx9e-C5iADptxNip9kZIZOSHoLGzoaA-Da6tYfQSyGg6BMpJNU1hFdZBFA73Vg2QGC166W7EOwwguKMJBQv7Qfkx4mqsBDJqWRNCDEGTjRLB271BMjum6vc8Z1faD");'></div>
+</div>
+<h2 class="text-[#111518] dark:text-white tracking-tight text-[26px] font-bold leading-tight text-center pb-3">Coordinate home services</h2>
+<p class="text-[#637588] dark:text-gray-400 text-[15px] font-normal leading-relaxed text-center pb-6 max-w-xs">Invite your family to manage bookings, track cleaners, and share service details securely.</p>
+</div>
+<!-- Main Action -->
+<div class="flex px-5 pb-8 justify-center w-full">
+<button class="flex w-full max-w-sm cursor-pointer items-center justify-center overflow-hidden rounded-xl h-[52px] px-5 bg-primary hover:bg-[#1184d6] active:bg-[#0e76bf] text-white gap-2 text-[16px] font-bold leading-normal tracking-[0.015em] shadow-lg shadow-blue-500/25 transition-all transform active:scale-[0.98]">
+<span class="material-symbols-outlined text-[22px]">add</span>
+<span class="truncate">Add Family Member</span>
+</button>
+</div>
+<!-- Members List -->
+<div class="px-5 w-full max-w-md mx-auto mb-6">
+<h3 class="text-[#111518] dark:text-gray-200 text-sm font-bold uppercase tracking-wider leading-tight pb-3 opacity-80 pl-1">Family Members</h3>
+<div class="flex flex-col gap-3">
+<!-- Admin User -->
+<div class="flex items-center gap-4 bg-surface-light dark:bg-surface-dark p-3.5 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800">
+<div class="w-11 h-11 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm ring-2 ring-white dark:ring-[#1c2630]">
+                        JD
+                    </div>
+<div class="flex-1 min-w-0">
+<div class="text-[15px] font-semibold text-[#111518] dark:text-white truncate">John Doe (You)</div>
+<div class="text-xs text-[#637588] dark:text-gray-400 mt-0.5">Account Owner • Admin</div>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-[11px] font-semibold border border-green-100 dark:border-green-800">Active</span>
+</div>
+<!-- Family Member -->
+<div class="group flex items-center gap-4 bg-surface-light dark:bg-surface-dark p-3.5 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 cursor-pointer hover:border-primary/30 transition-colors">
+<div class="w-11 h-11 rounded-full bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center text-purple-600 dark:text-purple-300 font-bold text-sm ring-2 ring-white dark:ring-[#1c2630]">
+                        SD
+                    </div>
+<div class="flex-1 min-w-0">
+<div class="text-[15px] font-semibold text-[#111518] dark:text-white truncate">Sarah Doe</div>
+<div class="text-xs text-[#637588] dark:text-gray-400 mt-0.5">Can book &amp; view details</div>
+</div>
+<span class="material-symbols-outlined text-gray-400 group-hover:text-primary transition-colors text-[20px]">chevron_right</span>
+</div>
+</div>
+</div>
+<!-- Global Settings -->
+<div class="px-5 w-full max-w-md mx-auto mb-4">
+<h3 class="text-[#111518] dark:text-gray-200 text-sm font-bold uppercase tracking-wider leading-tight pb-3 opacity-80 pl-1">Permissions &amp; Sharing</h3>
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden divide-y divide-gray-100 dark:divide-gray-800">
+<!-- Setting 1 -->
+<div class="p-4 flex items-center justify-between gap-4">
+<div class="flex-1">
+<div class="text-[15px] font-semibold text-[#111518] dark:text-white">Share Booking History</div>
+<div class="text-xs text-[#637588] dark:text-gray-400 mt-1.5 leading-relaxed">Allow members to see past and upcoming service appointments.</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer shrink-0">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary transition-colors"></div>
+</label>
+</div>
+<!-- Setting 2 -->
+<div class="p-4 flex items-center justify-between gap-4">
+<div class="flex-1">
+<div class="text-[15px] font-semibold text-[#111518] dark:text-white">Allow Payment Sharing</div>
+<div class="text-xs text-[#637588] dark:text-gray-400 mt-1.5 leading-relaxed">Members can charge bookings to the shared card ending in •••• 4242.</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer shrink-0">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary transition-colors"></div>
+</label>
+</div>
+</div>
+</div>
+<!-- Privacy Footer -->
+<div class="px-8 pb-8 text-center mt-auto">
+<div class="inline-flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-full bg-gray-100 dark:bg-gray-800/50 text-[#637588] dark:text-gray-400">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+<span class="text-[11px] font-medium">Family data is encrypted &amp; secure</span>
+</div>
+</div>
+<!-- Mobile Nav Bar -->
+<div class="fixed bottom-0 left-0 w-full bg-surface-light dark:bg-surface-dark border-t border-gray-200 dark:border-gray-800 pb-6 pt-3 px-6 flex justify-around items-end z-50 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+<div class="flex flex-col items-center gap-1.5 text-[#637588] dark:text-gray-400 cursor-pointer group hover:text-primary transition-colors">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">home</span>
+<span class="text-[10px] font-medium tracking-wide">Home</span>
+</div>
+<div class="flex flex-col items-center gap-1.5 text-[#637588] dark:text-gray-400 cursor-pointer group hover:text-primary transition-colors">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">calendar_month</span>
+<span class="text-[10px] font-medium tracking-wide">Bookings</span>
+</div>
+<div class="flex flex-col items-center gap-1.5 text-primary cursor-pointer relative">
+<!-- Active Indicator -->
+<span class="absolute -top-3 w-8 h-1 bg-primary rounded-full opacity-0 scale-x-0 transition-all"></span>
+<span class="material-symbols-filled animate-pulse-once">group</span>
+<span class="text-[10px] font-bold tracking-wide">Family</span>
+</div>
+<div class="flex flex-col items-center gap-1.5 text-[#637588] dark:text-gray-400 cursor-pointer group hover:text-primary transition-colors">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">person</span>
+<span class="text-[10px] font-medium tracking-wide">Profile</span>
+</div>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Channels Screen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#42a7f0",
+                        "background-light": "#ffffff",
+                        "background-dark": "#101a22",
+                        "surface-light": "#f6f7f8",
+                        "surface-dark": "#1c2b36",
+                        "text-main": "#111518",
+                        "text-secondary": "#617989",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for better aesthetics */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-main dark:text-white transition-colors duration-200">
+<div class="relative flex h-full min-h-screen w-full flex-col overflow-hidden max-w-md mx-auto border-x border-gray-100 dark:border-gray-800 shadow-xl">
+<!-- Header -->
+<header class="flex items-center bg-background-light dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-10 border-b border-gray-100 dark:border-gray-800">
+<h1 class="text-text-main dark:text-white text-2xl font-bold leading-tight tracking-[-0.015em] flex-1">Channels</h1>
+<div class="flex items-center gap-3">
+<button class="flex items-center justify-center rounded-full h-10 w-10 hover:bg-surface-light dark:hover:bg-surface-dark transition-colors">
+<span class="material-symbols-outlined text-text-main dark:text-white" style="font-size: 24px;">add_circle</span>
+</button>
+</div>
+</header>
+<!-- Search Bar -->
+<div class="px-4 py-3 bg-background-light dark:bg-background-dark">
+<label class="flex flex-col w-full">
+<div class="flex w-full items-center rounded-lg h-10 bg-surface-light dark:bg-surface-dark overflow-hidden transition-all focus-within:ring-2 focus-within:ring-primary/50">
+<div class="flex items-center justify-center pl-3 pr-2 text-text-secondary dark:text-gray-400">
+<span class="material-symbols-outlined" style="font-size: 20px;">search</span>
+</div>
+<input class="flex-1 h-full bg-transparent border-none text-text-main dark:text-white placeholder:text-text-secondary dark:placeholder:text-gray-500 focus:ring-0 text-sm" placeholder="Search for providers or groups..."/>
+</div>
+</label>
+</div>
+<!-- Segmented Control -->
+<div class="px-4 pb-2 bg-background-light dark:bg-background-dark">
+<div class="flex h-10 w-full items-center rounded-lg bg-surface-light dark:bg-surface-dark p-1 relative">
+<!-- Active Indicator (Sliding effect simulated) -->
+<div class="absolute left-1 top-1 h-8 w-[calc(50%-4px)] rounded bg-white dark:bg-gray-700 shadow-sm transition-all duration-300 transform translate-x-0"></div>
+<button class="flex-1 z-10 flex items-center justify-center rounded text-sm font-semibold text-text-main dark:text-white transition-colors">
+                    My Channels
+                </button>
+<button class="flex-1 z-10 flex items-center justify-center rounded text-sm font-medium text-text-secondary dark:text-gray-400 hover:text-text-main dark:hover:text-white transition-colors">
+                    Discover
+                </button>
+</div>
+</div>
+<!-- Main Content Area -->
+<div class="flex-1 overflow-y-auto hide-scrollbar pb-24 bg-background-light dark:bg-background-dark">
+<!-- Pinned / Important Section -->
+<div class="px-4 py-3">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary" style="font-size: 18px;">push_pin</span>
+<h3 class="text-xs font-bold uppercase tracking-wider text-text-secondary dark:text-gray-400">Pinned</h3>
+</div>
+<!-- Pinned Item -->
+<div class="flex items-center gap-3 p-3 bg-primary/10 dark:bg-primary/5 rounded-xl border border-primary/20 cursor-pointer hover:bg-primary/20 transition-colors">
+<div class="relative">
+<div class="h-12 w-12 rounded-full bg-center bg-cover border-2 border-white dark:border-gray-800 shadow-sm" data-alt="Official company logo with shield icon" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA9LtJ71BJUzCys7A8Jxgz3DEVyE2aEq99W71nIpQdI-rPgiDWh7mIAnSrg7XyrXaiY54f5MFYZx0dqbTWQaJExs2s8E8UT45QFWMZ8NdfQGX-A1AICvCPiBkELNZWCAkQNPGHbeFcZwWw2B5kIF6WpzAz4CSJStEjjjezoyhxhWI5B7_jR2-hYJ93nAsnwwex030U4UOCKpGzcxqHUswyE4por6jORJfHn5165CO_-1P7dqu-xuvx1gSR5WuaSEYBiXIIY5JTsvOQG");'></div>
+<div class="absolute -bottom-1 -right-1 bg-white dark:bg-background-dark rounded-full p-0.5">
+<span class="material-symbols-outlined text-primary block" style="font-size: 16px;">verified</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline">
+<h4 class="text-text-main dark:text-white font-semibold truncate text-sm">Official App Updates</h4>
+<span class="text-xs text-primary font-medium">10:42 AM</span>
+</div>
+<p class="text-text-secondary dark:text-gray-400 text-xs line-clamp-1 mt-0.5">
+<span class="inline-flex items-center align-middle mr-1 px-1.5 py-0.5 rounded-sm bg-primary text-white text-[10px] font-bold">NEW</span>
+                            System maintenance scheduled for tonight at 2AM EST.
+                        </p>
+</div>
+</div>
+</div>
+<!-- Recent Messages List -->
+<div class="mt-2">
+<h3 class="px-4 text-xs font-bold uppercase tracking-wider text-text-secondary dark:text-gray-400 mb-2">Recent Messages</h3>
+<!-- List Item 1: Active Group -->
+<div class="group relative flex items-center gap-4 px-4 py-3 hover:bg-surface-light dark:hover:bg-surface-dark transition-colors cursor-pointer border-b border-gray-50 dark:border-gray-800 last:border-0">
+<div class="relative shrink-0">
+<div class="h-14 w-14 rounded-full bg-center bg-cover" data-alt="Close up of cleaning supplies and bucket" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAb-PIBsCz1iHBxs0cphRf-qbL7qpONIb362YjvjTqPtEvDpKAAELbi0wNiFq7X4_KB9oUWv4zVWsJBdmhXO7Yn8vq0kRO-V7TA5eq71G939JiKEvDLO0Asa2zE2ugLYIMvBmIOpupsVxpV77zCkpLObEDVMK5pEyVZAJLTOeG-VAbu6QnPwRmPKheRi4wyEOcXBB62n8gi8dmoQRzp8wKxg9uh8cACtaj7y98rcYOB2L7ugFL1YauA_SM4wUI1JQxRxwo4SJ2W91tA");'></div>
+<span class="absolute bottom-0 right-0 h-3.5 w-3.5 rounded-full bg-green-500 border-2 border-white dark:border-background-dark"></span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-center mb-1">
+<h4 class="text-text-main dark:text-white font-semibold text-base truncate">Cleaners Hub Announcements</h4>
+<span class="text-xs text-text-secondary dark:text-gray-500">2m ago</span>
+</div>
+<p class="text-text-secondary dark:text-gray-400 text-sm line-clamp-1 font-medium text-text-main dark:text-gray-200">
+<span class="material-symbols-outlined align-bottom text-text-secondary dark:text-gray-500 mr-1" style="font-size: 16px;">lock</span>
+                            ⚠️ Holiday schedule: We are closed on the 25th.
+                        </p>
+</div>
+<!-- Unread Badge -->
+<div class="h-2.5 w-2.5 rounded-full bg-primary shrink-0"></div>
+</div>
+<!-- List Item 2: Provider Update -->
+<div class="group relative flex items-center gap-4 px-4 py-3 hover:bg-surface-light dark:hover:bg-surface-dark transition-colors cursor-pointer border-b border-gray-50 dark:border-gray-800 last:border-0">
+<div class="relative shrink-0">
+<div class="h-14 w-14 rounded-full bg-center bg-cover" data-alt="Portrait of a smiling female chef in kitchen" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBOATHFirVMYC1S0piD2wEufxU7rNdQsPnI6jnGkuhL6iJH-_u-JPZJk6uDvnrCaK6bWP5PFPMEPUvavxXEXvJzZDesd2WoLgXEzFKAjfbyxRTKAw6LTkQ1VGEH8YqnRy4YHpgzX8Xiqx_hX_echA6_lVlSqDJissUONGVUg4rujzA9bMgRXg2eYWcjjKqNhkMjA-r0-YuS6yiNTXNxsyCQRU7kjoHHFJ3qW2q1bJbLAA8BJBW_QbBq58dnd5oIvEo5aEI4VLHdyZWH");'></div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-center mb-1">
+<h4 class="text-text-main dark:text-white font-medium text-base truncate">Sarah's Cooking Tips</h4>
+<span class="text-xs text-text-secondary dark:text-gray-500">Yesterday</span>
+</div>
+<p class="text-text-secondary dark:text-gray-400 text-sm line-clamp-2">
+                            New seasonal recipe uploaded! 🥕 Check out the vegan stew guide I just posted for all subscribers.
+                        </p>
+</div>
+</div>
+<!-- List Item 3: Service Group -->
+<div class="group relative flex items-center gap-4 px-4 py-3 hover:bg-surface-light dark:hover:bg-surface-dark transition-colors cursor-pointer border-b border-gray-50 dark:border-gray-800 last:border-0">
+<div class="relative shrink-0">
+<div class="h-14 w-14 rounded-full bg-center bg-cover" data-alt="Medical professional with stethoscope" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDZGrYAJXlAfca5pM5oRg73b8nL5Z5pIKHZa_q7NzkjIfqXnrH-LWCFqcD8JoVoJsI-LKoL9fhtR9wAF8d8T3QJIMnJZmedsaIrWvHPTW_fA8iDshS9Ckqcej8X-fK9uI97xAOzjnbrLBbpPx9nKDIhP2wGCMNeAKadVhC0WZRzrKcxGa4QUOkoUiLNd5DDTPdcXo9UR1tkHT5_d7QsPtCaQj88hCpQIppODRi3gGtUF4CkpIZN2PUDO8ylGPaisnmDVKCDQGpQExVW");'></div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-center mb-1">
+<h4 class="text-text-main dark:text-white font-medium text-base truncate">Caregivers Community</h4>
+<span class="text-xs text-text-secondary dark:text-gray-500">Tue</span>
+</div>
+<p class="text-text-secondary dark:text-gray-400 text-sm line-clamp-1">
+                            Does anyone have availability for a weekend shift in Downtown?
+                        </p>
+</div>
+</div>
+<!-- List Item 4: Admin Locked Channel -->
+<div class="group relative flex items-center gap-4 px-4 py-3 hover:bg-surface-light dark:hover:bg-surface-dark transition-colors cursor-pointer border-b border-gray-50 dark:border-gray-800 last:border-0">
+<div class="relative shrink-0">
+<div class="flex items-center justify-center h-14 w-14 rounded-full bg-surface-light dark:bg-surface-dark border border-gray-200 dark:border-gray-700">
+<span class="material-symbols-outlined text-gray-400" style="font-size: 28px;">campaign</span>
+</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-center mb-1">
+<h4 class="text-text-main dark:text-white font-medium text-base truncate">Platform Policy Updates</h4>
+<span class="text-xs text-text-secondary dark:text-gray-500">Oct 24</span>
+</div>
+<p class="text-text-secondary dark:text-gray-400 text-sm line-clamp-1">
+<span class="material-symbols-outlined align-bottom text-text-secondary dark:text-gray-500 mr-1" style="font-size: 16px;">lock</span>
+                            We have updated our terms of service regarding cancellation fees.
+                        </p>
+</div>
+</div>
+</div>
+<!-- Discovery Teaser / FAB Alternative -->
+<div class="px-4 py-6 mt-2 mb-4">
+<div class="bg-gradient-to-r from-primary/10 to-blue-100 dark:from-primary/20 dark:to-blue-900/20 rounded-xl p-4 flex items-center justify-between">
+<div>
+<h4 class="font-bold text-text-main dark:text-white text-sm">Find more channels</h4>
+<p class="text-xs text-text-secondary dark:text-gray-400 mt-1">Discover experts and communities.</p>
+</div>
+<button class="bg-primary hover:bg-blue-600 text-white text-sm font-semibold py-2 px-4 rounded-lg shadow-sm transition-colors">
+                        Browse
+                    </button>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation Bar (Persistent) -->
+<nav class="flex items-center justify-around bg-white dark:bg-background-dark border-t border-gray-100 dark:border-gray-800 h-[80px] px-2 pb-4 absolute bottom-0 w-full z-20">
+<a class="flex flex-col items-center justify-center w-full h-full text-text-secondary dark:text-gray-500 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined mb-1" style="font-size: 24px;">home</span>
+<span class="text-[10px] font-medium">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full h-full text-text-secondary dark:text-gray-500 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined mb-1" style="font-size: 24px;">calendar_month</span>
+<span class="text-[10px] font-medium">Bookings</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full h-full text-primary transition-colors" href="#">
+<span class="material-symbols-outlined mb-1 fill-current" style="font-variation-settings: 'FILL' 1; font-size: 24px;">chat_bubble</span>
+<span class="text-[10px] font-medium">Channels</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full h-full text-text-secondary dark:text-gray-500 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined mb-1" style="font-size: 24px;">person</span>
+<span class="text-[10px] font-medium">Profile</span>
+</a>
+</nav>
+</div>
+</body></html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Language Settings</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1392ec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101a22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>/* Custom scrollbar for cleaner look */
+::-webkit-scrollbar {
+    width: 0;
+    background: transparent
+    }
+/* Custom radio button check style to match primary color */
+.custom-radio:checked {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuCwZHxT1cdPYbyeybMf-xxY-x3FK0t2xuc4DBzcz0WqiRmSl7OWxeukNXHO8Q_0aFUHcmg2lxHeATgz07N7sn-fPaDZGMoAQjZQ0lrhhhOqdeCOgV0aiFjU5TaBRXbiOnPX-0ZJ1p3zaXYIMpsV-BpCcP4S1VFlkm88X-o82lC3OlZxpHz1f2HA1_NHKbD2toZkJBEg3GsnFfbzM3ZpOn5os_D0avu0n0P-j3wHxj3uUFyiAOVw_PZWSWPFkdyEn-U8L5UMAgtggYeN)
+    }</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white antialiased overflow-hidden">
+<div class="relative flex h-full max-h-screen w-full flex-col bg-white dark:bg-background-dark overflow-hidden max-w-md mx-auto shadow-2xl">
+<!-- Top App Bar -->
+<header class="flex items-center bg-white dark:bg-background-dark p-4 pb-2 justify-between sticky top-0 z-20 border-b border-slate-100 dark:border-slate-800">
+<button class="text-slate-900 dark:text-white flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined text-[24px]">arrow_back_ios_new</span>
+</button>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight flex-1 text-center pr-10">Language</h2>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto pb-32">
+<!-- Description -->
+<div class="px-5 pt-4 pb-2">
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal">
+                    Choose your preferred language for the app interface.
+                </p>
+</div>
+<!-- Search Bar -->
+<div class="px-4 py-3 sticky top-0 bg-white dark:bg-background-dark z-10">
+<label class="flex flex-col w-full">
+<div class="flex w-full items-center rounded-xl h-12 bg-slate-50 dark:bg-slate-800 border border-transparent focus-within:border-primary/30 focus-within:bg-white dark:focus-within:bg-slate-900 transition-all duration-200">
+<div class="text-slate-400 dark:text-slate-500 flex items-center justify-center pl-4 pr-2">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="flex w-full min-w-0 flex-1 bg-transparent border-none text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 px-2 text-base font-normal leading-normal focus:ring-0" placeholder="Search language" value=""/>
+</div>
+</label>
+</div>
+<!-- Language List -->
+<div class="flex flex-col px-4 gap-2">
+<!-- English (Active) -->
+<label class="group flex items-center justify-between p-4 rounded-xl border border-primary bg-primary/5 cursor-pointer transition-all hover:bg-primary/10">
+<div class="flex items-center gap-3">
+<span class="text-2xl">🇺🇸</span>
+<div class="flex flex-col">
+<span class="text-slate-900 dark:text-white text-base font-semibold">English (US)</span>
+<span class="text-slate-500 dark:text-slate-400 text-xs">English</span>
+</div>
+</div>
+<div class="relative flex items-center">
+<input checked="" class="custom-radio peer h-5 w-5 border-2 border-slate-300 dark:border-slate-600 rounded-full bg-transparent checked:border-primary focus:ring-0 focus:ring-offset-0 transition-all" name="language" type="radio"/>
+</div>
+</label>
+<!-- Spanish -->
+<label class="group flex items-center justify-between p-4 rounded-xl border border-slate-100 dark:border-slate-800 hover:border-slate-200 dark:hover:border-slate-700 bg-white dark:bg-slate-800/50 cursor-pointer transition-all">
+<div class="flex items-center gap-3">
+<span class="text-2xl">🇪🇸</span>
+<div class="flex flex-col">
+<span class="text-slate-900 dark:text-white text-base font-medium">Español</span>
+<span class="text-slate-500 dark:text-slate-400 text-xs">Spanish</span>
+</div>
+</div>
+<div class="relative flex items-center">
+<input class="custom-radio peer h-5 w-5 border-2 border-slate-300 dark:border-slate-600 rounded-full bg-transparent checked:border-primary focus:ring-0 focus:ring-offset-0 transition-all" name="language" type="radio"/>
+</div>
+</label>
+<!-- French -->
+<label class="group flex items-center justify-between p-4 rounded-xl border border-slate-100 dark:border-slate-800 hover:border-slate-200 dark:hover:border-slate-700 bg-white dark:bg-slate-800/50 cursor-pointer transition-all">
+<div class="flex items-center gap-3">
+<span class="text-2xl">🇫🇷</span>
+<div class="flex flex-col">
+<span class="text-slate-900 dark:text-white text-base font-medium">Français</span>
+<span class="text-slate-500 dark:text-slate-400 text-xs">French</span>
+</div>
+</div>
+<div class="relative flex items-center">
+<input class="custom-radio peer h-5 w-5 border-2 border-slate-300 dark:border-slate-600 rounded-full bg-transparent checked:border-primary focus:ring-0 focus:ring-offset-0 transition-all" name="language" type="radio"/>
+</div>
+</label>
+<!-- German -->
+<label class="group flex items-center justify-between p-4 rounded-xl border border-slate-100 dark:border-slate-800 hover:border-slate-200 dark:hover:border-slate-700 bg-white dark:bg-slate-800/50 cursor-pointer transition-all">
+<div class="flex items-center gap-3">
+<span class="text-2xl">🇩🇪</span>
+<div class="flex flex-col">
+<span class="text-slate-900 dark:text-white text-base font-medium">Deutsch</span>
+<span class="text-slate-500 dark:text-slate-400 text-xs">German</span>
+</div>
+</div>
+<div class="relative flex items-center">
+<input class="custom-radio peer h-5 w-5 border-2 border-slate-300 dark:border-slate-600 rounded-full bg-transparent checked:border-primary focus:ring-0 focus:ring-offset-0 transition-all" name="language" type="radio"/>
+</div>
+</label>
+<!-- Chinese -->
+<label class="group flex items-center justify-between p-4 rounded-xl border border-slate-100 dark:border-slate-800 hover:border-slate-200 dark:hover:border-slate-700 bg-white dark:bg-slate-800/50 cursor-pointer transition-all">
+<div class="flex items-center gap-3">
+<span class="text-2xl">🇨🇳</span>
+<div class="flex flex-col">
+<span class="text-slate-900 dark:text-white text-base font-medium">中文</span>
+<span class="text-slate-500 dark:text-slate-400 text-xs">Chinese</span>
+</div>
+</div>
+<div class="relative flex items-center">
+<input class="custom-radio peer h-5 w-5 border-2 border-slate-300 dark:border-slate-600 rounded-full bg-transparent checked:border-primary focus:ring-0 focus:ring-offset-0 transition-all" name="language" type="radio"/>
+</div>
+</label>
+<!-- Japanese -->
+<label class="group flex items-center justify-between p-4 rounded-xl border border-slate-100 dark:border-slate-800 hover:border-slate-200 dark:hover:border-slate-700 bg-white dark:bg-slate-800/50 cursor-pointer transition-all">
+<div class="flex items-center gap-3">
+<span class="text-2xl">🇯🇵</span>
+<div class="flex flex-col">
+<span class="text-slate-900 dark:text-white text-base font-medium">日本語</span>
+<span class="text-slate-500 dark:text-slate-400 text-xs">Japanese</span>
+</div>
+</div>
+<div class="relative flex items-center">
+<input class="custom-radio peer h-5 w-5 border-2 border-slate-300 dark:border-slate-600 rounded-full bg-transparent checked:border-primary focus:ring-0 focus:ring-offset-0 transition-all" name="language" type="radio"/>
+</div>
+</label>
+</div>
+<!-- Save Button Area -->
+<div class="px-4 py-6">
+<button class="w-full flex items-center justify-center rounded-xl h-12 px-5 bg-primary hover:bg-primary/90 text-white text-base font-bold tracking-[0.015em] shadow-lg shadow-primary/20 active:scale-[0.98] transition-all">
+                    Save Changes
+                </button>
+</div>
+<div class="h-8"></div>
+</main>
+<!-- Bottom Navigation -->
+<nav class="absolute bottom-0 left-0 w-full bg-white dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 pb-5 pt-3 px-6 flex justify-between items-center z-50">
+<button class="flex flex-col items-center gap-1 group w-16">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors text-[24px]">home</span>
+<span class="text-[10px] font-medium text-slate-400 group-hover:text-primary transition-colors">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 group w-16">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors text-[24px]">calendar_month</span>
+<span class="text-[10px] font-medium text-slate-400 group-hover:text-primary transition-colors">Bookings</span>
+</button>
+<button class="flex flex-col items-center gap-1 group w-16">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors text-[24px]">chat_bubble</span>
+<span class="text-[10px] font-medium text-slate-400 group-hover:text-primary transition-colors">Messages</span>
+</button>
+<button class="flex flex-col items-center gap-1 group w-16">
+<div class="relative">
+<!-- Subtle active indicator for settings/profile context -->
+<span class="absolute -top-1 -right-1 flex h-2.5 w-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
+</span>
+<span class="material-symbols-outlined text-primary text-[24px]">person</span>
+</div>
+<span class="text-[10px] font-medium text-primary">Profile</span>
+</button>
+</nav>
+</div>
+</body></html>

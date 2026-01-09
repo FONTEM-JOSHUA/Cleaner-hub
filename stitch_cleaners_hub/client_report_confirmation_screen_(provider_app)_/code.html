@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Client Report Confirmation</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#42b0f0",
+                        "background-light": "#ffffff",
+                        "background-dark": "#101b22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Animation classes for entrance effects */
+        @keyframes scaleIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes slideUp {
+            0% { transform: translateY(20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        .animate-scale-in {
+            animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        .animate-slide-up {
+            animation: slideUp 0.6s ease-out forwards;
+            opacity: 0;
+        }
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display antialiased">
+<!-- Main Container -->
+<div class="relative flex h-screen w-full flex-col overflow-hidden">
+<!-- Content Wrapper: Centered vertically -->
+<div class="flex flex-1 flex-col items-center justify-center px-6 pt-10 pb-4">
+<!-- Success Indicator Image/Icon -->
+<div class="mb-8 animate-scale-in flex items-center justify-center">
+<!-- Using a decorative div to simulate the 'check' or 'shield' illustration as requested -->
+<div class="relative flex h-32 w-32 items-center justify-center rounded-full bg-primary/10 dark:bg-primary/20">
+<span class="material-symbols-outlined text-7xl text-primary font-bold">check_circle</span>
+<!-- Decorative sparkle elements -->
+<span class="material-symbols-outlined absolute -top-2 -right-2 text-2xl text-[#FFD700] animate-bounce" style="animation-duration: 2s;">spark</span>
+</div>
+</div>
+<!-- Status Badge -->
+<div class="mb-6 animate-slide-up delay-100">
+<div class="flex h-8 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 px-4 py-1">
+<span class="material-symbols-outlined mr-1 text-sm text-gray-500 dark:text-gray-400">pending</span>
+<p class="text-sm font-medium text-gray-600 dark:text-gray-300">Pending Review</p>
+</div>
+</div>
+<!-- Headline -->
+<h1 class="animate-slide-up delay-200 mb-4 text-center text-3xl font-bold leading-tight tracking-tight text-[#111518] dark:text-white">
+                Report Submitted Successfully!
+            </h1>
+<!-- Body Text -->
+<p class="animate-slide-up delay-300 mb-8 max-w-sm text-center text-base font-normal leading-relaxed text-gray-500 dark:text-gray-400">
+                Thank you for letting us know. Our safety team has received your report and is currently reviewing it. We will contact you directly if we need more information.
+            </p>
+</div>
+<!-- Footer / Action Area: Fixed at bottom for easy thumb reach -->
+<div class="w-full bg-background-light dark:bg-background-dark p-4 pb-8 animate-slide-up delay-300">
+<button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-full bg-primary h-14 px-5 text-white shadow-lg shadow-primary/30 transition-transform active:scale-95 hover:bg-primary/90">
+<span class="text-lg font-bold tracking-wide">Back to Dashboard</span>
+</button>
+</div>
+</div>
+</body></html>
