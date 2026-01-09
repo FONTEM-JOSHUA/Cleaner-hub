@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Messages - Service Booking App</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#42b0f0",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101b22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111518] dark:text-white antialiased overflow-hidden selection:bg-primary/30">
+<!-- Mobile Wrapper -->
+<div class="relative flex h-screen w-full flex-col mx-auto max-w-[480px] bg-white dark:bg-background-dark shadow-2xl overflow-hidden">
+<!-- --- VIEW 1: CONVERSATION LIST --- -->
+<!-- This section would be the initial view. For the purpose of the single page demo, I will layout the list and then the chat interface below it to simulate scrolling or as separate conceptual sections on the same canvas for review, but strictly structurally I will make the list take up the main view area. -->
+<!-- Header -->
+<header class="flex items-center bg-white dark:bg-background-dark px-4 py-4 justify-between border-b border-gray-100 dark:border-gray-800 shrink-0 z-20">
+<h2 class="text-[#111518] dark:text-white text-2xl font-bold leading-tight tracking-tight flex-1">Messages</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="flex items-center justify-center rounded-full size-10 bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-[24px]">edit_square</span>
+</button>
+</div>
+</header>
+<!-- Main Content: Message List -->
+<main class="flex-1 overflow-y-auto pb-20">
+<!-- List Item 1: Active with Unread -->
+<div class="group relative flex flex-col hover:bg-gray-50 dark:hover:bg-white/5 transition-colors cursor-pointer">
+<div class="flex items-center gap-4 px-4 py-3 min-h-[72px] justify-between">
+<div class="flex items-center gap-4 flex-1 min-w-0">
+<div class="relative">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-14 border border-gray-100 dark:border-gray-700" data-alt="Portrait of Sarah cleaning specialist smiling" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBWDGuP2Fcf1jdFQ_wZbHplyL4ZNq_pC6I6t03_tYZAY4obbIqtyo_ezeHIjd-CMc3cWfHee5W9phY6mXBS1GHWGb3LoS6_ROGweIykVFfX2OMMfLT9NWGEwhqfUkDhsaTzH-lq4ALniu_Q0APR3EVE3QhMKlj8315xg-xRQbHvcJa63qLrKbnjGDVbzTE-XA1FqEuHGQbEgrAZ2Tzq280hnFL70WANTYA1i8D4CHKAaBYKGemI2yDGL_SjUmxV158PMf5Q0iZ2DLO_");'></div>
+<span class="absolute bottom-0 right-0 size-3.5 bg-green-500 border-2 border-white dark:border-background-dark rounded-full"></span>
+</div>
+<div class="flex flex-col justify-center flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-0.5">
+<p class="text-[#111518] dark:text-white text-base font-semibold leading-normal truncate">Sarah - Cleaning Pro</p>
+<p class="text-primary text-xs font-semibold shrink-0 ml-2">2m ago</p>
+</div>
+<p class="text-[#111518] dark:text-gray-300 text-sm font-medium leading-normal truncate">I'll be there at 2 PM sharp.</p>
+</div>
+</div>
+<div class="shrink-0 flex flex-col items-end gap-1">
+<div class="flex size-5 items-center justify-center rounded-full bg-primary text-white text-[10px] font-bold">2</div>
+</div>
+</div>
+<div class="ml-[88px] h-px bg-gray-100 dark:bg-gray-800"></div>
+</div>
+<!-- List Item 2: Read -->
+<div class="group relative flex flex-col hover:bg-gray-50 dark:hover:bg-white/5 transition-colors cursor-pointer">
+<div class="flex items-center gap-4 px-4 py-3 min-h-[72px] justify-between">
+<div class="flex items-center gap-4 flex-1 min-w-0">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-14 border border-gray-100 dark:border-gray-700" data-alt="Portrait of Chef Michael in chef coat" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCeWFrShP6XMNMx3KwgpBIx8yTKoxm9wn2rGajQlsIm8NyUJB2t3-ZXfPeFa04_wPATyx-TgJBM3dBKOd4EnpVHURM5cPoSKuYxwnGxG9zQYOSNz16VGNFUXFTkJ8SsdU7Ihhlm8dEajzKbvTi8nPhNm-N8X8pYqCMTyDmhyCYxrnYZZGwUtn3pXxQSLbWKSJgU4prw1PF3YDHZ4NxBAmPYN_THu8qsjahiEOPJMj22-5TV0UiOXi7SifGyj8pAeL3cythVpNIQhhP5");'></div>
+<div class="flex flex-col justify-center flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-0.5">
+<p class="text-[#111518] dark:text-white text-base font-semibold leading-normal truncate">Chef Michael</p>
+<p class="text-gray-400 text-xs font-normal shrink-0 ml-2">Yesterday</p>
+</div>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal truncate">Did you receive the grocery list for the dinner party?</p>
+</div>
+</div>
+</div>
+<div class="ml-[88px] h-px bg-gray-100 dark:bg-gray-800"></div>
+</div>
+<!-- List Item 3: Read -->
+<div class="group relative flex flex-col hover:bg-gray-50 dark:hover:bg-white/5 transition-colors cursor-pointer">
+<div class="flex items-center gap-4 px-4 py-3 min-h-[72px] justify-between">
+<div class="flex items-center gap-4 flex-1 min-w-0">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-14 border border-gray-100 dark:border-gray-700" data-alt="Portrait of Maria caregiver looking caring" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDKLjh8ka5C4F1Fcl52TIqQ_LXgsjStRG2WOJQ_lCnvKn0_aFXUAB2ZhDTlDmP7_7xL60G_jfDAR7zPnz5llBRyxmAgysVOSCYrglCcKsB_4_ZZBR3M_3o1zkQJL1y8-QXc6N5W0zCtxI2Ibj42zglNqOOr91IN_uGG89OMLa9B8V-Rt0GRnd4hZCl9NBzt9O5TWnAn5jdQ3DFs-UY8Yj6W0yVJj5Unb5ScZITcXr_iivj9yhVhdqboTaCIccfk--VVKfQQx7Gl_w5y");'></div>
+<div class="flex flex-col justify-center flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-0.5">
+<p class="text-[#111518] dark:text-white text-base font-semibold leading-normal truncate">Maria - Caregiver</p>
+<p class="text-gray-400 text-xs font-normal shrink-0 ml-2">Tue</p>
+</div>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal truncate">Thanks for the booking! Looking forward to helping your mom.</p>
+</div>
+</div>
+</div>
+<div class="ml-[88px] h-px bg-gray-100 dark:bg-gray-800"></div>
+</div>
+<!-- List Item 4: Read -->
+<div class="group relative flex flex-col hover:bg-gray-50 dark:hover:bg-white/5 transition-colors cursor-pointer">
+<div class="flex items-center gap-4 px-4 py-3 min-h-[72px] justify-between">
+<div class="flex items-center gap-4 flex-1 min-w-0">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-14 border border-gray-100 dark:border-gray-700 bg-gray-200 flex items-center justify-center text-gray-500" data-alt="Placeholder abstract gradient" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBMyvcGBwjgUOaHlkxggzrhG9hB6rp_VUIyH8XOFiChWNfxe3dIb3TcG5eCVqIPA4SkWXkwYzMWhi5nku0Sdu0HZTyS79OiW1WY5W0GXNy9mdXdkSbmeqvttJ1aJDmxszr-evEuBItaxY_a3XB44mQzOvuPFlu1Hh5G9zy59b2H6J65xNLqyTjHO3LILIZB5IJzLeUttyBewS38lFpE4OjJjZAYRsUG-mPewlAmfzxapgI0cOXvCZU9asBWr95u-Y5sa3Bc4tLCryV_");'>
+</div>
+<div class="flex flex-col justify-center flex-1 min-w-0">
+<div class="flex justify-between items-baseline mb-0.5">
+<p class="text-[#111518] dark:text-white text-base font-semibold leading-normal truncate">Alex - Plumber</p>
+<p class="text-gray-400 text-xs font-normal shrink-0 ml-2">Last Week</p>
+</div>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal truncate">The leak is fixed. Let me know if you see any water.</p>
+</div>
+</div>
+</div>
+<div class="ml-[88px] h-px bg-gray-100 dark:bg-gray-800"></div>
+</div>
+<!-- --- VIEW 2: ACTIVE CHAT DEMO (Overlaid visually within the flow but would be a separate screen) --- -->
+<!-- Separator for visual clarity in this single page output -->
+<div class="bg-background-light dark:bg-gray-900 py-6 text-center text-xs font-bold text-gray-400 uppercase tracking-widest mt-4">
+                Active Chat View Preview
+            </div>
+<div class="flex flex-col h-[600px] bg-[#EBF5FB] dark:bg-background-dark border-t border-gray-200 dark:border-gray-800">
+<!-- Chat Header -->
+<div class="flex items-center bg-white dark:bg-background-dark px-4 py-3 justify-between shadow-sm z-10">
+<button class="text-[#111518] dark:text-white flex size-10 shrink-0 items-center justify-center -ml-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10">
+<span class="material-symbols-outlined text-[24px]">arrow_back_ios_new</span>
+</button>
+<div class="flex items-center gap-3 flex-1 ml-2">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-10 w-10 border border-gray-100" data-alt="Small portrait of Sarah" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB11SWyk69MKuAueTAteTTASrLOIWgCJYB47hihIygSiI2DYUs8bOFTNhyoynj1aBAMSqdz4GuUsIDICDxGR9_CkUKLrF2g2SVLDgvxQW49ipTTMGrCeHZJEhEaRYbbFz4B_TAbxFeGhm-ysJJvf-SHx-yFevt3rtloFfqBcJiVo1NBcDEj-094suT7wWhbw76XRQ88QUfldAK7QUqhFpgcdVq_tE51zlHQe0DljkXDOY5IakF922NE8fw40xmakkEq1zYZWHYgoc8z");'></div>
+<div class="flex flex-col">
+<h2 class="text-[#111518] dark:text-white text-base font-bold leading-tight">Sarah Jenkins</h2>
+<span class="text-primary text-xs">Online</span>
+</div>
+</div>
+<div class="flex w-12 items-center justify-end">
+<button class="flex items-center justify-center rounded-full size-10 bg-green-50 text-green-600 hover:bg-green-100 dark:bg-green-900/30 dark:text-green-400 transition-colors">
+<span class="material-symbols-outlined filled text-[20px]">call</span>
+</button>
+</div>
+</div>
+<!-- Chat Area -->
+<div class="flex-1 overflow-y-auto p-4 space-y-4 bg-pattern">
+<!-- Date Separator -->
+<div class="flex justify-center my-4">
+<span class="bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-400 text-xs px-3 py-1 rounded-full shadow-sm">Today</span>
+</div>
+<!-- Message Received -->
+<div class="flex justify-start">
+<div class="flex flex-col max-w-[75%] gap-1">
+<div class="bg-white dark:bg-gray-800 p-3 rounded-2xl rounded-tl-none shadow-sm text-[#111518] dark:text-gray-200 text-sm leading-relaxed border border-gray-100 dark:border-gray-700">
+                                Hi! Just confirming our appointment for today at 2 PM.
+                            </div>
+<span class="text-[10px] text-gray-400 ml-1">10:30 AM</span>
+</div>
+</div>
+<!-- Message Sent -->
+<div class="flex justify-end">
+<div class="flex flex-col items-end max-w-[75%] gap-1">
+<div class="bg-primary text-white p-3 rounded-2xl rounded-tr-none shadow-sm text-sm leading-relaxed">
+                                Yes, that works perfectly for me. See you then!
+                            </div>
+<div class="flex items-center gap-1">
+<span class="text-[10px] text-gray-400 dark:text-gray-500">10:32 AM</span>
+<span class="material-symbols-outlined text-[14px] text-primary">done_all</span>
+</div>
+</div>
+</div>
+<!-- Message Received (Location) -->
+<div class="flex justify-start">
+<div class="flex flex-col max-w-[75%] gap-1">
+<div class="bg-white dark:bg-gray-800 p-1 rounded-2xl rounded-tl-none shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
+<div class="bg-gray-100 h-24 w-full rounded-xl bg-cover bg-center mb-2 relative" data-location="Map view of New York streets" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBeJfelTMXlt5AAISsGeNxDN8FCF5l3YrQysw11LEF5qMzKZEoHzFsI9x4BgJIXyXbnqCGqi9Lsu0OyM3YQS2LT2H4RcriXjJrracasCYuAAhOvzU8GaEqsCOxjMtv6rTYkSJ5CjSBTLmoCpAvMtITLoHnciZ8kolus4vU_AeXfFKNSS-9SgrqOO0fPrqDJaSp_t1IyEBGevXfLVARurW8at8xu6EF5gqrv08TOZQbjCvqVrkIwEqZqc3kJJ-ui7h6gTgNbOkG_PPn3");'>
+<div class="absolute inset-0 bg-black/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-red-500 text-[32px] drop-shadow-md">location_on</span>
+</div>
+</div>
+<div class="px-2 pb-2">
+<p class="text-[#111518] dark:text-white text-sm font-semibold">Current Location</p>
+<p class="text-gray-500 dark:text-gray-400 text-xs truncate">123 Maple Street, Apt 4B</p>
+</div>
+</div>
+<span class="text-[10px] text-gray-400 ml-1">10:33 AM</span>
+</div>
+</div>
+<!-- Message Received -->
+<div class="flex justify-start">
+<div class="flex flex-col max-w-[75%] gap-1">
+<div class="bg-white dark:bg-gray-800 p-3 rounded-2xl rounded-tl-none shadow-sm text-[#111518] dark:text-gray-200 text-sm leading-relaxed border border-gray-100 dark:border-gray-700">
+                                I'll be there at 2 PM sharp.
+                            </div>
+<span class="text-[10px] text-gray-400 ml-1">10:35 AM</span>
+</div>
+</div>
+</div>
+<!-- Input Area -->
+<div class="p-3 bg-white dark:bg-background-dark border-t border-gray-100 dark:border-gray-800">
+<div class="flex items-center gap-2">
+<button class="flex items-center justify-center size-10 rounded-full text-gray-400 hover:text-primary hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined text-[24px]">add_circle</span>
+</button>
+<div class="flex-1 bg-gray-100 dark:bg-gray-800 rounded-full px-4 py-2.5 flex items-center">
+<input class="bg-transparent border-none outline-none text-sm w-full text-[#111518] dark:text-white placeholder-gray-400 focus:ring-0 p-0 m-0" placeholder="Type a message..." type="text"/>
+<button class="ml-2 text-gray-400 hover:text-primary">
+<span class="material-symbols-outlined text-[20px]">sticky_note_2</span>
+</button>
+</div>
+<button class="flex items-center justify-center size-10 rounded-full bg-primary text-white hover:bg-blue-500 shadow-md transition-all active:scale-95">
+<!-- Show mic if empty, send if text. Showing Mic for demo state -->
+<span class="material-symbols-outlined text-[20px]">mic</span>
+</button>
+</div>
+<!-- Expanded Actions Drawer (Hidden by default in real app, shown here to display requested features) -->
+<!-- In a real app this would trigger on the '+' button. I'll represent them as quick actions below the input for the design visual -->
+<div class="flex justify-around pt-3 pb-1 px-2 border-t border-dashed border-gray-100 dark:border-gray-800 mt-2">
+<button class="flex flex-col items-center gap-1 group">
+<div class="size-10 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-500 flex items-center justify-center group-hover:bg-blue-100 dark:group-hover:bg-blue-900/40 transition-colors">
+<span class="material-symbols-outlined text-[20px]">photo_camera</span>
+</div>
+<span class="text-[10px] text-gray-500 font-medium">Photo</span>
+</button>
+<button class="flex flex-col items-center gap-1 group">
+<div class="size-10 rounded-full bg-green-50 dark:bg-green-900/20 text-green-500 flex items-center justify-center group-hover:bg-green-100 dark:group-hover:bg-green-900/40 transition-colors">
+<span class="material-symbols-outlined text-[20px]">location_on</span>
+</div>
+<span class="text-[10px] text-gray-500 font-medium">Location</span>
+</button>
+<button class="flex flex-col items-center gap-1 group">
+<div class="size-10 rounded-full bg-purple-50 dark:bg-purple-900/20 text-purple-500 flex items-center justify-center group-hover:bg-purple-100 dark:group-hover:bg-purple-900/40 transition-colors">
+<span class="material-symbols-outlined text-[20px]">mic</span>
+</div>
+<span class="text-[10px] text-gray-500 font-medium">Voice</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation -->
+<nav class="flex items-center justify-around bg-white dark:bg-background-dark border-t border-gray-100 dark:border-gray-800 py-2 pb-5 shrink-0 z-30">
+<button class="flex flex-col items-center gap-1 w-16 group">
+<span class="material-symbols-outlined text-gray-400 group-hover:text-primary transition-colors text-[24px]">home</span>
+<span class="text-[10px] font-medium text-gray-400 group-hover:text-primary transition-colors">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 w-16 group">
+<span class="material-symbols-outlined text-gray-400 group-hover:text-primary transition-colors text-[24px]">calendar_month</span>
+<span class="text-[10px] font-medium text-gray-400 group-hover:text-primary transition-colors">Bookings</span>
+</button>
+<button class="flex flex-col items-center gap-1 w-16 group">
+<div class="relative">
+<span class="material-symbols-outlined text-primary fill-current transition-colors text-[24px]" style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
+<span class="absolute -top-0.5 -right-0.5 size-2.5 bg-red-500 rounded-full border border-white dark:border-background-dark"></span>
+</div>
+<span class="text-[10px] font-bold text-primary transition-colors">Messages</span>
+</button>
+<button class="flex flex-col items-center gap-1 w-16 group">
+<span class="material-symbols-outlined text-gray-400 group-hover:text-primary transition-colors text-[24px]">person</span>
+<span class="text-[10px] font-medium text-gray-400 group-hover:text-primary transition-colors">Profile</span>
+</button>
+</nav>
+</div>
+</body></html>

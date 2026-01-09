@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Booking Requests</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#42b0f0",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101b22",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#182631",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "sans": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "1.5rem", "xl": "2rem", "full": "9999px"},
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Hide scrollbar for clean look */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-[#111518] dark:text-white font-display antialiased overflow-x-hidden">
+<div class="relative flex h-full min-h-screen w-full flex-col max-w-md mx-auto bg-background-light dark:bg-background-dark shadow-2xl overflow-hidden pb-[80px]">
+<!-- Top App Bar -->
+<div class="sticky top-0 z-20 flex items-center bg-white/90 dark:bg-[#101b22]/90 backdrop-blur-md p-4 pb-2 justify-between border-b border-gray-100 dark:border-gray-800">
+<h2 class="text-[#111518] dark:text-white text-xl font-bold leading-tight tracking-[-0.015em] flex-1">New Requests</h2>
+<div class="flex items-center justify-end gap-2">
+<button class="flex items-center justify-center rounded-full w-10 h-10 bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 text-[#111518] dark:text-white transition-colors">
+<span class="material-symbols-outlined">tune</span>
+</button>
+</div>
+</div>
+<!-- Filter Chips -->
+<div class="flex gap-3 px-4 py-3 overflow-x-auto no-scrollbar bg-white dark:bg-[#101b22] border-b border-gray-100 dark:border-gray-800">
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-[#111518] dark:bg-white px-5 shadow-sm transition-transform active:scale-95">
+<p class="text-white dark:text-[#111518] text-sm font-medium leading-normal">All</p>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-[#f0f3f4] dark:bg-[#23303b] px-5 transition-transform active:scale-95">
+<p class="text-[#111518] dark:text-gray-200 text-sm font-medium leading-normal">Cleaning</p>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-[#f0f3f4] dark:bg-[#23303b] px-5 transition-transform active:scale-95">
+<p class="text-[#111518] dark:text-gray-200 text-sm font-medium leading-normal">Cooking</p>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-[#f0f3f4] dark:bg-[#23303b] px-5 transition-transform active:scale-95">
+<p class="text-[#111518] dark:text-gray-200 text-sm font-medium leading-normal">Care</p>
+</button>
+</div>
+<!-- Requests List -->
+<div class="flex flex-col gap-4 p-4">
+<!-- Card 1 -->
+<div class="bg-white dark:bg-[#182631] rounded-[1.5rem] p-5 shadow-soft border border-gray-100 dark:border-gray-700 flex flex-col gap-4 group">
+<!-- Header -->
+<div class="flex justify-between items-start">
+<div class="flex gap-3 items-center">
+<div class="relative">
+<img class="w-12 h-12 rounded-full object-cover border-2 border-white dark:border-[#182631] shadow-sm" data-alt="Portrait of Sarah Jenkins smiling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsRA_ja4nmcZCNz905DjZxYLcMPcVDcJoj_zDPJ6Fov12h435qNF-276_oVsja7XSxWBE1fB-o0Sc-nBRRAChexGnw8QpO-c8APbjXvA7MUAgYIvf34OPOS5PpszDyFCoGgSw1s0PHbcs6aDwDrU5-MvS3PsfHUxw_qDhSfwJSL8bIIckgICC0aaWZA7xbdLumpHh6an3dgxRrbshgGuGV_77yTIXQrnvN-IkcgLd1h-_kiwREeTIiK9MCcTOzCXaLsxrqO-73qiCD"/>
+<div class="absolute -bottom-1 -right-1 bg-white dark:bg-[#182631] rounded-full p-[2px]">
+<div class="bg-primary text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full flex items-center gap-0.5">
+<span class="material-symbols-filled text-[10px]">star</span> 4.9
+                                </div>
+</div>
+</div>
+<div>
+<h3 class="text-[#111518] dark:text-white text-base font-bold leading-tight">Sarah Jenkins</h3>
+<p class="text-gray-500 dark:text-gray-400 text-xs font-medium mt-0.5">12 Reviews • Verified</p>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-xl font-bold text-primary">$75</span>
+<span class="text-xs text-gray-400 font-medium">Est. 3 hrs</span>
+</div>
+</div>
+<!-- Divider -->
+<div class="h-px bg-gray-100 dark:bg-gray-700 w-full"></div>
+<!-- Details -->
+<div class="flex flex-col gap-3">
+<div class="flex items-start gap-3">
+<div class="w-8 h-8 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center shrink-0 text-primary">
+<span class="material-symbols-outlined text-[18px]">cleaning_services</span>
+</div>
+<div>
+<p class="text-[#111518] dark:text-gray-200 text-sm font-semibold">Home Cleaning</p>
+<p class="text-gray-500 dark:text-gray-400 text-xs leading-normal">Deep clean, eco-friendly products required.</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center shrink-0 text-primary">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+</div>
+<div>
+<p class="text-[#111518] dark:text-gray-200 text-sm font-semibold">Today, 2:00 PM</p>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<div class="w-8 h-8 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center shrink-0 text-primary">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+</div>
+<div class="flex-1">
+<p class="text-[#111518] dark:text-gray-200 text-sm font-semibold">123 Maple Ave, Downtown</p>
+<p class="text-gray-500 dark:text-gray-400 text-xs mt-0.5">2.4 miles away</p>
+</div>
+</div>
+</div>
+<!-- Map Snippet (Optional visual context) -->
+<div class="h-24 w-full rounded-xl bg-cover bg-center relative overflow-hidden mt-1" data-alt="Map view of downtown area showing streets and blocks" data-location="Downtown" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBAGX3B9r07xACPWNr3i67GdZD20aE0AG_jVXyZpOAuoviXkTPSlbnM1wQzrruZ92JGwGyeGvY1DpmxM9oSUNQNVuIa3BBCpCxT9nVripFWdcCk6tunYPXomk1hUSQfAbFadFU87y8AAft6KM_P8KXslVg_4YxcCDoOTuuWFTW9pYZb55s_kBRMVDuqNKBYTOIsrkw0hwmCuWQcCEjPOEm3F68VAyBkF1WyGYfighaljHlhZOTQWgXzNf1dzMLwhg2Xk2iuxYUATlxK');">
+<div class="absolute inset-0 bg-black/10"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-8 h-8 bg-primary/90 rounded-full flex items-center justify-center text-white shadow-lg ring-4 ring-white/30">
+<span class="material-symbols-filled text-sm">home</span>
+</div>
+</div>
+</div>
+<!-- Actions -->
+<div class="grid grid-cols-[auto_1fr_1fr] gap-3 mt-2">
+<button aria-label="Decline" class="flex items-center justify-center w-12 h-12 rounded-full bg-red-50 dark:bg-red-900/20 text-red-500 hover:bg-red-100 dark:hover:bg-red-900/40 transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+<button class="flex items-center justify-center h-12 rounded-full bg-primary/10 dark:bg-primary/20 text-primary font-bold text-sm hover:bg-primary/20 dark:hover:bg-primary/30 transition-colors">
+                        Counter Offer
+                    </button>
+<button class="flex items-center justify-center h-12 rounded-full bg-[#4CAF50] text-white font-bold text-sm shadow-md hover:bg-[#43a047] transition-colors">
+                        Accept
+                    </button>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-white dark:bg-[#182631] rounded-[1.5rem] p-5 shadow-soft border border-gray-100 dark:border-gray-700 flex flex-col gap-4">
+<!-- Header -->
+<div class="flex justify-between items-start">
+<div class="flex gap-3 items-center">
+<div class="relative">
+<div class="w-12 h-12 rounded-full bg-gradient-to-br from-purple-400 to-primary flex items-center justify-center text-white text-lg font-bold shadow-sm">
+                                MD
+                            </div>
+<div class="absolute -bottom-1 -right-1 bg-white dark:bg-[#182631] rounded-full p-[2px]">
+<div class="bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-[10px] font-bold px-1.5 py-0.5 rounded-full flex items-center gap-0.5">
+                                    New
+                                </div>
+</div>
+</div>
+<div>
+<h3 class="text-[#111518] dark:text-white text-base font-bold leading-tight">Mark D.</h3>
+<p class="text-gray-500 dark:text-gray-400 text-xs font-medium mt-0.5">New User</p>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-xl font-bold text-primary">$120</span>
+<span class="text-xs text-gray-400 font-medium">Flat Rate</span>
+</div>
+</div>
+<!-- Divider -->
+<div class="h-px bg-gray-100 dark:bg-gray-700 w-full"></div>
+<!-- Details -->
+<div class="flex flex-col gap-3">
+<div class="flex items-start gap-3">
+<div class="w-8 h-8 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center shrink-0 text-primary">
+<span class="material-symbols-outlined text-[18px]">restaurant_menu</span>
+</div>
+<div>
+<p class="text-[#111518] dark:text-gray-200 text-sm font-semibold">Meal Prep</p>
+<p class="text-gray-500 dark:text-gray-400 text-xs leading-normal">Preparation of 5 meals for the week.</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center shrink-0 text-primary">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+</div>
+<div>
+<p class="text-[#111518] dark:text-gray-200 text-sm font-semibold">Tomorrow, 10:00 AM</p>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<div class="w-8 h-8 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center shrink-0 text-primary">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+</div>
+<div class="flex-1">
+<p class="text-[#111518] dark:text-gray-200 text-sm font-semibold">450 Highland Park</p>
+<p class="text-gray-500 dark:text-gray-400 text-xs mt-0.5">5.1 miles away</p>
+</div>
+</div>
+</div>
+<!-- Actions -->
+<div class="grid grid-cols-[auto_1fr_1fr] gap-3 mt-2">
+<button aria-label="Decline" class="flex items-center justify-center w-12 h-12 rounded-full bg-red-50 dark:bg-red-900/20 text-red-500 hover:bg-red-100 dark:hover:bg-red-900/40 transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+<button class="flex items-center justify-center h-12 rounded-full bg-primary/10 dark:bg-primary/20 text-primary font-bold text-sm hover:bg-primary/20 dark:hover:bg-primary/30 transition-colors">
+                        Counter Offer
+                    </button>
+<button class="flex items-center justify-center h-12 rounded-full bg-[#4CAF50] text-white font-bold text-sm shadow-md hover:bg-[#43a047] transition-colors">
+                        Accept
+                    </button>
+</div>
+</div>
+<!-- Empty State / All Caught Up (Optional spacer/footer for list) -->
+<div class="flex items-center justify-center py-8">
+<p class="text-gray-400 text-sm font-medium">You've reached the end of the list</p>
+</div>
+</div>
+<!-- Mobile Bottom Navigation -->
+<div class="fixed bottom-0 w-full max-w-md bg-white dark:bg-[#101b22] border-t border-gray-100 dark:border-gray-800 pb-safe pt-2 z-30">
+<div class="grid grid-cols-4 h-16">
+<button class="flex flex-col items-center justify-center gap-1 text-primary">
+<span class="material-symbols-filled text-2xl">home_app_logo</span>
+<span class="text-[10px] font-bold">Requests</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300">
+<span class="material-symbols-outlined text-2xl">calendar_month</span>
+<span class="text-[10px] font-medium">Schedule</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300">
+<span class="material-symbols-outlined text-2xl">account_balance_wallet</span>
+<span class="text-[10px] font-medium">Earnings</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300">
+<span class="material-symbols-outlined text-2xl">person</span>
+<span class="text-[10px] font-medium">Profile</span>
+</button>
+</div>
+<!-- Safe Area Spacer for iOS Home Indicator -->
+<div class="h-5 w-full"></div>
+</div>
+</div>
+</body></html>

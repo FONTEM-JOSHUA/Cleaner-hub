@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Admin Login Screen</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#42b0f0",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101b22",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2630",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display bg-background-light dark:bg-background-dark text-[#111518] dark:text-white antialiased transition-colors duration-200">
+<div class="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Top App Bar -->
+<div class="flex items-center p-4 pb-2 justify-between sticky top-0 z-10 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md">
+<div class="text-[#111518] dark:text-white flex size-12 shrink-0 items-center justify-center cursor-pointer hover:bg-black/5 dark:hover:bg-white/10 rounded-full transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</div>
+<h2 class="text-[#111518] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12">
+                Admin Portal
+            </h2>
+</div>
+<!-- Main Content Area -->
+<div class="flex flex-1 flex-col items-center justify-center px-4 pb-10 w-full max-w-md mx-auto">
+<!-- Logo / Illustration -->
+<div class="flex justify-center mb-6">
+<div class="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center">
+<div class="w-16 h-16 bg-center bg-contain bg-no-repeat" data-alt="Admin shield logo icon" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBKyeJ6yxIvuS6s9dmL8jq5JjxK6VG-XnWyqFCKUz_37me036UdES7YC3MXTL_OFA5QR4lsEZgUqZ8GiVWUgMdHNJN3dlBeaAeFscewuuYo52DFNhCBHTRIHEg5KIVjUPIMyTUt8D-MiEciz1ibxlO25QY6qNXeXRKs7_avO7Uz_vMswWReOZaY2MlLG-9pwf2Oi3Wy2SSisLETrAoZi_79BU8dN1s1DlBEQygvpkQJ91Ff5iO-q4IL4GaI74V0tPqWzQ-8j3rMQtdY");'></div>
+</div>
+</div>
+<!-- Headline -->
+<h2 class="text-[#111518] dark:text-white tracking-tight text-[28px] font-bold leading-tight text-center pb-2">
+                Welcome Back
+            </h2>
+<!-- Body Text -->
+<p class="text-[#64748B] dark:text-[#94a3b8] text-base font-normal leading-normal pb-8 text-center max-w-[320px]">
+                Sign in to manage bookings and services.
+            </p>
+<!-- Login Form -->
+<div class="w-full flex flex-col gap-5">
+<!-- Email Input -->
+<div class="flex flex-col gap-1.5">
+<label class="text-[#111518] dark:text-white text-sm font-medium leading-normal">Email Address</label>
+<div class="relative">
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111518] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dbe2e6] dark:border-[#3e4a56] bg-surface-light dark:bg-surface-dark h-12 placeholder:text-[#9ca3af] p-[15px] text-base font-normal leading-normal transition-all" placeholder="admin@serviceapp.com" type="email" value=""/>
+<div class="absolute right-4 top-1/2 -translate-y-1/2 text-[#9ca3af]">
+<span class="material-symbols-outlined text-[20px]">mail</span>
+</div>
+</div>
+</div>
+<!-- Password Input -->
+<div class="flex flex-col gap-1.5">
+<label class="text-[#111518] dark:text-white text-sm font-medium leading-normal">Password</label>
+<div class="relative">
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111518] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dbe2e6] dark:border-[#3e4a56] bg-surface-light dark:bg-surface-dark h-12 placeholder:text-[#9ca3af] p-[15px] pr-10 text-base font-normal leading-normal transition-all" placeholder="Enter your password" type="password" value=""/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-[#9ca3af] hover:text-primary transition-colors focus:outline-none">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</div>
+</div>
+<!-- Forgot Password Link -->
+<div class="flex justify-end">
+<a class="text-primary hover:text-primary/80 text-sm font-medium transition-colors" href="#">Forgot Password?</a>
+</div>
+<!-- Login Button -->
+<button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary hover:bg-primary/90 text-white text-base font-bold leading-normal tracking-[0.015em] w-full transition-all active:scale-[0.98]">
+<span class="truncate">Log In</span>
+</button>
+<!-- Security Notice -->
+<div class="flex gap-3 p-3 rounded-lg bg-primary/10 dark:bg-primary/5 border border-primary/20 items-start">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0 mt-0.5">verified_user</span>
+<p class="text-sm text-[#111518] dark:text-[#e2e8f0] leading-snug">
+<span class="font-semibold text-primary">Note:</span> Extra verification steps may be required for admin access upon login.
+                    </p>
+</div>
+</div>
+<!-- Spacer -->
+<div class="flex-1 min-h-[40px]"></div>
+<!-- Bottom Utility Link -->
+<div class="flex flex-col items-center gap-2 mt-auto pt-4">
+<a class="text-[#64748B] dark:text-[#94a3b8] text-sm font-medium hover:text-primary transition-colors flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-[18px]">support</span>
+                    Contact IT Support
+                </a>
+</div>
+</div>
+</div>
+</body></html>

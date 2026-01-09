@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Smart Search Screen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#42b0f0",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101b22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar hiding for clean UI */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display bg-background-light dark:bg-background-dark min-h-screen flex justify-center">
+<div class="relative w-full max-w-md h-screen flex flex-col bg-white dark:bg-background-dark shadow-xl overflow-hidden">
+<!-- Status Bar Safe Area -->
+<div class="h-12 w-full bg-white dark:bg-background-dark shrink-0"></div>
+<!-- Search Header -->
+<div class="px-4 pb-4 bg-white dark:bg-background-dark sticky top-0 z-10">
+<div class="flex items-center justify-between mb-4">
+<h1 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Search</h1>
+<div class="p-2 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-300">notifications</span>
+</div>
+</div>
+<label class="flex flex-col w-full">
+<div class="flex w-full items-center rounded-xl h-12 bg-slate-100 dark:bg-slate-800 focus-within:ring-2 focus-within:ring-primary/50 transition-all duration-200">
+<div class="pl-4 pr-2 flex items-center justify-center pointer-events-none">
+<span class="material-symbols-outlined text-slate-500" style="font-size: 24px;">search</span>
+</div>
+<input autofocus="" class="w-full bg-transparent border-none focus:ring-0 text-slate-900 dark:text-white placeholder:text-slate-500 text-base leading-normal h-full" placeholder="Service, location, or provider" value=""/>
+<div class="pr-4 flex items-center gap-2">
+<button class="flex items-center justify-center p-1 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-primary" style="font-size: 24px;">mic</span>
+</button>
+</div>
+</div>
+</label>
+</div>
+<!-- Main Content Scroll Area -->
+<div class="flex-1 overflow-y-auto hide-scrollbar pb-24">
+<!-- Popular Near You Section -->
+<div class="pt-2">
+<div class="flex items-center justify-between px-4 pb-3 pt-2">
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight">Popular near you</h2>
+<a class="text-primary text-sm font-medium hover:text-primary/80" href="#">See all</a>
+</div>
+<!-- Horizontal Scroll Container -->
+<div class="flex gap-3 px-4 overflow-x-auto hide-scrollbar pb-2">
+<!-- Card 1 -->
+<div class="flex flex-col shrink-0 gap-2 w-28 group cursor-pointer">
+<div class="w-28 h-28 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center relative overflow-hidden group-hover:shadow-md transition-all">
+<div class="absolute inset-0 bg-primary/10 group-hover:bg-primary/20 transition-colors"></div>
+<span class="material-symbols-outlined text-primary text-4xl z-10">cleaning_services</span>
+</div>
+<p class="text-slate-900 dark:text-white text-xs font-medium text-center">Cleaning</p>
+</div>
+<!-- Card 2 -->
+<div class="flex flex-col shrink-0 gap-2 w-28 group cursor-pointer">
+<div class="w-28 h-28 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center relative overflow-hidden group-hover:shadow-md transition-all">
+<div class="absolute inset-0 bg-orange-500/10 group-hover:bg-orange-500/20 transition-colors"></div>
+<span class="material-symbols-outlined text-orange-500 text-4xl z-10">skillet</span>
+</div>
+<p class="text-slate-900 dark:text-white text-xs font-medium text-center">Meal Prep</p>
+</div>
+<!-- Card 3 -->
+<div class="flex flex-col shrink-0 gap-2 w-28 group cursor-pointer">
+<div class="w-28 h-28 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center relative overflow-hidden group-hover:shadow-md transition-all">
+<div class="absolute inset-0 bg-red-500/10 group-hover:bg-red-500/20 transition-colors"></div>
+<span class="material-symbols-outlined text-red-500 text-4xl z-10">diversity_1</span>
+</div>
+<p class="text-slate-900 dark:text-white text-xs font-medium text-center">Caregiving</p>
+</div>
+<!-- Card 4 -->
+<div class="flex flex-col shrink-0 gap-2 w-28 group cursor-pointer">
+<div class="w-28 h-28 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center relative overflow-hidden group-hover:shadow-md transition-all">
+<div class="absolute inset-0 bg-purple-500/10 group-hover:bg-purple-500/20 transition-colors"></div>
+<span class="material-symbols-outlined text-purple-500 text-4xl z-10">child_care</span>
+</div>
+<p class="text-slate-900 dark:text-white text-xs font-medium text-center">Babysitting</p>
+</div>
+</div>
+</div>
+<!-- Divider -->
+<div class="h-2 bg-slate-50 dark:bg-slate-900/50 mt-4 mb-4"></div>
+<!-- Recent Searches Section -->
+<div>
+<div class="flex items-center justify-between px-4 pb-2 pt-2">
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight">Recent searches saved</h2>
+<button class="text-slate-400 text-sm font-medium hover:text-slate-600 dark:hover:text-slate-300">Clear</button>
+</div>
+<div class="flex flex-col">
+<!-- List Item 1 -->
+<div class="group flex items-center gap-4 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer transition-colors border-b border-slate-100 dark:border-slate-800 last:border-0">
+<div class="flex items-center justify-center rounded-full bg-primary/10 shrink-0 size-10">
+<span class="material-symbols-outlined text-primary" style="font-size: 20px;">schedule</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<p class="text-slate-900 dark:text-white text-base font-medium truncate">Plumber in Downtown</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs truncate">2 hours ago</p>
+</div>
+<button class="shrink-0 p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors">
+<span class="material-symbols-outlined" style="font-size: 20px;">close</span>
+</button>
+</div>
+<!-- List Item 2 -->
+<div class="group flex items-center gap-4 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer transition-colors border-b border-slate-100 dark:border-slate-800 last:border-0">
+<div class="flex items-center justify-center rounded-full bg-primary/10 shrink-0 size-10">
+<span class="material-symbols-outlined text-primary" style="font-size: 20px;">schedule</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<p class="text-slate-900 dark:text-white text-base font-medium truncate">Weekly Maid Service</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs truncate">Yesterday</p>
+</div>
+<button class="shrink-0 p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors">
+<span class="material-symbols-outlined" style="font-size: 20px;">close</span>
+</button>
+</div>
+<!-- List Item 3 -->
+<div class="group flex items-center gap-4 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer transition-colors border-b border-slate-100 dark:border-slate-800 last:border-0">
+<div class="flex items-center justify-center rounded-full bg-primary/10 shrink-0 size-10">
+<span class="material-symbols-outlined text-primary" style="font-size: 20px;">schedule</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<p class="text-slate-900 dark:text-white text-base font-medium truncate">Electrician</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs truncate">3 days ago</p>
+</div>
+<button class="shrink-0 p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors">
+<span class="material-symbols-outlined" style="font-size: 20px;">close</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Categories / Suggestions Chips -->
+<div class="px-4 pt-6 pb-4">
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight mb-3">Explore Categories</h2>
+<div class="flex flex-wrap gap-2">
+<button class="px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm font-medium hover:bg-primary/10 hover:text-primary transition-colors">
+                        Home Repairs
+                     </button>
+<button class="px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm font-medium hover:bg-primary/10 hover:text-primary transition-colors">
+                        Gardening
+                     </button>
+<button class="px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm font-medium hover:bg-primary/10 hover:text-primary transition-colors">
+                        Pet Care
+                     </button>
+<button class="px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm font-medium hover:bg-primary/10 hover:text-primary transition-colors">
+                        Tutoring
+                     </button>
+<button class="px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm font-medium hover:bg-primary/10 hover:text-primary transition-colors">
+                        Tech Support
+                     </button>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation -->
+<div class="bg-white dark:bg-background-dark border-t border-slate-100 dark:border-slate-800 shrink-0">
+<div class="flex items-center justify-around h-16 px-2">
+<a class="flex flex-col items-center justify-center w-full h-full gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">home</span>
+<span class="text-[10px] font-medium">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full h-full gap-1 text-primary" href="#">
+<span class="material-symbols-outlined text-2xl fill-current">search</span>
+<span class="text-[10px] font-medium">Search</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full h-full gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">calendar_month</span>
+<span class="text-[10px] font-medium">Bookings</span>
+</a>
+<a class="flex flex-col items-center justify-center w-full h-full gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">person</span>
+<span class="text-[10px] font-medium">Profile</span>
+</a>
+</div>
+</div>
+</div>
+</body></html>

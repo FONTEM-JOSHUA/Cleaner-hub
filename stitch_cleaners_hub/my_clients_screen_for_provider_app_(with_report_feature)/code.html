@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Provider App - My Clients</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#42b0f0",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101b22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display min-h-screen pb-24 text-slate-900 dark:text-slate-100 antialiased selection:bg-primary/30">
+<!-- Top App Bar -->
+<div class="sticky top-0 z-20 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md w-full">
+<div class="flex items-center px-4 py-3 justify-between">
+<h2 class="text-2xl font-bold leading-tight tracking-tight flex-1 dark:text-white">My Clients</h2>
+<div class="flex gap-3">
+<button class="flex items-center justify-center size-10 rounded-full bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 shadow-sm border border-slate-100 dark:border-slate-700">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</div>
+<!-- Search Bar -->
+<div class="px-4 pb-2">
+<label class="flex flex-col h-12 w-full">
+<div class="flex w-full flex-1 items-center rounded-xl h-full bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden focus-within:ring-2 focus-within:ring-primary/50 transition-all">
+<div class="text-slate-400 dark:text-slate-500 flex items-center justify-center pl-4" data-icon="MagnifyingGlass">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="flex w-full min-w-0 flex-1 resize-none overflow-hidden border-none bg-transparent focus:outline-0 focus:ring-0 h-full placeholder:text-slate-400 dark:placeholder:text-slate-500 px-3 text-base font-normal leading-normal dark:text-white" placeholder="Search name..." value=""/>
+<div class="pr-4 text-slate-400">
+<span class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors">tune</span>
+</div>
+</div>
+</label>
+</div>
+<!-- Chips -->
+<div class="flex gap-2 px-4 pb-4 overflow-x-auto no-scrollbar scroll-smooth">
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary text-white pl-4 pr-4 shadow-md shadow-primary/20 transition-transform active:scale-95">
+<span class="text-sm font-medium leading-normal">Active</span>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 pl-4 pr-4 border border-slate-100 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+<span class="text-sm font-medium leading-normal">Recent</span>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 pl-4 pr-4 border border-slate-100 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+<span class="text-sm font-medium leading-normal">Past</span>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 pl-4 pr-4 border border-slate-100 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+<span class="text-sm font-medium leading-normal">Blocked</span>
+</button>
+</div>
+</div>
+<!-- Main List Content -->
+<div class="px-4 flex flex-col gap-4">
+<!-- Client Item 1 -->
+<div class="flex flex-col gap-3 bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700/50">
+<div class="flex items-start gap-4 justify-between">
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-14 ring-2 ring-white dark:ring-slate-700 shadow-sm" data-alt="Portrait of Sarah Jenkins smiling in professional attire" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDwA32pnxxTyjbyqvL4E3ovoRtzqfJZ2K8uNemqGLig8J1hGuYXBD0e3wpsR2i5JW5TxKqkXbjPf0py4RPokK_VzI_-GnkPGMnwRz7gW9dVTLXpRqyDXLUZldZzpGBQfvCu9lCixfzqIcFWYlz82chLLVsf_j8dwfytTBxepK-fvV00-19qZPAGrPP34LBD7jLHku0mCpQSGcDSbRDC4k0NdT6T5e76OsNl-gF5cwlSd2rB6JEwxikDi5tcjWRAV964SqjWW1aHbsCV");'></div>
+<div class="flex flex-col justify-center">
+<p class="text-slate-900 dark:text-white text-lg font-bold leading-tight">Sarah Jenkins</p>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[16px] text-slate-400">calendar_month</span>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Oct 24, 2023</p>
+</div>
+</div>
+</div>
+<div class="bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 text-xs px-2 py-1 rounded-md font-semibold uppercase tracking-wider">
+                    Regular
+                </div>
+</div>
+<div class="h-px w-full bg-slate-100 dark:bg-slate-700 my-1"></div>
+<div class="flex items-center gap-3">
+<button class="flex-1 h-10 flex items-center justify-center gap-2 rounded-full bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary font-semibold text-sm hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-[20px]">person</span>
+                    View Profile
+                </button>
+<button class="h-10 px-6 flex items-center justify-center gap-2 rounded-full bg-slate-50 dark:bg-slate-700/50 text-slate-600 dark:text-slate-300 font-medium text-sm border border-slate-100 dark:border-slate-600 hover:bg-red-50 hover:text-red-600 hover:border-red-100 dark:hover:bg-red-900/20 dark:hover:text-red-400 dark:hover:border-red-900/30 transition-all group">
+<span class="material-symbols-outlined text-[20px] group-hover:text-red-500 transition-colors">flag</span>
+<span class="hidden sm:inline">Report</span>
+</button>
+</div>
+</div>
+<!-- Client Item 2 -->
+<div class="flex flex-col gap-3 bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700/50">
+<div class="flex items-start gap-4 justify-between">
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-14 ring-2 ring-white dark:ring-slate-700 shadow-sm" data-alt="Portrait of Michael Chen in casual shirt" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB3hlnK1NwRfsF860n_Mg-d52eWUR7hffIWLfsXyCe7ilD9cyBrKnGdLCtUvW0X085KiB3dJKMOgPQ708U7dP6kRTEYa8wiiJVd615IPh0ZO7pnPqog-2kYqgd62ZwuvfSF5FufyZPMxJEX-iA_OwAoI3djKvFQj5wMYmYhgCQe_cpB4poKYGvGMg2cVOrxvwkywuNHhbWgsIe3BznAwaj8a_LaDDQb-rUwavPI5NFL0uK7Bvsp63K2SYlddTJhGudjeRFlJhu2t3Uh");'></div>
+<div class="flex flex-col justify-center">
+<p class="text-slate-900 dark:text-white text-lg font-bold leading-tight">Michael Chen</p>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[16px] text-slate-400">calendar_month</span>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Oct 20, 2023</p>
+</div>
+</div>
+</div>
+<div class="bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 text-xs px-2 py-1 rounded-md font-semibold uppercase tracking-wider">
+                    New
+                </div>
+</div>
+<div class="h-px w-full bg-slate-100 dark:bg-slate-700 my-1"></div>
+<div class="flex items-center gap-3">
+<button class="flex-1 h-10 flex items-center justify-center gap-2 rounded-full bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary font-semibold text-sm hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-[20px]">person</span>
+                    View Profile
+                </button>
+<button class="h-10 px-6 flex items-center justify-center gap-2 rounded-full bg-slate-50 dark:bg-slate-700/50 text-slate-600 dark:text-slate-300 font-medium text-sm border border-slate-100 dark:border-slate-600 hover:bg-red-50 hover:text-red-600 hover:border-red-100 dark:hover:bg-red-900/20 dark:hover:text-red-400 dark:hover:border-red-900/30 transition-all group">
+<span class="material-symbols-outlined text-[20px] group-hover:text-red-500 transition-colors">flag</span>
+<span class="hidden sm:inline">Report</span>
+</button>
+</div>
+</div>
+<!-- Client Item 3 -->
+<div class="flex flex-col gap-3 bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700/50">
+<div class="flex items-start gap-4 justify-between">
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-14 ring-2 ring-white dark:ring-slate-700 shadow-sm" data-alt="Portrait of Emily Rodriguez looking confident" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuByJLF65NDFlXdgWbRRGbli4hbJ2QC9LULl3Fn1yH6EU4PQ0Kgpd5OBdNSGz9tckrBCB11j-dLOn-OYzI9l5SkOP0jSu-MGXbT64KKJP45z1TMA4XKwh_TWiQZmuPDTnFgwRDvVS8Q5qsyzJWk0rUzA0rvGdKyeiByhTQjSceG56pVcZ0QXBFhW3pyqnnIurGEWdi5SY_w_B0NaeS6tYVB0Gh5vRE4cT2H3G0eTzIFnqb7j-HjY7ZPMwe2NdkC671Hfm-rrCeXkRLk0");'></div>
+<div class="flex flex-col justify-center">
+<p class="text-slate-900 dark:text-white text-lg font-bold leading-tight">Emily Rodriguez</p>
+<div class="flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[16px] text-slate-400">calendar_month</span>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Sep 15, 2023</p>
+</div>
+</div>
+</div>
+</div>
+<div class="h-px w-full bg-slate-100 dark:bg-slate-700 my-1"></div>
+<div class="flex items-center gap-3">
+<button class="flex-1 h-10 flex items-center justify-center gap-2 rounded-full bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary font-semibold text-sm hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-[20px]">person</span>
+                    View Profile
+                </button>
+<button class="h-10 px-6 flex items-center justify-center gap-2 rounded-full bg-slate-50 dark:bg-slate-700/50 text-slate-600 dark:text-slate-300 font-medium text-sm border border-slate-100 dark:border-slate-600 hover:bg-red-50 hover:text-red-600 hover:border-red-100 dark:hover:bg-red-900/20 dark:hover:text-red-400 dark:hover:border-red-900/30 transition-all group">
+<span class="material-symbols-outlined text-[20px] group-hover:text-red-500 transition-colors">flag</span>
+<span class="hidden sm:inline">Report</span>
+</button>
+</div>
+</div>
+<!-- Client Item 4 (Reported State) -->
+<div class="flex flex-col gap-3 bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-sm border border-red-100 dark:border-red-900/30 relative overflow-hidden">
+<!-- Subtle background warning indicator -->
+<div class="absolute top-0 right-0 p-2 opacity-5">
+<span class="material-symbols-outlined text-8xl text-red-500">warning</span>
+</div>
+<div class="flex items-start gap-4 justify-between relative z-10">
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-14 w-14 ring-2 ring-red-100 dark:ring-red-900/40 shadow-sm opacity-80 grayscale" data-alt="Portrait of David Kim looking serious" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCGQGRZKVgRFtOWCLQqPXfofIG7q7OQ252IVdrEY7clxt_NqPOdWc-2EQflvmxJ4aSZFmBZUWreVlz-bmfbpN7JoTKDYgevCkjqeAt1Ko-hY2AosRWJ_3WHUOt8ozvreeVDmoQsontnxNi3tcwecT6v9a3ue8-hf-2j9s9CHkRxhLUpjS5HFL0cMvCn3mUo6mcirivveqPncjAhFxGUgCPYKKIS9OP0gOi8h5mo6YLc0bU5Q9Iu8ULnwlPEe2YhhiAVgUpB8b5uo_ca");'></div>
+<div class="flex flex-col justify-center">
+<p class="text-slate-700 dark:text-slate-200 text-lg font-bold leading-tight">David Kim</p>
+<div class="flex items-center gap-1 mt-1 text-red-500 dark:text-red-400">
+<span class="material-symbols-outlined text-[16px]">info</span>
+<p class="text-sm font-medium">Report under review</p>
+</div>
+</div>
+</div>
+</div>
+<div class="h-px w-full bg-slate-100 dark:bg-slate-700 my-1 relative z-10"></div>
+<div class="flex items-center gap-3 relative z-10">
+<button class="flex-1 h-10 flex items-center justify-center gap-2 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-500 font-semibold text-sm">
+<span class="material-symbols-outlined text-[20px]">person</span>
+                    View Profile
+                </button>
+<button class="h-10 px-6 flex items-center justify-center gap-2 rounded-full bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 font-medium text-sm border border-red-100 dark:border-red-900/30 cursor-default">
+<span class="material-symbols-outlined text-[20px]">history</span>
+<span class="hidden sm:inline">Details</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation Bar -->
+<div class="fixed bottom-0 z-30 w-full bg-white dark:bg-slate-800 border-t border-slate-100 dark:border-slate-700 pb-safe">
+<div class="flex items-center justify-around h-16 max-w-lg mx-auto">
+<button class="flex flex-col items-center justify-center gap-1 w-full h-full text-slate-400 dark:text-slate-500 hover:text-primary dark:hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[26px]">home</span>
+<span class="text-[10px] font-medium">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 w-full h-full text-slate-400 dark:text-slate-500 hover:text-primary dark:hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[26px]">calendar_month</span>
+<span class="text-[10px] font-medium">Schedule</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 w-full h-full text-primary dark:text-primary">
+<span class="material-symbols-outlined text-[26px] fill-current">group</span>
+<span class="text-[10px] font-medium">Clients</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 w-full h-full text-slate-400 dark:text-slate-500 hover:text-primary dark:hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[26px]">person</span>
+<span class="text-[10px] font-medium">Profile</span>
+</button>
+</div>
+</div>
+<!-- Padding for Scroll -->
+<div class="h-6"></div>
+</body></html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Channel Management Screen</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#42a7f0",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101a22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar hiding for clean UI */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-[#111518] dark:text-white overflow-hidden">
+<div class="relative flex h-screen w-full max-w-md mx-auto flex-col bg-background-light dark:bg-background-dark shadow-2xl overflow-hidden">
+<!-- Top App Bar -->
+<div class="flex items-center bg-white dark:bg-[#1a2630] p-4 pb-3 justify-between shadow-sm z-10">
+<div class="text-[#111518] dark:text-white flex size-10 shrink-0 items-center cursor-pointer">
+<span class="material-symbols-outlined text-2xl">arrow_back_ios_new</span>
+</div>
+<h2 class="text-[#111518] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Manage Channels</h2>
+<div class="flex size-10 items-center justify-end cursor-pointer text-primary">
+<span class="material-symbols-outlined text-3xl">add</span>
+</div>
+</div>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto no-scrollbar pb-24">
+<!-- Search Bar -->
+<div class="px-4 py-4 bg-white dark:bg-[#1a2630] sticky top-0 z-10 border-b border-gray-100 dark:border-gray-800">
+<label class="flex flex-col h-11 w-full">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full bg-[#f0f3f4] dark:bg-[#24303a]">
+<div class="text-[#617989] flex items-center justify-center pl-3 pr-1">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg bg-transparent text-[#111518] dark:text-white focus:outline-none placeholder:text-[#617989] px-2 text-base font-normal leading-normal" placeholder="Search by channel name"/>
+</div>
+</label>
+</div>
+<!-- List Section -->
+<div class="px-4">
+<h3 class="text-[#111518] dark:text-white text-xl font-bold leading-tight text-left pb-2 pt-6">My Channels</h3>
+<!-- Channel 1 -->
+<div class="flex items-center gap-4 bg-white dark:bg-[#1a2630] px-4 py-3 mb-3 rounded-xl shadow-sm border border-transparent hover:border-primary/20 transition-all cursor-pointer">
+<div class="flex items-center gap-4 flex-1">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-12 relative overflow-hidden" data-alt="Blue cleaning supplies pattern" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBXDnN4KKdkOCMgZJNpsnVj-8h_yr_jfUKtN4MFxG-3JCAWeY3Xtn4D4yihkWzla6y8Zh-qvAUwldVmLHifzGow63Own3jEI2Pp4cJUwVRetYQMOp_Iq--JY1T2TKabc7LS9oRYFlJORCVd0BcghSlnvR11gz9zBGxE49OY67rnygCXtYoK7yvBJCFEhNt5tVOQsie3_Vd_ZBeI-KGp0lxHPcw3Uy8x6_PbAItDznuTLqtPnYCMKdwE8SbU56oJQwGhGGq9YxSPtdRT");'>
+<div class="absolute inset-0 bg-black/10"></div>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-[#111518] dark:text-white text-base font-semibold leading-normal line-clamp-1">Downtown Cleaners</p>
+<p class="text-[#617989] text-sm font-normal leading-normal line-clamp-1">12 Members • Admin-only</p>
+</div>
+</div>
+<div class="shrink-0 text-[#617989] active:text-primary p-2 -mr-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
+<span class="material-symbols-outlined text-[24px]">more_horiz</span>
+</div>
+</div>
+<!-- Channel 2 -->
+<div class="flex items-center gap-4 bg-white dark:bg-[#1a2630] px-4 py-3 mb-3 rounded-xl shadow-sm border border-transparent hover:border-primary/20 transition-all cursor-pointer">
+<div class="flex items-center gap-4 flex-1">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-12 relative overflow-hidden" data-alt="Cooking ingredients flatlay" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC-mTbNP3rFZLwzDwAJR9C7ZUsIy-h-O75jOUeV5l7pYLpXlYodY_PX6Yt30wkAdOd73_z1vdmkuBmQVSgQAGo6s_6nyTJZV4QapG5ZlxyMXdhIElV_pQrM5a-H-E3WESfHM3OoIRpWEdoDZSg1xiR8Jo-oxEOXbD9EJgPGIEoZxMjF-12CuHIqRTBBmTheHGLzmPEXo9WeYDrYRki6yOMXAy1KwxBf9RYDlhPHitXKKOJVwxkXZu5aXq8cFOJOTeZP4FDosEMvca_X");'>
+<div class="absolute inset-0 bg-black/10"></div>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-[#111518] dark:text-white text-base font-semibold leading-normal line-clamp-1">Cooking Pros Network</p>
+<p class="text-[#617989] text-sm font-normal leading-normal line-clamp-1">34 Members • Public</p>
+</div>
+</div>
+<div class="shrink-0 text-[#617989] active:text-primary p-2 -mr-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
+<span class="material-symbols-outlined text-[24px]">more_horiz</span>
+</div>
+</div>
+<!-- Channel 3 -->
+<div class="flex items-center gap-4 bg-white dark:bg-[#1a2630] px-4 py-3 mb-3 rounded-xl shadow-sm border border-transparent hover:border-primary/20 transition-all cursor-pointer">
+<div class="flex items-center gap-4 flex-1">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-12 relative overflow-hidden" data-alt="Caregiver holding hands" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBLp1FO_hYCqdcUwlqKyvrQIf9mpYD7BZuFuFmh5NWk2uW1svYF9r-MM5WmkxMCH8Rn310cdxINF6m9DBhVbn-Q6tyZLtNSlWWDfJ9K9kme3HYnLaRlmehIhuwvbW7Md7BFQCOkS8sGDFVMTezpMG-hnkfAuuQ7PM8iR1aWmfFynEkCPRp3qdK1RNEEYkx5P8RdnnjSg2niNg_iqPL_GrRoH8TcbLiumSxZxwnOGn_jgt4_EG89X1PTitxPBM65kDlbY7pQ1-MPyDCW");'>
+<div class="absolute inset-0 bg-black/10"></div>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-[#111518] dark:text-white text-base font-semibold leading-normal line-clamp-1">Senior Care Group</p>
+<p class="text-[#617989] text-sm font-normal leading-normal line-clamp-1">8 Members • Private</p>
+</div>
+</div>
+<div class="shrink-0 text-[#617989] active:text-primary p-2 -mr-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
+<span class="material-symbols-outlined text-[24px]">more_horiz</span>
+</div>
+</div>
+<!-- Channel 4 -->
+<div class="flex items-center gap-4 bg-white dark:bg-[#1a2630] px-4 py-3 mb-3 rounded-xl shadow-sm border border-transparent hover:border-primary/20 transition-all cursor-pointer">
+<div class="flex items-center gap-4 flex-1">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-12 relative overflow-hidden" data-alt="Gardening tools on grass" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAMrZvltSexdGolNRI8et0rK6lrFx2YuHqaGemYm2HUMfDkTrf9eac3O3v1aeIpOTgZQWYq1weUwadunIn3cHQI_XWXOBIUvjwOfSFtRsyUSlVCfrsvxtAD0Gnn1AMf-xSEifgQ7kKoAfMPf6WovllzmF9EVQGQY9LNUv2zLRU_-qB7WW2xrV5Tp5Kdv1QLZgzZX5A488OjWK63D9D-BUnurMTh9HupxY4t36jViteKcghZQXyocv3O6HA6P-UHNO1uVGNkmnyn0pEH");'>
+<div class="absolute inset-0 bg-black/10"></div>
+</div>
+<div class="flex flex-col justify-center">
+<p class="text-[#111518] dark:text-white text-base font-semibold leading-normal line-clamp-1">Landscape Experts</p>
+<p class="text-[#617989] text-sm font-normal leading-normal line-clamp-1">21 Members • Public</p>
+</div>
+</div>
+<div class="shrink-0 text-[#617989] active:text-primary p-2 -mr-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
+<span class="material-symbols-outlined text-[24px]">more_horiz</span>
+</div>
+</div>
+</div>
+<!-- Empty State Illustration Placeholder (Hidden if content exists, but included for completeness logic) -->
+<!-- <div class="flex flex-col items-center justify-center py-10 opacity-60">
+                <span class="material-symbols-outlined text-6xl text-gray-300">groups</span>
+                <p class="text-gray-400 mt-2">No other channels found</p>
+            </div> -->
+</div>
+<!-- Simulated Active Action Sheet (Overlay) -->
+<!-- This simulates the state when user taps the "..." on the first item "Downtown Cleaners" -->
+<div class="absolute inset-0 bg-black/50 z-20 transition-opacity">
+<div class="absolute bottom-0 left-0 w-full bg-white dark:bg-[#1a2630] rounded-t-2xl shadow-lg transform transition-transform duration-300 ease-out flex flex-col pb-6">
+<!-- Sheet Handle -->
+<div class="w-full flex justify-center pt-3 pb-1">
+<div class="w-12 h-1.5 bg-gray-300 rounded-full"></div>
+</div>
+<!-- Sheet Header -->
+<div class="px-6 py-4 border-b border-gray-100 dark:border-gray-700 flex gap-4 items-center">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-12" data-alt="Blue cleaning supplies pattern" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAfoOl1d8XzLwPUvbPklx_OhZAqMTGu3Gr3HM3V8Er3nL4uOqYsIJU-MVoaOFH02gfjbfB24b2wHsr0hOl2oBnBhYX96oM9h9D0cN3R9mGR-XAIqqQzZHXjrhAgT3y8YTFrPV7hVQWRHIfP_Wi8QZ3IbfiBzHpMQ4YeDew_WjVihuvErRypqYgPoRxUhk1znz52oo2yAGIVNd_-V81_FsuBJogY4wYpGVcT4CcB6wuKPsxnt8I_exkLKw4ZadBtKg43GgMmAvCMal94");'></div>
+<div>
+<h3 class="text-lg font-bold text-[#111518] dark:text-white">Downtown Cleaners</h3>
+<p class="text-sm text-[#617989]">Manage this channel</p>
+</div>
+</div>
+<!-- Actions -->
+<div class="px-4 py-2 flex flex-col gap-1">
+<button class="flex items-center gap-3 w-full p-4 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg text-left transition-colors">
+<span class="material-symbols-outlined text-primary text-2xl">edit</span>
+<div class="flex flex-col">
+<span class="text-[#111518] dark:text-white font-medium text-base">Edit Channel Details</span>
+<span class="text-[#617989] text-xs">Update name, icon, description</span>
+</div>
+</button>
+<button class="flex items-center gap-3 w-full p-4 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg text-left transition-colors">
+<span class="material-symbols-outlined text-primary text-2xl">group</span>
+<div class="flex flex-col">
+<span class="text-[#111518] dark:text-white font-medium text-base">Manage Members</span>
+<span class="text-[#617989] text-xs">Add or remove participants</span>
+</div>
+</button>
+<button class="flex items-center gap-3 w-full p-4 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg text-left transition-colors">
+<span class="material-symbols-outlined text-primary text-2xl">settings</span>
+<div class="flex flex-col">
+<span class="text-[#111518] dark:text-white font-medium text-base">Channel Settings</span>
+<span class="text-[#617989] text-xs">Permissions and visibility</span>
+</div>
+</button>
+<div class="h-px w-full bg-gray-100 dark:bg-gray-700 my-1"></div>
+<button class="flex items-center gap-3 w-full p-4 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-lg text-left transition-colors group">
+<span class="material-symbols-outlined text-red-500 text-2xl group-hover:text-red-600">delete</span>
+<div class="flex flex-col">
+<span class="text-red-500 font-medium text-base group-hover:text-red-600">Delete Channel</span>
+</div>
+</button>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation -->
+<div class="w-full bg-white dark:bg-[#1a2630] border-t border-gray-100 dark:border-gray-800 flex justify-between items-center px-6 py-3 shrink-0 z-0">
+<div class="flex flex-col items-center gap-1 opacity-50 cursor-pointer hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-[24px]">home</span>
+<span class="text-[10px] font-medium">Home</span>
+</div>
+<div class="flex flex-col items-center gap-1 opacity-50 cursor-pointer hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-[24px]">calendar_month</span>
+<span class="text-[10px] font-medium">Bookings</span>
+</div>
+<!-- Active State -->
+<div class="flex flex-col items-center gap-1 text-primary cursor-pointer">
+<span class="material-symbols-outlined text-[24px] fill-current">chat_bubble</span>
+<span class="text-[10px] font-medium">Channels</span>
+</div>
+<div class="flex flex-col items-center gap-1 opacity-50 cursor-pointer hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-[24px]">person</span>
+<span class="text-[10px] font-medium">Profile</span>
+</div>
+</div>
+</div>
+</body></html>
