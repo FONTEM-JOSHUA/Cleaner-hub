@@ -1,0 +1,7 @@
+# Ignore compressed files
+*.zip
+*.rar
+
+# Ignore design assets
+stitch_cleaners_hub/
+cleanerhub pics/
