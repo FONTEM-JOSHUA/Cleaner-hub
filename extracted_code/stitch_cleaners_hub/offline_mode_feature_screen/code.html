@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Offline Mode</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#1392ec",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101a22",
+              "surface-light": "#ffffff",
+              "surface-dark": "#1c2b36",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        /* Custom utilities if needed */
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111518] dark:text-white overflow-x-hidden antialiased selection:bg-primary/20">
+<div class="relative flex min-h-screen w-full flex-col pb-24">
+<!-- Header -->
+<header class="sticky top-0 z-20 flex items-center justify-between bg-surface-light dark:bg-surface-dark px-4 py-3 shadow-sm transition-colors">
+<div class="flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-background-light dark:hover:bg-background-dark cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-[#111518] dark:text-white" style="font-size: 24px;">arrow_back</span>
+</div>
+<h2 class="flex-1 text-center text-lg font-bold leading-tight tracking-[-0.015em] text-[#111518] dark:text-white pr-10">
+                Offline Mode
+            </h2>
+</header>
+<!-- Status Banner -->
+<div class="w-full bg-gray-100 dark:bg-gray-800 px-4 py-2.5 flex items-center justify-center gap-2 border-b border-gray-200 dark:border-gray-700">
+<span class="material-symbols-outlined text-gray-500 dark:text-gray-400" style="font-size: 20px;">wifi_off</span>
+<p class="text-xs font-medium text-gray-600 dark:text-gray-300">You are currently offline</p>
+</div>
+<!-- Main Content -->
+<main class="flex flex-col px-4 pt-6">
+<!-- Hero Section -->
+<div class="flex flex-col items-center gap-6 mb-8">
+<!-- Hero Illustration -->
+<div class="relative flex items-center justify-center w-full max-w-[280px] aspect-square rounded-full bg-blue-50 dark:bg-surface-dark overflow-hidden">
+<div class="absolute inset-0 bg-center bg-no-repeat bg-contain opacity-90" data-alt="Minimalist vector illustration of a cloud with a disconnected plug in soft blue and gray" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD-Aiq8eqyKkWPJ6goheNMkJ4Fe6BsXpza0t2Be36QS4eiT3lq-xLjwOggcuuP7B6gNS0dZkjWRWmozRmh4fa-VsVBWc8Jf75ON1STrIWle2CYEQoRo_Xdl9VQexPKRamczdxl20oRisaLL80uWy1qjrPZkMTUkP24jsKrKGEbI-swqSflcof-JilG-v4zPUAuTVdoOaLEvFGPsfLyc_7p2ik9mc7VtC7Nt1YpiGYTPr1zDWbJGIEYdN2e8Tcj8DOvcWUYgpayqKhC2");'>
+</div>
+</div>
+<div class="flex max-w-[480px] flex-col items-center gap-2">
+<h1 class="text-[#111518] dark:text-white text-2xl font-bold leading-tight tracking-tight text-center">
+                        No Internet Connection
+                    </h1>
+<p class="text-gray-600 dark:text-gray-400 text-sm font-normal leading-relaxed text-center max-w-[320px]">
+                        Don't worry, you can still access your saved info. We'll automatically reconnect when you're back online.
+                    </p>
+</div>
+<button class="flex min-w-[140px] cursor-pointer items-center justify-center gap-2 rounded-full h-11 px-6 bg-primary hover:bg-primary/90 transition-colors text-white text-sm font-bold leading-normal tracking-wide shadow-sm shadow-blue-200 dark:shadow-none">
+<span class="material-symbols-outlined" style="font-size: 20px;">refresh</span>
+<span class="truncate">Try Reconnecting</span>
+</button>
+</div>
+<!-- Offline Capabilities List -->
+<div class="flex flex-col gap-4 max-w-[480px] mx-auto w-full">
+<h3 class="text-[#111518] dark:text-white text-lg font-bold leading-tight px-1">
+                    Available Offline
+                </h3>
+<!-- Card 1: Past Bookings -->
+<div class="group flex items-center gap-4 bg-surface-light dark:bg-surface-dark px-4 py-4 rounded-xl shadow-sm border border-transparent hover:border-primary/20 cursor-pointer transition-all">
+<div class="flex items-center justify-center rounded-lg bg-blue-50 dark:bg-blue-900/20 shrink-0 size-12 text-primary">
+<span class="material-symbols-outlined" style="font-size: 24px;">history_edu</span>
+</div>
+<div class="flex flex-col justify-center flex-1">
+<p class="text-[#111518] dark:text-white text-base font-semibold leading-normal line-clamp-1">
+                            Past Bookings
+                        </p>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal line-clamp-1">
+                            Access receipts and details from previous jobs
+                        </p>
+</div>
+<div class="shrink-0 text-gray-400 dark:text-gray-500 group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined" style="font-size: 24px;">chevron_right</span>
+</div>
+</div>
+<!-- Card 2: Draft Messages -->
+<div class="group flex items-center gap-4 bg-surface-light dark:bg-surface-dark px-4 py-4 rounded-xl shadow-sm border border-transparent hover:border-primary/20 cursor-pointer transition-all">
+<div class="relative flex items-center justify-center rounded-lg bg-blue-50 dark:bg-blue-900/20 shrink-0 size-12 text-primary">
+<span class="material-symbols-outlined" style="font-size: 24px;">chat_bubble_outline</span>
+<!-- Notification Badge -->
+<span class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white ring-2 ring-white dark:ring-surface-dark">2</span>
+</div>
+<div class="flex flex-col justify-center flex-1">
+<p class="text-[#111518] dark:text-white text-base font-semibold leading-normal line-clamp-1">
+                            Draft Messages
+                        </p>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal line-clamp-1">
+                            2 messages waiting to be sent
+                        </p>
+</div>
+<div class="shrink-0 text-gray-400 dark:text-gray-500 group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined" style="font-size: 24px;">chevron_right</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Loading / Auto-retry Indicator -->
+<div class="mt-8 flex justify-center pb-6">
+<div class="flex items-center gap-2 px-4 py-1.5 bg-white/50 dark:bg-black/20 rounded-full">
+<div class="size-2 rounded-full bg-primary animate-pulse"></div>
+<span class="text-xs font-medium text-gray-500 dark:text-gray-400">Waiting for connection...</span>
+</div>
+</div>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 z-30 w-full bg-surface-light dark:bg-surface-dark border-t border-gray-200 dark:border-gray-800 pb-safe">
+<div class="flex justify-around items-center h-16 px-2">
+<!-- Home (Active but Offline) -->
+<button class="flex flex-col items-center justify-center gap-1 w-full h-full text-primary">
+<span class="material-symbols-filled text-[24px]">home</span>
+<span class="text-[10px] font-medium">Home</span>
+</button>
+<!-- Search (Disabled/Dimmed) -->
+<button class="flex flex-col items-center justify-center gap-1 w-full h-full text-gray-300 dark:text-gray-600 cursor-not-allowed opacity-60">
+<span class="material-symbols-outlined text-[24px]">search</span>
+<span class="text-[10px] font-medium">Search</span>
+</button>
+<!-- Bookings (Available) -->
+<button class="flex flex-col items-center justify-center gap-1 w-full h-full text-gray-500 dark:text-gray-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[24px]">calendar_month</span>
+<span class="text-[10px] font-medium">Bookings</span>
+</button>
+<!-- Profile (Available) -->
+<button class="flex flex-col items-center justify-center gap-1 w-full h-full text-gray-500 dark:text-gray-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[24px]">person</span>
+<span class="text-[10px] font-medium">Profile</span>
+</button>
+</div>
+<!-- iOS Safe Area Spacer -->
+<div class="h-5 w-full bg-surface-light dark:bg-surface-dark"></div>
+</nav>
+<!-- Toast Notification (Hidden by default, simulated visible state for demo purposes as requested by 'reconnect when back online') -->
+<!-- In a real app this would be triggered via JS. Here it is positioned absolutely to show design -->
+<div class="fixed top-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 bg-gray-900/90 dark:bg-white/90 backdrop-blur text-white dark:text-gray-900 px-4 py-3 rounded-full shadow-lg transform translate-y-[-150%] opacity-0 animate-[slideDown_0.5s_ease-out_3s_forwards]">
+<span class="material-symbols-outlined text-green-400 dark:text-green-600" style="font-size: 20px;">check_circle</span>
+<div class="flex flex-col">
+<span class="text-sm font-bold">Back Online</span>
+</div>
+</div>
+<style>
+            @keyframes slideDown {
+                to {
+                    transform: translate(-50%, 48px); /* Adjust based on header height */
+                    opacity: 1;
+                }
+            }
+        </style>
+</div>
+</body></html>

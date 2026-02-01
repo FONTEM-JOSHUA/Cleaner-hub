@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Report Provider</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1392ec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101a22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar hiding for cleaner mobile look */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white antialiased">
+<div class="relative mx-auto flex h-full min-h-screen w-full max-w-md flex-col bg-white dark:bg-background-dark shadow-xl overflow-hidden">
+<!-- Header -->
+<div class="flex items-center justify-between bg-white dark:bg-background-dark p-4 pb-2 border-b border-gray-100 dark:border-gray-800 z-10">
+<button class="flex size-10 items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+<span class="material-symbols-outlined text-slate-800 dark:text-white" style="font-size: 24px;">arrow_back_ios_new</span>
+</button>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-10">Report Issue</h2>
+</div>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto scrollbar-hide pb-32">
+<!-- Safety Banner -->
+<div class="bg-primary/10 border-l-4 border-primary p-4 mx-4 mt-4 rounded-r-lg">
+<div class="flex items-start">
+<span class="material-symbols-outlined text-primary mr-3 mt-0.5" style="font-size: 20px;">info</span>
+<p class="text-slate-700 dark:text-slate-300 text-sm font-medium leading-relaxed">
+                        If this is an emergency, please contact local authorities immediately.
+                    </p>
+</div>
+</div>
+<!-- Booking Section -->
+<div class="mt-6 px-4">
+<label class="block text-slate-900 dark:text-white text-sm font-semibold mb-2">Which booking is this regarding?</label>
+<div class="relative">
+<select class="w-full appearance-none rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-slate-900 dark:text-white py-3.5 pl-4 pr-10 text-base focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all">
+<option>Oct 24 - House Cleaning (Sarah J.)</option>
+<option>Oct 10 - Deep Clean (Mike T.)</option>
+<option>Sep 28 - Plumbing Repair (FixIt Co.)</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Reason Section -->
+<div class="mt-6 px-4">
+<label class="block text-slate-900 dark:text-white text-sm font-semibold mb-3">What went wrong?</label>
+<div class="grid grid-cols-2 gap-3">
+<!-- Option 1 -->
+<label class="cursor-pointer relative">
+<input checked="" class="peer sr-only" name="reason" type="radio"/>
+<div class="flex flex-col items-center justify-center p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 peer-checked:border-primary peer-checked:bg-primary/5 dark:peer-checked:bg-primary/20 peer-checked:text-primary transition-all h-28">
+<span class="material-symbols-outlined mb-2 text-gray-500 peer-checked:text-primary" style="font-size: 28px;">engineering</span>
+<span class="text-sm font-medium text-center">Incomplete Job</span>
+</div>
+<div class="absolute top-2 right-2 opacity-0 peer-checked:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary filled" style="font-size: 20px; font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</label>
+<!-- Option 2 -->
+<label class="cursor-pointer relative">
+<input class="peer sr-only" name="reason" type="radio"/>
+<div class="flex flex-col items-center justify-center p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 peer-checked:border-primary peer-checked:bg-primary/5 dark:peer-checked:bg-primary/20 peer-checked:text-primary transition-all h-28">
+<span class="material-symbols-outlined mb-2 text-gray-500 peer-checked:text-primary" style="font-size: 28px;">gavel</span>
+<span class="text-sm font-medium text-center">Misconduct</span>
+</div>
+<div class="absolute top-2 right-2 opacity-0 peer-checked:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary filled" style="font-size: 20px; font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</label>
+<!-- Option 3 -->
+<label class="cursor-pointer relative">
+<input class="peer sr-only" name="reason" type="radio"/>
+<div class="flex flex-col items-center justify-center p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 peer-checked:border-primary peer-checked:bg-primary/5 dark:peer-checked:bg-primary/20 peer-checked:text-primary transition-all h-28">
+<span class="material-symbols-outlined mb-2 text-gray-500 peer-checked:text-primary" style="font-size: 28px;">lock_person</span>
+<span class="text-sm font-medium text-center">Theft</span>
+</div>
+<div class="absolute top-2 right-2 opacity-0 peer-checked:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary filled" style="font-size: 20px; font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</label>
+<!-- Option 4 -->
+<label class="cursor-pointer relative">
+<input class="peer sr-only" name="reason" type="radio"/>
+<div class="flex flex-col items-center justify-center p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 peer-checked:border-primary peer-checked:bg-primary/5 dark:peer-checked:bg-primary/20 peer-checked:text-primary transition-all h-28">
+<span class="material-symbols-outlined mb-2 text-gray-500 peer-checked:text-primary" style="font-size: 28px;">more_horiz</span>
+<span class="text-sm font-medium text-center">Other</span>
+</div>
+<div class="absolute top-2 right-2 opacity-0 peer-checked:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-primary filled" style="font-size: 20px; font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Detailed Description -->
+<div class="mt-6 px-4">
+<label class="block text-slate-900 dark:text-white text-sm font-semibold mb-2">Tell us more details</label>
+<textarea class="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-slate-900 dark:text-white p-4 text-base focus:border-primary focus:ring-1 focus:ring-primary outline-none min-h-[140px] resize-none placeholder-gray-400" placeholder="Please describe what happened..."></textarea>
+<p class="text-right text-xs text-gray-400 mt-1">0/500</p>
+</div>
+<!-- Evidence Uploader -->
+<div class="mt-4 px-4 pb-6">
+<label class="block text-slate-900 dark:text-white text-sm font-semibold mb-2">Evidence (Optional)</label>
+<button class="w-full group flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 py-8 hover:bg-primary/5 hover:border-primary/50 transition-all">
+<div class="size-10 rounded-full bg-white dark:bg-gray-700 shadow-sm flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary" style="font-size: 24px;">add_a_photo</span>
+</div>
+<span class="text-sm font-medium text-slate-600 dark:text-slate-300 group-hover:text-primary">Tap to upload photos or videos</span>
+</button>
+</div>
+<div class="h-6"></div>
+</div>
+<!-- Sticky Footer & Nav -->
+<div class="absolute bottom-0 left-0 right-0 bg-white dark:bg-background-dark border-t border-gray-100 dark:border-gray-800 pb-safe">
+<!-- Submit Button Area -->
+<div class="px-4 py-4">
+<button class="w-full flex items-center justify-center rounded-xl bg-primary py-3.5 text-base font-bold text-white shadow-lg shadow-blue-200/50 dark:shadow-none hover:bg-blue-600 active:scale-[0.98] transition-all">
+                    Submit Report
+                </button>
+<p class="text-center text-[10px] text-gray-400 mt-2 flex items-center justify-center gap-1">
+<span class="material-symbols-outlined" style="font-size: 12px;">lock</span>
+                    Your report is confidential and reviewed by our Trust &amp; Safety team.
+                </p>
+</div>
+<!-- Navigation Bar -->
+<div class="flex items-center justify-around pb-6 pt-2">
+<button class="group flex flex-col items-center gap-1">
+<span class="material-symbols-outlined text-gray-400 group-hover:text-primary transition-colors" style="font-size: 24px;">home</span>
+<span class="text-[10px] font-medium text-gray-400 group-hover:text-primary transition-colors">Home</span>
+</button>
+<button class="group flex flex-col items-center gap-1">
+<span class="material-symbols-outlined text-gray-400 group-hover:text-primary transition-colors" style="font-size: 24px; font-variation-settings: 'FILL' 1;">calendar_month</span>
+<span class="text-[10px] font-medium text-gray-400 group-hover:text-primary transition-colors">Bookings</span>
+</button>
+<button class="group flex flex-col items-center gap-1">
+<span class="material-symbols-outlined text-gray-400 group-hover:text-primary transition-colors" style="font-size: 24px;">chat_bubble</span>
+<span class="text-[10px] font-medium text-gray-400 group-hover:text-primary transition-colors">Chat</span>
+</button>
+<button class="group flex flex-col items-center gap-1">
+<span class="material-symbols-outlined text-gray-400 group-hover:text-primary transition-colors" style="font-size: 24px;">person</span>
+<span class="text-[10px] font-medium text-gray-400 group-hover:text-primary transition-colors">Profile</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>
