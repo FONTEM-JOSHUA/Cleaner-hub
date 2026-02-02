@@ -26,6 +26,18 @@ const SCREENS = {
   admin_home: 'extracted_code/stitch_cleaners_hub/admin_dashboard_screen_1/code.html',
   manage_users: 'extracted_code/stitch_cleaners_hub/manage_users_screen_for_admin_app/code.html',
   manage_bookings: 'extracted_code/stitch_cleaners_hub/manage_bookings_screen_for_admin_app/code.html',
+
+  // Special Features
+  emergency_mode: 'extracted_code/stitch_cleaners_hub/emergency_mode_feature_screen/code.html',
+  smart_search: 'extracted_code/stitch_cleaners_hub/smart_search_screen/code.html',
+  tracking: 'extracted_code/stitch_cleaners_hub/real-time_tracking_screen/code.html',
+  notifications: 'extracted_code/stitch_cleaners_hub/smart_notifications_feature_screen/code.html',
+  payments: 'extracted_code/stitch_cleaners_hub/easy_payments_feature_screen/code.html',
+  family_sharing: 'extracted_code/stitch_cleaners_hub/family_sharing_feature_screen/code.html',
+  language: 'extracted_code/stitch_cleaners_hub/multi-language_support_screen/code.html',
+  offline_mode: 'extracted_code/stitch_cleaners_hub/offline_mode_feature_screen/code.html',
+  quick_rebooking: 'extracted_code/stitch_cleaners_hub/quick_rebooking_feature_screen/code.html',
+  photo_verification: 'extracted_code/stitch_cleaners_hub/photo_verification_feature_screen/code.html',
 };
 
 function App() {
@@ -64,19 +76,33 @@ function App() {
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, 'text/html');
 
-      // Extract body content
-      const bodyContent = doc.body.innerHTML;
+      // Cleanup previous screen assets from Head
+      document.querySelectorAll('[data-screen-assets]').forEach(el => el.remove());
 
-      // Extract styles from head
-      const styles = Array.from(doc.head.querySelectorAll('style')).map(s => s.outerHTML).join('\n');
+      // Extract and inject styles into head
+      const styles = doc.querySelectorAll('style, link[rel="stylesheet"]');
+      styles.forEach(style => {
+        const newStyle = document.createElement(style.tagName);
+        Array.from(style.attributes).forEach(attr => newStyle.setAttribute(attr.name, attr.value));
+        newStyle.innerHTML = style.innerHTML;
+        newStyle.setAttribute('data-screen-assets', 'true');
+        document.head.appendChild(newStyle);
+      });
 
-      // Extract scripts from head (especially tailwind config)
-      const headScripts = Array.from(doc.head.querySelectorAll('script')).map(s => s.outerHTML).join('\n');
+      // Extract and inject scripts (like tailwind config) into head
+      const scripts = doc.querySelectorAll('script');
+      scripts.forEach(script => {
+        if (script.src && script.src.includes('tailwindcss.com')) return; // Already in index.html
+        const newScript = document.createElement('script');
+        Array.from(script.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+        newScript.innerHTML = script.innerHTML;
+        newScript.setAttribute('data-screen-assets', 'true');
+        document.head.appendChild(newScript);
+      });
 
-      setHtmlContent(styles + headScripts + bodyContent);
+      // Set body content
+      setHtmlContent(doc.body.innerHTML);
 
-      // We need to re-execute scripts after the content is in the DOM
-      // This will be handled in a separate useEffect or after state update
     } catch (error) {
       console.error('Failed to load screen:', error);
       setHtmlContent('<div class="p-8 text-red-500">Failed to load screen: ' + screenKey + '</div>');
@@ -85,19 +111,25 @@ function App() {
   };
 
   useEffect(() => {
+    /**
+     * Navigation Heuristics
+     * NOTE: This is a prototype-level navigation system using string matching
+     * on buttons and icons to simulate app flow between static HTML screens.
+     */
     const handleGlobalClick = (e) => {
-      const target = e.target.closest('button, a, [role="button"]');
+      const target = e.target.closest('button, a, [role="button"], input, .cursor-pointer');
       if (!target) return;
 
-      const text = target.innerText?.trim();
-      const icon = target.querySelector('.material-icons-round, .material-symbols-outlined')?.innerText?.trim();
+      const text = target.innerText?.trim() || target.placeholder || target.value;
+      const icon = target.querySelector('.material-icons-round, .material-symbols-outlined')?.innerText?.trim() ||
+                   (target.classList.contains('material-symbols-outlined') ? target.innerText?.trim() : null);
 
       // Navigation Heuristics
       if (text === 'Sign Up' || text === 'Log In' || text === 'Create Account') {
         navigateTo('signup');
       } else if (text === 'Continue as Guest' || icon === 'home') {
         navigateTo('client_home');
-      } else if (text?.toLowerCase().includes('find services') || text?.toLowerCase().includes('browse categories') || icon === 'grid_view' || icon === 'search' || text === 'Explore') {
+      } else if (text?.toLowerCase().includes('find services') || text?.toLowerCase().includes('browse categories') || icon === 'grid_view' || icon === 'search' || text === 'Explore' || text === 'What service do you need?') {
         navigateTo('find_services');
       } else if (text?.toLowerCase().includes('book now') || icon === 'add' || icon === 'calendar_today' || text === 'Bookings') {
         navigateTo('booking');
@@ -111,6 +143,14 @@ function App() {
         navigateTo('provider_profile');
       } else if (text === 'Confirm Booking') {
         navigateTo('my_bookings');
+      } else if (text === 'Emergency Clean' || icon === 'bolt' || icon === 'e911_emergency') {
+        navigateTo('emergency_mode');
+      } else if (text?.includes('20% off') || text === 'Claim Offer') {
+        navigateTo('payments');
+      } else if (icon === 'tune' || text === 'Smart Search') {
+        navigateTo('smart_search');
+      } else if (icon === 'notifications' || text === 'Notifications') {
+        navigateTo('notifications');
       } else if (icon === 'arrow_back' || icon === 'chevron_left') {
         goBack();
       } else if (text === 'Log Out') {
@@ -123,23 +163,6 @@ function App() {
     return () => window.removeEventListener('click', handleGlobalClick);
   }, [currentScreen]);
 
-  useEffect(() => {
-    if (!loading && htmlContent) {
-      // Re-execute scripts
-      const container = document.getElementById('screen-content');
-      if (container) {
-        const scripts = container.querySelectorAll('script');
-        scripts.forEach(oldScript => {
-          const newScript = document.createElement('script');
-          Array.from(oldScript.attributes).forEach(attr => {
-            newScript.setAttribute(attr.name, attr.value);
-          });
-          newScript.appendChild(document.createTextNode(oldScript.innerHTML));
-          oldScript.parentNode.replaceChild(newScript, oldScript);
-        });
-      }
-    }
-  }, [htmlContent, loading]);
 
   return (
     <div className="app-container">
@@ -182,6 +205,22 @@ function App() {
                   <button onClick={() => {navigateTo('admin_login'); setShowDevMenu(false)}} className="text-xs bg-purple-50 px-2 py-1 rounded hover:bg-purple-100">Login</button>
                   <button onClick={() => {navigateTo('admin_home'); setShowDevMenu(false)}} className="text-xs bg-purple-50 px-2 py-1 rounded hover:bg-purple-100">Dashboard</button>
                   <button onClick={() => {navigateTo('manage_users'); setShowDevMenu(false)}} className="text-xs bg-purple-50 px-2 py-1 rounded hover:bg-purple-100">Users</button>
+                </div>
+              </div>
+
+              <div>
+                <p className="text-xs font-bold text-slate-500 uppercase mb-2">Special Features</p>
+                <div className="flex flex-wrap gap-2">
+                  <button onClick={() => {navigateTo('emergency_mode'); setShowDevMenu(false)}} className="text-xs bg-red-50 px-2 py-1 rounded hover:bg-red-100">Emergency</button>
+                  <button onClick={() => {navigateTo('smart_search'); setShowDevMenu(false)}} className="text-xs bg-green-50 px-2 py-1 rounded hover:bg-green-100">Search</button>
+                  <button onClick={() => {navigateTo('tracking'); setShowDevMenu(false)}} className="text-xs bg-green-50 px-2 py-1 rounded hover:bg-green-100">Tracking</button>
+                  <button onClick={() => {navigateTo('notifications'); setShowDevMenu(false)}} className="text-xs bg-yellow-50 px-2 py-1 rounded hover:bg-yellow-100">Alerts</button>
+                  <button onClick={() => {navigateTo('payments'); setShowDevMenu(false)}} className="text-xs bg-emerald-50 px-2 py-1 rounded hover:bg-emerald-100">Payments</button>
+                  <button onClick={() => {navigateTo('family_sharing'); setShowDevMenu(false)}} className="text-xs bg-blue-50 px-2 py-1 rounded hover:bg-blue-100">Family</button>
+                  <button onClick={() => {navigateTo('language'); setShowDevMenu(false)}} className="text-xs bg-slate-50 px-2 py-1 rounded hover:bg-slate-100">Language</button>
+                  <button onClick={() => {navigateTo('offline_mode'); setShowDevMenu(false)}} className="text-xs bg-slate-50 px-2 py-1 rounded hover:bg-slate-100">Offline</button>
+                  <button onClick={() => {navigateTo('quick_rebooking'); setShowDevMenu(false)}} className="text-xs bg-blue-50 px-2 py-1 rounded hover:bg-blue-100">Rebooking</button>
+                  <button onClick={() => {navigateTo('photo_verification'); setShowDevMenu(false)}} className="text-xs bg-blue-50 px-2 py-1 rounded hover:bg-blue-100">Verify</button>
                 </div>
               </div>
             </div>
