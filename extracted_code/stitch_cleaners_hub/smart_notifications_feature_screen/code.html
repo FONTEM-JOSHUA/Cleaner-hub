@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Smart Notifications</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#42b0f0",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101b22",
+                        "surface-dark": "#1c2932",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar hide for cleaner UI */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Toggle Switch Animation Support */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #42b0f0;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #42b0f0;
+        }
+
+        /* Material Symbols overrides for size */
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-size: 24px;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111518] dark:text-white transition-colors duration-200">
+<div class="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto bg-white dark:bg-background-dark shadow-xl">
+<!-- Header -->
+<div class="sticky top-0 z-10 flex items-center bg-white dark:bg-background-dark p-4 pb-2 justify-between border-b border-gray-100 dark:border-gray-800">
+<div class="text-[#111518] dark:text-white flex size-12 shrink-0 items-center justify-start cursor-pointer">
+<span class="material-symbols-outlined">arrow_back</span>
+</div>
+<h2 class="text-[#111518] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12">Smart Notifications</h2>
+</div>
+<!-- Intro Text -->
+<div class="px-4 pt-4 pb-2">
+<p class="text-gray-600 dark:text-gray-300 text-base font-normal leading-normal">
+                Customize how you receive updates about your service bookings to ensure you never miss a cleaner or cook arrival.
+            </p>
+</div>
+<!-- Section 1: Service Updates -->
+<div class="flex flex-col mt-2">
+<h3 class="text-[#111518] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-4">Service Updates</h3>
+<!-- Item 1 -->
+<div class="flex items-center gap-4 px-4 min-h-16 justify-between border-b border-gray-50 dark:border-gray-800 py-2">
+<div class="flex items-center gap-4 overflow-hidden">
+<div class="text-[#111518] dark:text-white flex items-center justify-center rounded-lg bg-[#f0f3f4] dark:bg-surface-dark shrink-0 size-10">
+<span class="material-symbols-outlined text-gray-600 dark:text-gray-300">notifications_active</span>
+</div>
+<div class="flex flex-col">
+<p class="text-[#111518] dark:text-white text-base font-medium leading-normal truncate">Booking reminders</p>
+<p class="text-gray-500 dark:text-gray-400 text-sm">24h before service</p>
+</div>
+</div>
+<div class="shrink-0">
+<label class="relative flex h-[31px] w-[51px] cursor-pointer items-center rounded-full border-none bg-[#f0f3f4] dark:bg-gray-700 p-0.5 has-[:checked]:justify-end has-[:checked]:bg-primary transition-colors duration-200">
+<div class="h-full w-[27px] rounded-full bg-white shadow-sm"></div>
+<input checked="" class="invisible absolute" type="checkbox"/>
+</label>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex items-center gap-4 px-4 min-h-16 justify-between border-b border-gray-50 dark:border-gray-800 py-2">
+<div class="flex items-center gap-4 overflow-hidden">
+<div class="text-[#111518] dark:text-white flex items-center justify-center rounded-lg bg-[#f0f3f4] dark:bg-surface-dark shrink-0 size-10">
+<span class="material-symbols-outlined text-gray-600 dark:text-gray-300">directions_car</span>
+</div>
+<div class="flex flex-col">
+<p class="text-[#111518] dark:text-white text-base font-medium leading-normal truncate">Provider on the way</p>
+<p class="text-gray-500 dark:text-gray-400 text-sm">Real-time tracking alert</p>
+</div>
+</div>
+<div class="shrink-0">
+<label class="relative flex h-[31px] w-[51px] cursor-pointer items-center rounded-full border-none bg-[#f0f3f4] dark:bg-gray-700 p-0.5 has-[:checked]:justify-end has-[:checked]:bg-primary transition-colors duration-200">
+<div class="h-full w-[27px] rounded-full bg-white shadow-sm"></div>
+<input checked="" class="invisible absolute" type="checkbox"/>
+</label>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="flex items-center gap-4 px-4 min-h-16 justify-between py-2">
+<div class="flex items-center gap-4 overflow-hidden">
+<div class="text-[#111518] dark:text-white flex items-center justify-center rounded-lg bg-[#f0f3f4] dark:bg-surface-dark shrink-0 size-10">
+<span class="material-symbols-outlined text-gray-600 dark:text-gray-300">task_alt</span>
+</div>
+<div class="flex flex-col">
+<p class="text-[#111518] dark:text-white text-base font-medium leading-normal truncate">Service Status</p>
+<p class="text-gray-500 dark:text-gray-400 text-sm">Start and completion</p>
+</div>
+</div>
+<div class="shrink-0">
+<label class="relative flex h-[31px] w-[51px] cursor-pointer items-center rounded-full border-none bg-[#f0f3f4] dark:bg-gray-700 p-0.5 has-[:checked]:justify-end has-[:checked]:bg-primary transition-colors duration-200">
+<div class="h-full w-[27px] rounded-full bg-white shadow-sm"></div>
+<input checked="" class="invisible absolute" type="checkbox"/>
+</label>
+</div>
+</div>
+</div>
+<div class="h-2 w-full bg-background-light dark:bg-black/20"></div>
+<!-- Section 2: Administrative -->
+<div class="flex flex-col">
+<h3 class="text-[#111518] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-4">Administrative</h3>
+<!-- Item 1 -->
+<div class="flex items-center gap-4 px-4 min-h-16 justify-between border-b border-gray-50 dark:border-gray-800 py-2">
+<div class="flex items-center gap-4 overflow-hidden">
+<div class="text-[#111518] dark:text-white flex items-center justify-center rounded-lg bg-[#f0f3f4] dark:bg-surface-dark shrink-0 size-10">
+<span class="material-symbols-outlined text-gray-600 dark:text-gray-300">receipt_long</span>
+</div>
+<p class="text-[#111518] dark:text-white text-base font-medium leading-normal flex-1 truncate">Payment receipts</p>
+</div>
+<div class="shrink-0">
+<label class="relative flex h-[31px] w-[51px] cursor-pointer items-center rounded-full border-none bg-[#f0f3f4] dark:bg-gray-700 p-0.5 has-[:checked]:justify-end has-[:checked]:bg-primary transition-colors duration-200">
+<div class="h-full w-[27px] rounded-full bg-white shadow-sm"></div>
+<input checked="" class="invisible absolute" type="checkbox"/>
+</label>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex items-center gap-4 px-4 min-h-16 justify-between border-b border-gray-50 dark:border-gray-800 py-2">
+<div class="flex items-center gap-4 overflow-hidden">
+<div class="text-[#111518] dark:text-white flex items-center justify-center rounded-lg bg-[#f0f3f4] dark:bg-surface-dark shrink-0 size-10">
+<span class="material-symbols-outlined text-gray-600 dark:text-gray-300">rate_review</span>
+</div>
+<p class="text-[#111518] dark:text-white text-base font-medium leading-normal flex-1 truncate">Review reminders</p>
+</div>
+<div class="shrink-0">
+<label class="relative flex h-[31px] w-[51px] cursor-pointer items-center rounded-full border-none bg-[#f0f3f4] dark:bg-gray-700 p-0.5 has-[:checked]:justify-end has-[:checked]:bg-primary transition-colors duration-200">
+<div class="h-full w-[27px] rounded-full bg-white shadow-sm"></div>
+<input checked="" class="invisible absolute" type="checkbox"/>
+</label>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="flex items-center gap-4 px-4 min-h-16 justify-between py-2">
+<div class="flex items-center gap-4 overflow-hidden">
+<div class="text-[#111518] dark:text-white flex items-center justify-center rounded-lg bg-[#f0f3f4] dark:bg-surface-dark shrink-0 size-10">
+<span class="material-symbols-outlined text-gray-600 dark:text-gray-300">local_offer</span>
+</div>
+<p class="text-[#111518] dark:text-white text-base font-medium leading-normal flex-1 truncate">Promotional offers</p>
+</div>
+<div class="shrink-0">
+<label class="relative flex h-[31px] w-[51px] cursor-pointer items-center rounded-full border-none bg-[#f0f3f4] dark:bg-gray-700 p-0.5 has-[:checked]:justify-end has-[:checked]:bg-primary transition-colors duration-200">
+<div class="h-full w-[27px] rounded-full bg-white shadow-sm"></div>
+<input class="invisible absolute" type="checkbox"/>
+</label>
+</div>
+</div>
+</div>
+<div class="h-2 w-full bg-background-light dark:bg-black/20"></div>
+<!-- Section 3: Delivery Channels -->
+<div class="flex flex-col pb-24">
+<h3 class="text-[#111518] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-4">Delivery Channels</h3>
+<!-- Item 1 -->
+<div class="flex items-center gap-4 px-4 min-h-16 justify-between border-b border-gray-50 dark:border-gray-800 py-2">
+<div class="flex items-center gap-4 overflow-hidden">
+<div class="text-[#111518] dark:text-white flex items-center justify-center rounded-lg bg-[#f0f3f4] dark:bg-surface-dark shrink-0 size-10">
+<span class="material-symbols-outlined text-gray-600 dark:text-gray-300">smartphone</span>
+</div>
+<p class="text-[#111518] dark:text-white text-base font-medium leading-normal flex-1 truncate">Push Notifications</p>
+</div>
+<div class="shrink-0">
+<label class="relative flex h-[31px] w-[51px] cursor-pointer items-center rounded-full border-none bg-[#f0f3f4] dark:bg-gray-700 p-0.5 has-[:checked]:justify-end has-[:checked]:bg-primary transition-colors duration-200">
+<div class="h-full w-[27px] rounded-full bg-white shadow-sm"></div>
+<input checked="" class="invisible absolute" type="checkbox"/>
+</label>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex items-center gap-4 px-4 min-h-16 justify-between border-b border-gray-50 dark:border-gray-800 py-2">
+<div class="flex items-center gap-4 overflow-hidden">
+<div class="text-[#111518] dark:text-white flex items-center justify-center rounded-lg bg-[#f0f3f4] dark:bg-surface-dark shrink-0 size-10">
+<span class="material-symbols-outlined text-gray-600 dark:text-gray-300">mail</span>
+</div>
+<p class="text-[#111518] dark:text-white text-base font-medium leading-normal flex-1 truncate">Email</p>
+</div>
+<div class="shrink-0">
+<label class="relative flex h-[31px] w-[51px] cursor-pointer items-center rounded-full border-none bg-[#f0f3f4] dark:bg-gray-700 p-0.5 has-[:checked]:justify-end has-[:checked]:bg-primary transition-colors duration-200">
+<div class="h-full w-[27px] rounded-full bg-white shadow-sm"></div>
+<input checked="" class="invisible absolute" type="checkbox"/>
+</label>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="flex items-center gap-4 px-4 min-h-16 justify-between py-2">
+<div class="flex items-center gap-4 overflow-hidden">
+<div class="text-[#111518] dark:text-white flex items-center justify-center rounded-lg bg-[#f0f3f4] dark:bg-surface-dark shrink-0 size-10">
+<span class="material-symbols-outlined text-gray-600 dark:text-gray-300">sms</span>
+</div>
+<p class="text-[#111518] dark:text-white text-base font-medium leading-normal flex-1 truncate">SMS / Text Message</p>
+</div>
+<div class="shrink-0">
+<label class="relative flex h-[31px] w-[51px] cursor-pointer items-center rounded-full border-none bg-[#f0f3f4] dark:bg-gray-700 p-0.5 has-[:checked]:justify-end has-[:checked]:bg-primary transition-colors duration-200">
+<div class="h-full w-[27px] rounded-full bg-white shadow-sm"></div>
+<input class="invisible absolute" type="checkbox"/>
+</label>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation -->
+<div class="fixed bottom-0 w-full max-w-md bg-white dark:bg-background-dark border-t border-gray-200 dark:border-gray-700 flex justify-around items-center py-3 z-20">
+<button class="flex flex-col items-center justify-center gap-1 w-full text-gray-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">home</span>
+<span class="text-xs font-medium">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 w-full text-gray-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="text-xs font-medium">Bookings</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 w-full text-gray-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">chat</span>
+<span class="text-xs font-medium">Messages</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 w-full text-primary">
+<span class="material-symbols-outlined filled">person</span>
+<span class="text-xs font-medium">Profile</span>
+</button>
+</div>
+</div>
+</body></html>

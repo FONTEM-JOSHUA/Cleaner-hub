@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Provider Setup Screen</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#42b0f0",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101b22",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2630",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "1rem", "lg": "1.5rem", "xl": "2rem", "2xl": "2.5rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Hide scrollbar for clean horizontal scrolling */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white antialiased overflow-x-hidden">
+<!-- Sticky Header -->
+<div class="sticky top-0 z-50 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md border-b border-gray-200/50 dark:border-gray-800/50 px-4 py-3">
+<div class="flex items-center justify-between">
+<button class="flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition">
+<span class="material-symbols-outlined text-slate-900 dark:text-white">arrow_back</span>
+</button>
+<h2 class="text-lg font-bold leading-tight">Provider Setup</h2>
+<div class="size-10"></div> <!-- Spacer for alignment -->
+</div>
+<!-- Progress Stepper -->
+<div class="mt-4 flex w-full items-center justify-between px-2 pb-2">
+<div class="flex flex-col items-center gap-1">
+<div class="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white text-xs font-bold">1</div>
+<span class="text-[10px] font-medium text-primary">Info</span>
+</div>
+<div class="h-[2px] flex-1 bg-gray-200 dark:bg-gray-700 mx-1 relative">
+<div class="absolute inset-0 bg-primary w-1/2"></div>
+</div>
+<div class="flex flex-col items-center gap-1 opacity-50">
+<div class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200 dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-xs font-bold">2</div>
+<span class="text-[10px] font-medium text-gray-500 dark:text-gray-400">Service</span>
+</div>
+<div class="h-[2px] flex-1 bg-gray-200 dark:bg-gray-700 mx-1"></div>
+<div class="flex flex-col items-center gap-1 opacity-50">
+<div class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200 dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-xs font-bold">3</div>
+<span class="text-[10px] font-medium text-gray-500 dark:text-gray-400">Area</span>
+</div>
+<div class="h-[2px] flex-1 bg-gray-200 dark:bg-gray-700 mx-1"></div>
+<div class="flex flex-col items-center gap-1 opacity-50">
+<div class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200 dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-xs font-bold">4</div>
+<span class="text-[10px] font-medium text-gray-500 dark:text-gray-400">Time</span>
+</div>
+<div class="h-[2px] flex-1 bg-gray-200 dark:bg-gray-700 mx-1"></div>
+<div class="flex flex-col items-center gap-1 opacity-50">
+<div class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200 dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-xs font-bold">5</div>
+<span class="text-[10px] font-medium text-gray-500 dark:text-gray-400">Pay</span>
+</div>
+</div>
+</div>
+<!-- Main Content Form -->
+<div class="px-4 pb-32 pt-6 flex flex-col gap-6 max-w-lg mx-auto">
+<!-- SECTION 1: Personal Info -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl p-6 shadow-sm">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary text-2xl">person</span>
+<h3 class="text-xl font-bold">Personal Info</h3>
+</div>
+<!-- Avatar Upload -->
+<div class="flex flex-col items-center justify-center mb-8">
+<div class="relative group cursor-pointer">
+<div class="h-28 w-28 rounded-full overflow-hidden border-4 border-background-light dark:border-background-dark shadow-md bg-gray-100 dark:bg-gray-800">
+<img alt="User profile placeholder avatar" class="h-full w-full object-cover opacity-80" data-alt="Abstract colorful face placeholder" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZgjdeptNTcKHor6TKMdF3UuP_ZDtJY8VO7_KdnPo0-lP1T7g27LK2JCkadsC-NxbUzwRhpZpoxfJ7VhPDsexQKAbj3nhGqCNCt2D5OA5VC3eX8BpgdnSUokBHI0G0k3igWk_DqjzLXrwIoJGkjooXddUMzDlZ7n_wVjLOsL8nlVky3381fQjYvvnRODVQyA8w4VOCXjPha8i5rlOUzZAnqh4twS9U8kl-J5kYRUbP1vUf0qSH29SVGUzI1I_gIXygHXDX7nVVuDuf"/>
+</div>
+<div class="absolute bottom-1 right-1 bg-primary text-white rounded-full p-2 shadow-lg border-2 border-surface-light dark:border-surface-dark">
+<span class="material-symbols-outlined text-sm font-bold">camera_alt</span>
+</div>
+</div>
+<p class="mt-3 text-sm text-gray-500 dark:text-gray-400 font-medium">Upload Profile Photo</p>
+</div>
+<div class="space-y-4">
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-medium ml-2 text-gray-600 dark:text-gray-300">Full Legal Name</label>
+<input class="w-full bg-background-light dark:bg-background-dark border-none rounded-full px-5 py-3 text-sm focus:ring-2 focus:ring-primary/50 dark:text-white placeholder-gray-400" placeholder="e.g. Sarah Jenkins" type="text"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-medium ml-2 text-gray-600 dark:text-gray-300">Phone Number</label>
+<div class="relative">
+<span class="absolute left-5 top-1/2 -translate-y-1/2 material-symbols-outlined text-gray-400 text-lg">call</span>
+<input class="w-full bg-background-light dark:bg-background-dark border-none rounded-full pl-12 pr-5 py-3 text-sm focus:ring-2 focus:ring-primary/50 dark:text-white placeholder-gray-400" placeholder="(555) 123-4567" type="tel"/>
+</div>
+</div>
+<div class="mt-2 p-4 rounded-xl border border-dashed border-gray-300 dark:border-gray-700 bg-background-light/50 dark:bg-background-dark/50 flex flex-col items-center gap-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+<span class="material-symbols-outlined text-gray-400 text-3xl">id_card</span>
+<div class="text-center">
+<p class="text-sm font-semibold text-primary">Verify Identity</p>
+<p class="text-xs text-gray-500">Scan government issued ID</p>
+</div>
+</div>
+</div>
+</div>
+<!-- SECTION 2: Services Offered -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl p-6 shadow-sm">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-primary text-2xl">cleaning_services</span>
+<h3 class="text-xl font-bold">Services &amp; Rates</h3>
+</div>
+<p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Select the services you want to provide.</p>
+<div class="grid grid-cols-2 gap-3 mb-6">
+<!-- Selected State -->
+<button class="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-primary/10 border-2 border-primary text-primary transition">
+<span class="material-symbols-outlined filled text-3xl">mop</span>
+<span class="text-sm font-bold">Cleaning</span>
+</button>
+<!-- Default State -->
+<button class="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-background-light dark:bg-background-dark border-2 border-transparent hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 transition">
+<span class="material-symbols-outlined text-3xl">skillet</span>
+<span class="text-sm font-medium">Cooking</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-background-light dark:bg-background-dark border-2 border-transparent hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 transition">
+<span class="material-symbols-outlined text-3xl">elderly</span>
+<span class="text-sm font-medium">Caregiving</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-2 p-4 rounded-2xl bg-background-light dark:bg-background-dark border-2 border-transparent hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 dark:text-gray-400 transition">
+<span class="material-symbols-outlined text-3xl">plumbing</span>
+<span class="text-sm font-medium">Repair</span>
+</button>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-medium ml-2 text-gray-600 dark:text-gray-300">Base Hourly Rate ($)</label>
+<div class="flex items-center gap-4">
+<button class="h-10 w-10 rounded-full bg-background-light dark:bg-background-dark flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined text-sm">remove</span>
+</button>
+<div class="flex-1 bg-background-light dark:bg-background-dark rounded-full px-4 py-3 text-center font-bold text-lg dark:text-white">$25.00</div>
+<button class="h-10 w-10 rounded-full bg-background-light dark:bg-background-dark flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- SECTION 3: Work Area -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl p-6 shadow-sm overflow-hidden">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-2xl">location_on</span>
+<h3 class="text-xl font-bold">Work Area</h3>
+</div>
+<button class="text-primary text-sm font-bold">Edit</button>
+</div>
+<div class="relative w-full aspect-[2/1] rounded-xl overflow-hidden mb-4">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Map view of city streets with overlay" data-location="San Francisco Map" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDZLTCPFgckay9M5xwuJzjL6sOQtz5-UkrYQ3gd5XpLzZhediPKVtzQffeAKfu2cWLe3PWswrFWSj_AhXycSrTNs6sBsf9W8N_m523kOLGfA7yLYL9uGIohqJzvF57TTvV6jaFXEklZV8clcRva9NQhFPViMyJh0U6_0_2x0FXUPl31Xuv6Ldq735Uh81_is0nXP-y7wW7RhzD4z9unIso1rkl9JopunhAJ8Opc4Ulok37K0CmUBAe_JnvLnkRzYpkVpWhlvmgiISPG');">
+</div>
+<div class="absolute inset-0 bg-primary/20 flex items-center justify-center">
+<div class="bg-white/90 dark:bg-black/80 rounded-full px-4 py-1.5 flex items-center gap-2 shadow-sm backdrop-blur">
+<span class="material-symbols-outlined text-primary text-sm">my_location</span>
+<span class="text-xs font-bold text-slate-900 dark:text-white">Current Location</span>
+</div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-sm font-medium px-1">
+<span class="text-gray-500">Radius</span>
+<span class="text-slate-900 dark:text-white font-bold">15 km</span>
+</div>
+<input class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700 accent-primary" max="50" min="1" type="range" value="15"/>
+<div class="flex justify-between text-xs text-gray-400 px-1">
+<span>1 km</span>
+<span>50 km</span>
+</div>
+</div>
+</div>
+<!-- SECTION 4: Availability -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl p-6 shadow-sm">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary text-2xl">schedule</span>
+<h3 class="text-xl font-bold">Availability</h3>
+</div>
+<div class="flex justify-between mb-6">
+<!-- Days of Week -->
+<button class="w-8 h-8 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-sm">M</button>
+<button class="w-8 h-8 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-sm">T</button>
+<button class="w-8 h-8 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-sm">W</button>
+<button class="w-8 h-8 rounded-full bg-background-light dark:bg-background-dark text-gray-500 dark:text-gray-400 text-xs font-bold flex items-center justify-center">T</button>
+<button class="w-8 h-8 rounded-full bg-primary text-white text-xs font-bold flex items-center justify-center shadow-sm">F</button>
+<button class="w-8 h-8 rounded-full bg-background-light dark:bg-background-dark text-gray-500 dark:text-gray-400 text-xs font-bold flex items-center justify-center">S</button>
+<button class="w-8 h-8 rounded-full bg-background-light dark:bg-background-dark text-gray-500 dark:text-gray-400 text-xs font-bold flex items-center justify-center">S</button>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="flex flex-col gap-1.5">
+<label class="text-xs font-medium ml-2 text-gray-500 uppercase">Start Time</label>
+<div class="bg-background-light dark:bg-background-dark rounded-full px-4 py-3 flex justify-between items-center">
+<span class="text-sm font-semibold">09:00 AM</span>
+<span class="material-symbols-outlined text-gray-400 text-sm">expand_more</span>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-xs font-medium ml-2 text-gray-500 uppercase">End Time</label>
+<div class="bg-background-light dark:bg-background-dark rounded-full px-4 py-3 flex justify-between items-center">
+<span class="text-sm font-semibold">05:00 PM</span>
+<span class="material-symbols-outlined text-gray-400 text-sm">expand_more</span>
+</div>
+</div>
+</div>
+</div>
+<!-- SECTION 5: Payment -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl p-6 shadow-sm">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary text-2xl">payments</span>
+<h3 class="text-xl font-bold">Payout Method</h3>
+</div>
+<div class="space-y-3">
+<label class="flex items-center justify-between p-4 rounded-xl border-2 border-primary bg-primary/5 cursor-pointer">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-2xl">account_balance</span>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-slate-900 dark:text-white">Bank Transfer</span>
+<span class="text-xs text-gray-500">2-3 business days</span>
+</div>
+</div>
+<div class="h-5 w-5 rounded-full border-2 border-primary flex items-center justify-center">
+<div class="h-2.5 w-2.5 rounded-full bg-primary"></div>
+</div>
+</label>
+<label class="flex items-center justify-between p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-transparent cursor-pointer hover:bg-background-light dark:hover:bg-background-dark transition">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-gray-500 text-2xl">credit_card</span>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-slate-900 dark:text-white">Debit Card</span>
+<span class="text-xs text-gray-500">Instant transfer</span>
+</div>
+</div>
+<div class="h-5 w-5 rounded-full border-2 border-gray-300 dark:border-gray-600"></div>
+</label>
+</div>
+</div>
+</div>
+<!-- Sticky Footer Action -->
+<div class="fixed bottom-0 left-0 w-full bg-surface-light dark:bg-surface-dark border-t border-gray-200/50 dark:border-gray-800/50 p-4 pb-6 z-40">
+<div class="max-w-lg mx-auto flex flex-col gap-3">
+<button class="w-full bg-primary hover:bg-sky-400 text-white font-bold py-4 rounded-full text-base shadow-lg shadow-primary/30 transition-all active:scale-[0.98]">
+                Save &amp; Continue
+            </button>
+</div>
+</div>
+</body></html>
