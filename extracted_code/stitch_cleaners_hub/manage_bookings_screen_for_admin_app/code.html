@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Manage Bookings</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#42b0f0",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101b22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-filled {
+            font-family: 'Material Symbols Outlined';
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-[#111518] dark:text-white min-h-screen flex justify-center">
+<div class="relative flex h-full min-h-screen w-full max-w-[480px] flex-col bg-background-light dark:bg-background-dark overflow-x-hidden shadow-xl border-x border-gray-100 dark:border-gray-800">
+<!-- Top App Bar -->
+<header class="sticky top-0 z-20 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 px-4 py-3 flex items-center justify-between">
+<h2 class="text-[#111518] dark:text-white text-xl font-bold leading-tight tracking-tight font-display">Manage Bookings</h2>
+<button class="flex items-center justify-center h-10 w-10 rounded-full bg-white dark:bg-[#1f2b36] shadow-sm hover:bg-gray-50 dark:hover:bg-[#2a3844] transition-colors">
+<span class="material-symbols-outlined text-[#111518] dark:text-white">search</span>
+</button>
+</header>
+<!-- Scrollable Filters -->
+<div class="flex gap-2 p-4 overflow-x-auto no-scrollbar pb-2">
+<!-- Active Chip -->
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary px-5 shadow-sm shadow-primary/30 transition-transform active:scale-95">
+<p class="text-white text-sm font-semibold font-display">All</p>
+</button>
+<!-- Inactive Chips -->
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-[#1f2b36] border border-gray-200 dark:border-gray-700 px-5 transition-colors hover:bg-gray-50 dark:hover:bg-[#2a3844] active:scale-95">
+<p class="text-gray-600 dark:text-gray-300 text-sm font-medium font-display">Today</p>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-[#1f2b36] border border-gray-200 dark:border-gray-700 px-5 transition-colors hover:bg-gray-50 dark:hover:bg-[#2a3844] active:scale-95">
+<p class="text-gray-600 dark:text-gray-300 text-sm font-medium font-display">Pending</p>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-[#1f2b36] border border-gray-200 dark:border-gray-700 px-5 transition-colors hover:bg-gray-50 dark:hover:bg-[#2a3844] active:scale-95">
+<p class="text-gray-600 dark:text-gray-300 text-sm font-medium font-display">Dispute</p>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-[#1f2b36] border border-gray-200 dark:border-gray-700 px-5 transition-colors hover:bg-gray-50 dark:hover:bg-[#2a3844] active:scale-95">
+<p class="text-gray-600 dark:text-gray-300 text-sm font-medium font-display">Completed</p>
+</button>
+</div>
+<!-- Stats Overview -->
+<div class="px-4 pb-4">
+<div class="flex gap-4">
+<div class="flex flex-1 flex-col gap-1 rounded-xl bg-white dark:bg-[#1f2b36] p-4 shadow-[0_2px_8px_rgba(0,0,0,0.04)] dark:shadow-none border border-transparent dark:border-gray-800">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">calendar_month</span>
+<p class="text-gray-500 dark:text-gray-400 text-xs font-medium uppercase tracking-wider font-display">Active</p>
+</div>
+<p class="text-[#111518] dark:text-white text-2xl font-bold leading-tight font-display">12</p>
+</div>
+<div class="flex flex-1 flex-col gap-1 rounded-xl bg-white dark:bg-[#1f2b36] p-4 shadow-[0_2px_8px_rgba(0,0,0,0.04)] dark:shadow-none border border-red-100 dark:border-red-900/30">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-red-500 text-xl">report_problem</span>
+<p class="text-red-500 dark:text-red-400 text-xs font-medium uppercase tracking-wider font-display">Disputes</p>
+</div>
+<p class="text-[#111518] dark:text-white text-2xl font-bold leading-tight font-display">2</p>
+</div>
+</div>
+</div>
+<!-- Main Content List -->
+<div class="flex flex-col gap-4 px-4 pb-28">
+<!-- Card 1: Dispute (High Priority) -->
+<div class="group flex flex-col gap-0 rounded-xl bg-white dark:bg-[#1f2b36] shadow-[0_2px_12px_rgba(0,0,0,0.06)] dark:shadow-none overflow-hidden border border-red-100 dark:border-red-900/30">
+<div class="flex p-4 gap-4">
+<!-- Image -->
+<div class="w-24 h-24 shrink-0 rounded-lg bg-center bg-cover bg-no-repeat shadow-inner" data-alt="Kitchen counter with various cooking ingredients and pots" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDyjadACWtzbTYblvsDJhmBqohkEo23BeJFAnUHT54y2pf_kpTCwledOpSiQzhNsjtCV8Ans4QxfBUA1M6R6ZSVC2vCo1Og64QIfFvAe4Z8uLKBTfLiUSVAT1uCSY9Smj8UoWXUUVR9oIzy4z-ngt_lxKoEQTNz9jAHzbsoW3gS0Elt_nUbrMgOyCdWdGcScPFhzTfTWLv0jcTsp9pi_BjM3J0AlOttZZXpjEwRjlv_swoK-oSA5u7kXC689e4J8SGGZiPV1Agyii0A");'>
+</div>
+<!-- Content -->
+<div class="flex flex-col flex-1 justify-between">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="inline-flex items-center gap-1 rounded-md bg-red-50 dark:bg-red-900/20 px-2 py-1 text-xs font-medium text-red-700 dark:text-red-400 ring-1 ring-inset ring-red-600/10 dark:ring-red-400/20 font-display">
+<span class="material-symbols-outlined text-[14px]">gavel</span>
+                                    Dispute
+                                </span>
+<span class="text-xs text-gray-400 font-medium font-display">#BK-9021</span>
+</div>
+<h3 class="text-[#111518] dark:text-white text-base font-bold leading-tight font-display">Home Cooking Service</h3>
+<div class="mt-1 flex flex-col gap-0.5">
+<p class="text-gray-500 dark:text-gray-400 text-xs flex items-center gap-1 font-display">
+<span class="material-symbols-outlined text-[14px]">person</span> Jane Doe vs. Chef Mike
+                                </p>
+<p class="text-gray-500 dark:text-gray-400 text-xs flex items-center gap-1 font-display">
+<span class="material-symbols-outlined text-[14px]">payments</span> $120.00 • Escrow Held
+                                </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Footer -->
+<div class="px-4 pb-4">
+<button class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg h-10 bg-primary text-white text-sm font-semibold shadow-md shadow-primary/20 hover:bg-blue-500 transition-colors font-display">
+<span class="material-symbols-outlined text-[18px]">support_agent</span>
+                        Resolve Dispute
+                    </button>
+</div>
+</div>
+<!-- Card 2: Confirmed -->
+<div class="group flex flex-col gap-0 rounded-xl bg-white dark:bg-[#1f2b36] shadow-[0_2px_8px_rgba(0,0,0,0.04)] dark:shadow-none overflow-hidden border border-gray-100 dark:border-gray-800">
+<div class="flex p-4 gap-4">
+<!-- Image -->
+<div class="w-24 h-24 shrink-0 rounded-lg bg-center bg-cover bg-no-repeat shadow-inner" data-alt="Clean living room with vacuum cleaner and supplies" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB2EuIZqw7QJMKfZvSQ-CCBF3hIW5q01DEA0FlmIVMwmOFlt47CtqUG37sP5PizdqNhN98HZz_oFFXh3qX-UKH8dR9i6teBcRb4c0nBlHSNNY7cKy8sOLbRGiktzYB7LEbYKGIxeRu59oHKpHBTL7--pp2gpzb6QXYE2_v6Q6EuhypWonrxNbzDSixixIpzhvpYWVmQOiA2mqhLqviDfq6zGIwkQuZvS98C4xbAHggmi8oUqcxFsPqy9xZ0AulI9NptSFes7kHrDpTr");'>
+</div>
+<!-- Content -->
+<div class="flex flex-col flex-1 justify-between">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="inline-flex items-center gap-1 rounded-md bg-green-50 dark:bg-green-900/20 px-2 py-1 text-xs font-medium text-green-700 dark:text-green-400 ring-1 ring-inset ring-green-600/10 dark:ring-green-400/20 font-display">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                                    Confirmed
+                                </span>
+<span class="text-xs text-gray-400 font-medium font-display">#BK-9022</span>
+</div>
+<h3 class="text-[#111518] dark:text-white text-base font-bold leading-tight font-display">Deep House Cleaning</h3>
+<div class="mt-1 flex flex-col gap-0.5">
+<p class="text-gray-500 dark:text-gray-400 text-xs flex items-center gap-1 font-display">
+<span class="material-symbols-outlined text-[14px]">schedule</span> Nov 12, 10:00 AM
+                                </p>
+<p class="text-gray-500 dark:text-gray-400 text-xs flex items-center gap-1 font-display">
+<span class="material-symbols-outlined text-[14px]">person</span> Client: John Smith
+                                </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Footer -->
+<div class="px-4 pb-4">
+<button class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg h-9 bg-gray-50 dark:bg-gray-800 text-[#111518] dark:text-gray-200 border border-gray-200 dark:border-gray-700 text-sm font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors font-display">
+                        View Details
+                    </button>
+</div>
+</div>
+<!-- Card 3: Pending -->
+<div class="group flex flex-col gap-0 rounded-xl bg-white dark:bg-[#1f2b36] shadow-[0_2px_8px_rgba(0,0,0,0.04)] dark:shadow-none overflow-hidden border border-gray-100 dark:border-gray-800">
+<div class="flex p-4 gap-4">
+<!-- Image -->
+<div class="w-24 h-24 shrink-0 rounded-lg bg-center bg-cover bg-no-repeat shadow-inner" data-alt="Plumbing tools and pipes under a sink" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCsrTJu-n8N1xQtulkxH3IU9RI04OwaUtoWOsGi_6y8zSQcyDm8jPBR9i9RhWwPhwYgg5X3kh2p58kuUjOxPqIuQg6iTRpBNxbYiL57KD9H0FTQzR5BvKZWhND2wQXb3w8lkNiVvkiSgvRAIvgmpyLdXQfGB-8iBTMKqWdEXEJETa6FzAqtNGpomCvCjaL8ejDviiEDK81G-K1vORkSuhGCSHsgmTTCSSNpvzQhZ9BWE0krQrzOX5OX77iRouKkUJEuCTksf5U_49Hg");'>
+</div>
+<!-- Content -->
+<div class="flex flex-col flex-1 justify-between">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="inline-flex items-center gap-1 rounded-md bg-yellow-50 dark:bg-yellow-900/20 px-2 py-1 text-xs font-medium text-yellow-800 dark:text-yellow-400 ring-1 ring-inset ring-yellow-600/10 dark:ring-yellow-400/20 font-display">
+<span class="material-symbols-outlined text-[14px]">hourglass_top</span>
+                                    Pending
+                                </span>
+<span class="text-xs text-gray-400 font-medium font-display">#BK-9023</span>
+</div>
+<h3 class="text-[#111518] dark:text-white text-base font-bold leading-tight font-display">Plumbing Repair</h3>
+<div class="mt-1 flex flex-col gap-0.5">
+<p class="text-gray-500 dark:text-gray-400 text-xs flex items-center gap-1 font-display">
+<span class="material-symbols-outlined text-[14px]">schedule</span> Today, 2:00 PM
+                                </p>
+<p class="text-gray-500 dark:text-gray-400 text-xs flex items-center gap-1 font-display">
+<span class="material-symbols-outlined text-[14px]">location_on</span> 123 Maple Ave
+                                </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Footer -->
+<div class="px-4 pb-4">
+<button class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg h-9 bg-primary/10 dark:bg-primary/20 text-primary border border-transparent text-sm font-medium hover:bg-primary/20 transition-colors font-display">
+                        Assign Provider
+                    </button>
+</div>
+</div>
+</div>
+<!-- Floating Action Button -->
+<div class="fixed bottom-24 right-4 z-10">
+<button class="flex h-14 w-14 items-center justify-center rounded-full bg-[#111518] dark:bg-white shadow-lg shadow-black/20 hover:scale-105 transition-transform group">
+<span class="material-symbols-outlined text-white dark:text-[#111518] text-2xl group-hover:rotate-90 transition-transform">add</span>
+</button>
+</div>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 z-30 w-full max-w-[480px] bg-white dark:bg-[#1f2b36] border-t border-gray-200 dark:border-gray-800 pb-5 pt-1">
+<div class="grid h-16 grid-cols-4 items-center justify-items-center">
+<button class="flex flex-col items-center justify-center gap-1 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-medium font-display">Dashboard</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 text-primary">
+<span class="material-symbols-filled">calendar_month</span>
+<span class="text-[10px] font-medium font-display">Bookings</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300">
+<span class="material-symbols-outlined">group</span>
+<span class="text-[10px] font-medium font-display">Users</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-medium font-display">Settings</span>
+</button>
+</div>
+</nav>
+</div>
+</body></html>

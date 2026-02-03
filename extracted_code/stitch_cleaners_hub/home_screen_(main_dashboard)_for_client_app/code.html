@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Home Screen Service App</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#42b0f0",
+                        "background-light": "#ffffff",
+                        "background-dark": "#101b22",
+                        "surface-light": "#f6f7f8",
+                        "surface-dark": "#1c2a33",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "1.5rem",
+                        "xl": "2rem",
+                        "2xl": "2.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white overflow-x-hidden antialiased">
+<div class="relative flex h-full min-h-screen w-full flex-col max-w-md mx-auto bg-background-light dark:bg-background-dark shadow-xl">
+<!-- Header Section -->
+<header class="flex items-center justify-between px-6 pt-12 pb-4 bg-background-light dark:bg-background-dark sticky top-0 z-10">
+<div class="flex flex-col">
+<span class="text-slate-500 dark:text-slate-400 text-sm font-medium">Tuesday, 14 Nov</span>
+<h1 class="text-2xl font-bold leading-tight tracking-tight text-slate-900 dark:text-white">Good Morning, Sarah</h1>
+</div>
+<div class="relative group cursor-pointer">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-12 ring-2 ring-primary ring-offset-2 ring-offset-white dark:ring-offset-background-dark" data-alt="User profile portrait of a smiling woman" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBmICRVBvCr70hwVLP-Duh00kY3A1WCX3OrAyfsQcoaaIc7moV7C1u8I10LcOCt_pAKbMfarSWwSgh60siNHOggNV65TpjCk-E3DyZgk7j52tso7sB_vAk8uzjnpAd1SI__76xmPNpnuFLAVHp8py20y24TE9JU9PFiRzwI_U_IxYznW_ExXKnZamkWH2sWGf7oaFNtigyrEJ___BWG0l1S2QoQgFwSXatTYn25D7cjXXWDh6xyk9x79-1Kf_v92RwCWu1STnBbmXBw");'>
+</div>
+<div class="absolute bottom-0 right-0 size-3 bg-green-500 border-2 border-white dark:border-background-dark rounded-full"></div>
+</div>
+</header>
+<!-- Search Bar -->
+<div class="px-6 py-2">
+<label class="relative flex items-center w-full h-14 rounded-full shadow-sm bg-surface-light dark:bg-surface-dark group focus-within:ring-2 focus-within:ring-primary/50 transition-all duration-200">
+<div class="absolute left-4 flex items-center justify-center text-primary pointer-events-none">
+<span class="material-symbols-outlined text-2xl">search</span>
+</div>
+<input class="w-full h-full bg-transparent border-none focus:ring-0 pl-12 pr-4 text-base font-medium text-slate-900 dark:text-white placeholder:text-slate-400" placeholder="What service do you need?" type="text"/>
+<div class="absolute right-4 flex items-center justify-center p-2 rounded-full bg-white dark:bg-slate-700 shadow-sm cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-600 transition-colors">
+<span class="material-symbols-outlined text-primary text-xl">tune</span>
+</div>
+</label>
+</div>
+<!-- Main Action Grid -->
+<div class="flex-1 overflow-y-auto px-6 py-6 scrollbar-hide">
+<div class="grid grid-cols-2 gap-4">
+<!-- Card 1: Find Services -->
+<button class="relative flex flex-col justify-between p-5 h-44 rounded-[2rem] bg-surface-light dark:bg-surface-dark hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-200 group active:scale-95 text-left shadow-sm">
+<div class="flex items-center justify-center size-12 rounded-full bg-white dark:bg-slate-700 shadow-sm text-primary group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-2xl">grid_view</span>
+</div>
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white leading-tight">Find<br/>Services</h3>
+<p class="text-xs text-slate-500 mt-1 dark:text-slate-400">Browse categories</p>
+</div>
+</button>
+<!-- Card 2: Book Now (Highlighted) -->
+<button class="relative flex flex-col justify-between p-5 h-44 rounded-[2rem] bg-primary text-white hover:bg-blue-400 transition-all duration-200 group active:scale-95 text-left shadow-lg shadow-blue-300/50 dark:shadow-none">
+<div class="flex items-center justify-center size-12 rounded-full bg-white/20 backdrop-blur-sm group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-2xl text-white">add</span>
+</div>
+<div>
+<h3 class="text-lg font-bold leading-tight">Book<br/>Now</h3>
+<p class="text-xs text-blue-100 mt-1">Instant schedule</p>
+</div>
+<!-- Decorative element -->
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-6xl">calendar_month</span>
+</div>
+</button>
+<!-- Card 3: My Bookings -->
+<button class="relative flex flex-col justify-between p-5 h-44 rounded-[2rem] bg-surface-light dark:bg-surface-dark hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-200 group active:scale-95 text-left shadow-sm">
+<div class="flex items-center justify-center size-12 rounded-full bg-white dark:bg-slate-700 shadow-sm text-primary group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-2xl">confirmation_number</span>
+</div>
+<div class="relative">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white leading-tight">My<br/>Bookings</h3>
+<div class="absolute -top-10 right-0 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">2 Upcoming</div>
+<p class="text-xs text-slate-500 mt-1 dark:text-slate-400">View active jobs</p>
+</div>
+</button>
+<!-- Card 4: Messages -->
+<button class="relative flex flex-col justify-between p-5 h-44 rounded-[2rem] bg-surface-light dark:bg-surface-dark hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-200 group active:scale-95 text-left shadow-sm">
+<div class="flex items-center justify-center size-12 rounded-full bg-white dark:bg-slate-700 shadow-sm text-primary group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-2xl">chat_bubble</span>
+</div>
+<div>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white leading-tight">Messages</h3>
+<p class="text-xs text-slate-500 mt-1 dark:text-slate-400">Chat with pros</p>
+</div>
+</button>
+</div>
+<!-- Quick Actions Section -->
+<div class="mt-8">
+<div class="flex items-center justify-between mb-4 px-1">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Quick Actions</h3>
+<button class="text-sm font-medium text-primary hover:text-blue-600 transition-colors">See all</button>
+</div>
+<div class="flex gap-3 overflow-x-auto pb-4 scrollbar-hide -mx-6 px-6">
+<!-- Chip 1 -->
+<button class="flex items-center gap-3 pl-2 pr-5 py-2 rounded-full bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-900/30 whitespace-nowrap active:scale-95 transition-transform">
+<div class="size-8 rounded-full bg-red-100 dark:bg-red-800 text-red-600 dark:text-red-200 flex items-center justify-center">
+<span class="material-symbols-outlined text-lg">bolt</span>
+</div>
+<span class="text-sm font-semibold text-red-900 dark:text-red-100">Emergency Clean</span>
+</button>
+<!-- Chip 2 -->
+<button class="flex items-center gap-3 pl-2 pr-5 py-2 rounded-full bg-purple-50 dark:bg-purple-900/20 border border-purple-100 dark:border-purple-900/30 whitespace-nowrap active:scale-95 transition-transform">
+<div class="size-8 rounded-full bg-purple-100 dark:bg-purple-800 text-purple-600 dark:text-purple-200 flex items-center justify-center">
+<span class="material-symbols-outlined text-lg">celebration</span>
+</div>
+<span class="text-sm font-semibold text-purple-900 dark:text-purple-100">Event Help</span>
+</button>
+<!-- Chip 3 -->
+<button class="flex items-center gap-3 pl-2 pr-5 py-2 rounded-full bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-900/30 whitespace-nowrap active:scale-95 transition-transform">
+<div class="size-8 rounded-full bg-emerald-100 dark:bg-emerald-800 text-emerald-600 dark:text-emerald-200 flex items-center justify-center">
+<span class="material-symbols-outlined text-lg">savings</span>
+</div>
+<span class="text-sm font-semibold text-emerald-900 dark:text-emerald-100">Subscribe &amp; Save</span>
+</button>
+</div>
+</div>
+<!-- Promo Banner -->
+<div class="mt-2 mb-20 relative overflow-hidden rounded-[2rem] bg-gradient-to-r from-blue-600 to-primary p-6 text-white shadow-lg">
+<div class="relative z-10 flex flex-col items-start gap-3">
+<span class="rounded-full bg-white/20 px-3 py-1 text-xs font-bold backdrop-blur-sm">New Offer</span>
+<h4 class="text-xl font-bold w-2/3">Get 20% off your first deep clean</h4>
+<button class="rounded-full bg-white px-5 py-2 text-sm font-bold text-primary hover:bg-slate-100 transition-colors mt-1">Claim Offer</button>
+</div>
+<!-- Abstract Pattern Background -->
+<div class="absolute right-[-20px] top-[-20px] size-40 rounded-full bg-white/10 blur-2xl" data-alt="Abstract white circle blur effect"></div>
+<div class="absolute right-[-40px] bottom-[-40px] size-40 rounded-full bg-blue-400/30 blur-2xl" data-alt="Abstract blue circle blur effect"></div>
+</div>
+</div>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 right-0 z-50 bg-white/90 dark:bg-background-dark/90 backdrop-blur-lg border-t border-slate-100 dark:border-slate-800 pb-safe max-w-md mx-auto">
+<div class="flex justify-around items-center h-20 pb-2">
+<button class="flex flex-col items-center justify-center gap-1 w-16 text-primary group">
+<span class="material-symbols-outlined text-2xl font-variation-settings-FILL-1">home</span>
+<span class="text-[10px] font-medium">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 w-16 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors group">
+<span class="material-symbols-outlined text-2xl group-hover:scale-110 transition-transform">search</span>
+<span class="text-[10px] font-medium">Explore</span>
+</button>
+<!-- Floating FAB center (Optional style variation, keeping simple nav as requested but prominent) -->
+<button class="flex flex-col items-center justify-center gap-1 w-16 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors group">
+<span class="material-symbols-outlined text-2xl group-hover:scale-110 transition-transform">calendar_today</span>
+<span class="text-[10px] font-medium">Bookings</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 w-16 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors group">
+<span class="material-symbols-outlined text-2xl group-hover:scale-110 transition-transform">person</span>
+<span class="text-[10px] font-medium">Profile</span>
+</button>
+</div>
+<!-- Home Indicator Space -->
+<div class="h-1 w-1/3 bg-slate-200 dark:bg-slate-700 rounded-full mx-auto mb-2"></div>
+</nav>
+</div>
+</body></html>
