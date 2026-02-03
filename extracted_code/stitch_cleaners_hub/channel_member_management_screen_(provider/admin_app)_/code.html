@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Channel Member Management</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#42b0f0",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101b22",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#182630",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for clean look */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #475569;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-50 antialiased selection:bg-primary/30">
+<div class="relative flex flex-col min-h-screen w-full max-w-md mx-auto bg-surface-light dark:bg-surface-dark shadow-xl overflow-hidden border-x border-slate-100 dark:border-slate-800">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-10 bg-surface-light dark:bg-surface-dark/95 backdrop-blur-md border-b border-slate-100 dark:border-slate-800">
+<div class="flex items-center p-4 justify-between h-16">
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-900 dark:text-white">
+<span class="material-symbols-outlined" style="font-size: 24px;">arrow_back</span>
+</button>
+<h2 class="text-lg font-bold leading-tight flex-1 text-center text-slate-900 dark:text-white">Manage Members</h2>
+<button class="flex items-center justify-center h-10 px-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<p class="text-slate-500 dark:text-slate-400 text-base font-bold">Done</p>
+</button>
+</div>
+</header>
+<!-- Main Content Scroll Area -->
+<main class="flex-1 overflow-y-auto">
+<!-- Search Bar -->
+<div class="px-4 pt-4 pb-2">
+<div class="relative flex items-center w-full h-12 rounded-xl focus-within:ring-2 focus-within:ring-primary/50 bg-background-light dark:bg-background-dark overflow-hidden transition-all">
+<div class="grid place-items-center h-full w-12 text-slate-400">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="peer h-full w-full outline-none bg-transparent text-sm text-slate-900 dark:text-white placeholder-slate-400 pr-4" id="search" placeholder="Search name or role..." type="text"/>
+</div>
+</div>
+<!-- Add Member Action -->
+<div class="px-4 py-4">
+<button class="w-full flex cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-5 bg-primary hover:bg-sky-400 active:scale-[0.98] transition-all text-white gap-2 font-bold leading-normal tracking-[0.015em] shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">add</span>
+<span class="truncate">Add New Member</span>
+</button>
+</div>
+<div class="h-1 bg-background-light dark:bg-background-dark"></div>
+<!-- List Header -->
+<div class="px-4 py-4 flex items-end justify-between">
+<h3 class="text-slate-900 dark:text-white text-xl font-bold leading-tight">Channel Members</h3>
+<span class="text-sm font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-md">8</span>
+</div>
+<!-- Member List -->
+<div class="flex flex-col pb-8">
+<!-- Admin/Owner (Sticky or top of list) -->
+<div class="flex items-center gap-4 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<div class="relative shrink-0">
+<div class="bg-center bg-no-repeat bg-cover rounded-full h-14 w-14 ring-2 ring-primary ring-offset-2 ring-offset-white dark:ring-offset-surface-dark" data-alt="Profile picture of channel admin" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDG_3rbOVAfTU_tpur5aaclRow_sLBOiyiacjO6uVfcFDI-T9-w3z65rCWMv6YSezQHqx-irTfud9E22Db6xV9n7tv9CJUCiA-ejLOCGJDmpxwCBEXMfF--4SZs8RmL-_N0hURMFyXxkomqW3XtiFU7FOxGAlLR_CqWcRz-u62pBCaTYdNNhuxVC-cl1yBRjHo5RsRyA5IoKm-mnq1jZFMZqJ4we6M0jxaazRNkw2GQfIzpzoMc4ryB3jXlzX7BCfGgsccSPB9gEmUY");'></div>
+<div class="absolute -bottom-1 -right-1 bg-primary text-white rounded-full p-1 border-2 border-white dark:border-surface-dark grid place-items-center">
+<span class="material-symbols-outlined text-[12px]">star</span>
+</div>
+</div>
+<div class="flex flex-col justify-center flex-1 min-w-0">
+<p class="text-slate-900 dark:text-white text-base font-semibold leading-normal truncate">Elena Rodriguez (You)</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal truncate">Channel Admin</p>
+</div>
+<div class="shrink-0">
+<!-- Admin cannot remove self here typically -->
+<span class="text-xs font-medium text-slate-400 uppercase tracking-wider px-3 py-1">Owner</span>
+</div>
+</div>
+<div class="mx-4 h-px bg-slate-100 dark:bg-slate-800 my-1"></div>
+<!-- Member Item 1 -->
+<div class="flex items-center gap-4 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<div class="bg-center bg-no-repeat bg-cover rounded-full h-14 w-14 shrink-0 bg-slate-200" data-alt="Profile picture of Sarah Jenkins" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAOw3GM-aYdnIB3AnwqioB22w885en5q9VtUlDffqJT8FILkJcZ1ci4JPcpffs5CC2mPYD5qbsNrhcKGgZ0z_W9okgoSpHYriSR9GW5E34ZvW3w2F1t8ebcBcgGKwyS39TGpKUIIsPuNZcP4eDZjXr8YHcNNXBReFUhi5MKE64olr-kKUDP5VLZG299gIF1lj07TAdIIpQiSzVkJ0wOwY9HZTY95ysTMDQmXilNA0IFoY67StRHfiF8oQMLumtqz5_jGbK-eNEXRQLS");'></div>
+<div class="flex flex-col justify-center flex-1 min-w-0">
+<p class="text-slate-900 dark:text-white text-base font-medium leading-normal truncate">Sarah Jenkins</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal truncate">House Cleaner</p>
+</div>
+<div class="shrink-0">
+<button class="flex items-center justify-center rounded-full h-9 px-4 bg-slate-100 dark:bg-slate-800 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 text-slate-700 dark:text-slate-300 text-sm font-medium transition-all active:scale-95">
+<span class="truncate">Remove</span>
+</button>
+</div>
+</div>
+<!-- Member Item 2 -->
+<div class="flex items-center gap-4 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<div class="bg-center bg-no-repeat bg-cover rounded-full h-14 w-14 shrink-0 bg-slate-200" data-alt="Profile picture of Michael Ross" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA8a-XPm1Z2YUox7vnY426tFXo2Fv8uEr18iCpvdRdIx6nTAgd8LcGO2ivZKrKn-pj99WUX6LzDUXnNqr93hF5w5UFaeOqqzHrGi1Lj6O79MK-kTJRknIJf95w-o-FoeUUzhfbH4gglGxyjw0EnJYhNapRCTc0-9JO0kp70wq7HP_xT9PEQGFUAx15stsocMCg3bRXHT4Jloxa51UJE45tLflJlp0P_HCBJeNCztSNkPhY29O4uSePtpncI7weA25oHOmi2XbLbOdIO");'></div>
+<div class="flex flex-col justify-center flex-1 min-w-0">
+<p class="text-slate-900 dark:text-white text-base font-medium leading-normal truncate">Michael Ross</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal truncate">Professional Chef</p>
+</div>
+<div class="shrink-0">
+<button class="flex items-center justify-center rounded-full h-9 px-4 bg-slate-100 dark:bg-slate-800 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 text-slate-700 dark:text-slate-300 text-sm font-medium transition-all active:scale-95">
+<span class="truncate">Remove</span>
+</button>
+</div>
+</div>
+<!-- Member Item 3 -->
+<div class="flex items-center gap-4 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<div class="bg-center bg-no-repeat bg-cover rounded-full h-14 w-14 shrink-0 bg-slate-200" data-alt="Profile picture of Emily Chen" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCMUrvdDwK3G6OXiYNoIoVT0zZyvLka_AUDRGOUa0N8tYbU9cV1B0FMy6lRo9CMhquEVFpP1XwGuqaIJFqv_qEc_ipo7Qr7Qzo6mlLcTj3fCYg74S28jONEckkGm9suRxXz6Np850pxFTwhT_i9g841CFCsbRJd3J2Oz0A9Dy5k0v075bobCIlzg4CsWylMpk7AWkYEB0-H95oywIBm_8r1e4VSuQyvOmTYWcgSUXWDpKAWYDhYreH6UENDu0_dLacjm4lfib2F4hGI");'></div>
+<div class="flex flex-col justify-center flex-1 min-w-0">
+<p class="text-slate-900 dark:text-white text-base font-medium leading-normal truncate">Emily Chen</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal truncate">Caregiver</p>
+</div>
+<div class="shrink-0">
+<button class="flex items-center justify-center rounded-full h-9 px-4 bg-slate-100 dark:bg-slate-800 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 text-slate-700 dark:text-slate-300 text-sm font-medium transition-all active:scale-95">
+<span class="truncate">Remove</span>
+</button>
+</div>
+</div>
+<!-- Member Item 4 -->
+<div class="flex items-center gap-4 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<div class="bg-center bg-no-repeat bg-cover rounded-full h-14 w-14 shrink-0 bg-slate-200" data-alt="Profile picture of David Kim" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCaWAQGFJ_fsVfMbS5Jkr2ZDmDhTvOcsvlbkchwJipKQf2aU0qz_EBi60j2OLEjrOFy_TnLm8kHpJs3V0-iAos4Xm-xmIOwEImSn_oPEwXZp39MKWlBLLgarjh_M-7fFjesNTtRRHaZDLApKWCtN7xB-4GnDW27Jkh1h-2XkiKvDkdtKxGdVBpzMY3iuClaqaRLMowa3Q_b2THvpqoq-h4lqbbnxCwjLZHFxQ2Jtu2IRipRmeMo12D1hbcH07pz7dC7Z9UPq8yy34iT");'></div>
+<div class="flex flex-col justify-center flex-1 min-w-0">
+<p class="text-slate-900 dark:text-white text-base font-medium leading-normal truncate">David Kim</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal truncate">Plumber</p>
+</div>
+<div class="shrink-0">
+<button class="flex items-center justify-center rounded-full h-9 px-4 bg-slate-100 dark:bg-slate-800 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 text-slate-700 dark:text-slate-300 text-sm font-medium transition-all active:scale-95">
+<span class="truncate">Remove</span>
+</button>
+</div>
+</div>
+<!-- Member Item 5 -->
+<div class="flex items-center gap-4 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<div class="bg-center bg-no-repeat bg-cover rounded-full h-14 w-14 shrink-0 bg-slate-200" data-alt="Profile picture of Marcus Johnson" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCFbp4xpbmmuxp_JpxhWLuK_0MT656MLwKZGhQBZqaCoCAke1L4RXitvVGtWD2u3ipG_t5xaxPrYTqmIT2ER5cRfHcVySpmSPHYWoWazyqxtcOFX1XArJBxzXH7IoXvPJVwTcR7BGAPvri2lF94qUg96szqOP6_k1aL5TGvZqJ9HIOGzyM4GQoRAAKF5W6yxw0fKE-KF9yJ1QveoxliGsJbQY6U__wZMwArUt2_UBxliGiDU656blkeFSKhCaM2UK84DOTQneldgNmo");'></div>
+<div class="flex flex-col justify-center flex-1 min-w-0">
+<p class="text-slate-900 dark:text-white text-base font-medium leading-normal truncate">Marcus Johnson</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal truncate">Electrician</p>
+</div>
+<div class="shrink-0">
+<button class="flex items-center justify-center rounded-full h-9 px-4 bg-slate-100 dark:bg-slate-800 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 text-slate-700 dark:text-slate-300 text-sm font-medium transition-all active:scale-95">
+<span class="truncate">Remove</span>
+</button>
+</div>
+</div>
+<!-- Member Item 6 -->
+<div class="flex items-center gap-4 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<div class="bg-center bg-no-repeat bg-cover rounded-full h-14 w-14 shrink-0 bg-slate-200" data-alt="Profile picture of Priya Patel" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBBBqEsrjz-cFdYRZm6rT-_5BVVyoveQ1d6YU4p_duTyhm1xCwJS9WLVZeUZT1rK14yWtR_oIi9PVQMOAPPkHW0AOco3BjwyW6UAh6Izv4TWJUVTn4f3x2V3x-5XxN-DLKJBnwSfPVl1t4Jt6y3QXk_40XOlvJMGYDakI75B9f373UIvkMzRSG4DuNuYwECQsF1ljw3aI35U2hsky4mmDruKib-wkH5_Wq4LV4MMZ_eToE0kjvZ7IIV7HZf00NXAwJ0NpU1hkA27H2R");'></div>
+<div class="flex flex-col justify-center flex-1 min-w-0">
+<p class="text-slate-900 dark:text-white text-base font-medium leading-normal truncate">Priya Patel</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal truncate">House Cleaner</p>
+</div>
+<div class="shrink-0">
+<button class="flex items-center justify-center rounded-full h-9 px-4 bg-slate-100 dark:bg-slate-800 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 text-slate-700 dark:text-slate-300 text-sm font-medium transition-all active:scale-95">
+<span class="truncate">Remove</span>
+</button>
+</div>
+</div>
+<!-- Member Item 7 -->
+<div class="flex items-center gap-4 px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+<div class="bg-center bg-no-repeat bg-cover rounded-full h-14 w-14 shrink-0 bg-slate-200" data-alt="Profile picture of Robert Fox" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCacutOoLPOwHRGEFLzaxka3Wwa-o7_OJe3WFEru403TAXxi6MUpIPkBzVObXw9a8AKfV0tYySEjqnXVJX1ELSOxVhjv8gcUb7NZ4h8moQNLC2UF_Vlz4wc8dFWtHJ8h1qqmwO2kwchC37NhjEqkClUB2VlNHwDaT60bKWIDLJzCeSpuTme2kmB0OmgCu8ok9dtzjcU4lXrw65_un1jDYacUm46PHuLCyKW1Qkb_Ngn1sI13h_noG7g08TORE_8Z0gPcg-wJinWVhwo");'></div>
+<div class="flex flex-col justify-center flex-1 min-w-0">
+<p class="text-slate-900 dark:text-white text-base font-medium leading-normal truncate">Robert Fox</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal truncate">Gardener</p>
+</div>
+<div class="shrink-0">
+<button class="flex items-center justify-center rounded-full h-9 px-4 bg-slate-100 dark:bg-slate-800 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 text-slate-700 dark:text-slate-300 text-sm font-medium transition-all active:scale-95">
+<span class="truncate">Remove</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Bottom spacing for aesthetics -->
+<div class="h-12"></div>
+</main>
+</div>
+</body></html>

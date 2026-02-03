@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cleaners Hub - Welcome</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#3b82f6", // Sky blueish tone from the logo
+              "primary-dark": "#2563eb",
+              "background-light": "#f0f9ff", // Very light blue tint
+              "background-dark": "#0f172a", // Deep slate for dark mode
+              "surface-light": "#ffffff",
+              "surface-dark": "#1e293b",
+            },
+            fontFamily: {
+              display: ["Montserrat", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "1rem", // iOS style rounded corners
+              'xl': "1.5rem",
+              '2xl': "2rem",
+            },
+          },
+        },
+      };
+    </script>
+<style>@keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        .animate-delay-100 { animation-delay: 0.1s; }
+        .animate-delay-200 { animation-delay: 0.2s; }
+        .animate-delay-300 { animation-delay: 0.3s; }.glass-dark {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-800 dark:text-slate-100 min-h-screen flex flex-col justify-between overflow-hidden antialiased transition-colors duration-300">
+<div class="h-12 w-full flex-shrink-0"></div>
+<div class="flex-1 flex flex-col items-center justify-center px-6 relative z-10 w-full max-w-md mx-auto">
+<div class="absolute top-0 left-0 w-64 h-64 bg-blue-200 dark:bg-blue-900 rounded-full mix-blend-multiply dark:mix-blend-color-dodge filter blur-3xl opacity-30 -translate-x-1/2 -translate-y-1/2 animate-fade-in"></div>
+<div class="absolute bottom-0 right-0 w-80 h-80 bg-cyan-200 dark:bg-cyan-900 rounded-full mix-blend-multiply dark:mix-blend-color-dodge filter blur-3xl opacity-30 translate-x-1/3 translate-y-1/3 animate-fade-in"></div>
+<div class="flex flex-col items-center mb-12 w-full animate-fade-in">
+<div class="relative w-48 h-48 mb-6 drop-shadow-xl">
+<img alt="Cleaners Hub 3D Logo featuring a broom and service icons in a circular motion" class="w-full h-full object-contain rounded-full shadow-2xl dark:shadow-blue-900/50" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAphL22aO1ALvIs3E9twpLVYzJYEgtLxkJ-e8JVjZliR0z8sWasLTZugI0FpOQZaoE_Vr7lHfKNTkMKL4RcsU-xebTfiCZNZrxkOywEuFxuZHdXx0WPBU9GTY5bnDjJ5DWelubJBAiA_iZB8FLNzvMhIlr6FoJcTZVCPQerMLYfUGnaJDhLJf4W30dDfCae3ztZ_q6iPEC7KWqLKa3MZelnvJDCO0VBupG6jDDhQ9WumxKCUVbvw5VUro8GHygyN8GfAaP1kPW2T-HG"/>
+</div>
+<h1 class="text-3xl font-bold tracking-tight text-center text-slate-900 dark:text-white mb-2">
+                CLEANERS HUB
+            </h1>
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400 uppercase tracking-widest">
+                The Harmony Network
+            </p>
+</div>
+<div class="text-center mb-10 px-4 animate-fade-in animate-delay-100">
+<h2 class="text-xl font-semibold text-slate-800 dark:text-slate-200 mb-3">
+                Your Home, Perfectly Managed
+            </h2>
+<p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                Find trusted professionals for cleaning, cooking, caregiving, and more in just a few taps.
+            </p>
+</div>
+<div class="w-full space-y-4 animate-fade-in animate-delay-200">
+<button class="w-full py-4 px-6 bg-primary hover:bg-primary-dark text-white font-bold rounded-2xl shadow-lg shadow-blue-500/30 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2">
+<span>Sign Up</span>
+<span class="material-icons-round text-sm">arrow_forward</span>
+</button>
+<button class="w-full py-4 px-6 bg-white dark:bg-transparent border-2 border-primary text-primary dark:text-primary font-bold rounded-2xl transition-all duration-200 hover:bg-blue-50 dark:hover:bg-blue-900/20 active:scale-[0.98] flex items-center justify-center">
+                Log In
+            </button>
+</div>
+<div class="mt-8 mb-4 animate-fade-in animate-delay-300">
+<button class="text-slate-500 dark:text-slate-400 text-sm font-medium hover:text-slate-700 dark:hover:text-slate-200 transition-colors border-b border-transparent hover:border-slate-400 pb-0.5">
+                Continue as Guest
+            </button>
+</div>
+</div>
+<div class="w-full py-6 text-center z-10">
+<p class="text-[10px] text-slate-400 dark:text-slate-600">
+            By continuing, you agree to our Terms &amp; Privacy Policy
+        </p>
+</div>
+
+</body></html>
