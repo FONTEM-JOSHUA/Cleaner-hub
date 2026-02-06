@@ -120,16 +120,31 @@
             'PROVIDER_PROFILE': 'service_provider_profile_screen_for_client_app/code.html',
             'BOOKING': 'booking_screen_for_client_app/code.html',
             'MY_BOOKINGS': 'my_bookings_screen_for_client_app_1/code.html',
+            'MESSAGES': 'messages_screen_for_client_app/code.html',
+            'PROFILE': 'profile_screen_for_client_app/code.html',
             'PROVIDER_WELCOME': 'provider_welcome_screen/code.html',
             'PROVIDER_SETUP': 'provider_setup_screen/code.html',
             'PROVIDER_DASHBOARD': 'provider_dashboard_screen_1/code.html',
+            'MY_SCHEDULE': 'my_schedule_screen_for_provider_app/code.html',
+            'BOOKING_REQUESTS': 'booking_requests_screen_for_provider_app/code.html',
             'ADMIN_LOGIN': 'admin_login_screen/code.html',
             'ADMIN_DASHBOARD': 'admin_dashboard_screen_1/code.html',
-            'MESSAGES': 'messages_screen_for_client_app/code.html',
-            'PROFILE': 'profile_screen_for_client_app/code.html'
+            'MANAGE_USERS': 'manage_users_screen_for_admin_app/code.html',
+            'MANAGE_BOOKINGS': 'manage_bookings_screen_for_admin_app/code.html',
+            // Feature screens
+            'SMART_SEARCH': 'smart_search_screen/code.html',
+            'QUICK_REBOOKING': 'quick_rebooking_feature_screen/code.html',
+            'REALTIME_TRACKING': 'real-time_tracking_screen/code.html',
+            'PHOTO_VERIFICATION': 'photo_verification_feature_screen/code.html',
+            'EASY_PAYMENTS': 'easy_payments_feature_screen/code.html',
+            'SMART_NOTIFICATIONS': 'smart_notifications_feature_screen/code.html',
+            'EMERGENCY_MODE': 'emergency_mode_feature_screen/code.html',
+            'FAMILY_SHARING': 'family_sharing_feature_screen/code.html',
+            'LANGUAGE_SUPPORT': 'multi-language_support_screen/code.html',
+            'OFFLINE_MODE': 'offline_mode_feature_screen/code.html'
         };
 
-        const Screen = ({ screenKey, onNavigate }) => {
+        const Screen = ({ screenKey, onNavigate, onBack }) => {
             const [html, setHtml] = useState('');
             const [styles, setStyles] = useState('');
             const [loading, setLoading] = useState(true);
@@ -152,11 +167,9 @@
                             .join('\n');
                         setStyles(styleContent);
 
-                        // Extract Body Content (excluding scripts which we'll handle separately)
+                        // Extract Body Content
                         const bodyContent = doc.body.innerHTML;
                         setHtml(bodyContent);
-
-                        // We'll handle scripts in a separate useEffect
                     } catch (error) {
                         console.error('Failed to load screen:', error);
                         setHtml('<div class="p-10 text-center">Failed to load screen.</div>');
@@ -172,7 +185,6 @@
                     const container = containerRef.current;
 
                     // 1. Manually execute any script tags found in the HTML
-                    // Note: This is simplified for the demo/prototype
                     const scripts = container.querySelectorAll('script');
                     scripts.forEach(oldScript => {
                         const newScript = document.createElement('script');
@@ -183,45 +195,109 @@
 
                     // 2. Attach Click Listeners for Navigation
                     const handleGlobalClick = (e) => {
-                        const target = e.target.closest('button, a, [role="button"]');
+                        const target = e.target.closest('button, a, [role="button"], .cursor-pointer');
                         if (!target) return;
 
-                        const text = target.innerText.trim().toLowerCase();
+                        // Skip navigation if clicking on auth mode toggle
+                        if (target.querySelector('input[name="auth-mode"]')) return;
+
+                        const rawText = target.innerText.trim().toLowerCase();
+                        const text = rawText.replace(/\s+/g, ' ');
+                        const icon = target.querySelector('.material-symbols-outlined')?.innerText || target.innerText;
+
+                        // Go Back
+                        if (icon === 'arrow_back' || text.includes('back')) {
+                            onBack();
+                            return;
+                        }
 
                         // Navigation Logic Heuristics
                         if (text.includes('sign up') || text.includes('create account')) {
-                            if (text.includes('provider')) onNavigate('PROVIDER_WELCOME');
+                            if (text.includes('provider')) {
+                                if (screenKey === 'PROVIDER_WELCOME') onNavigate('PROVIDER_SETUP');
+                                else onNavigate('PROVIDER_WELCOME');
+                            }
                             else onNavigate('SIGNUP');
                         } else if (text.includes('log in') || text.includes('login') || text.includes('sign in')) {
                             if (text.includes('admin')) onNavigate('ADMIN_LOGIN');
                             else if (screenKey === 'ADMIN_LOGIN') onNavigate('ADMIN_DASHBOARD');
                             else if (screenKey === 'WELCOME') onNavigate('LOGIN');
-                            else onNavigate('CLIENT_HOME');
+                            else if (screenKey === 'SIGNUP' || screenKey === 'LOGIN') onNavigate('CLIENT_HOME');
+                            else onNavigate('LOGIN');
                         } else if (text.includes('continue as guest')) {
                             onNavigate('CLIENT_HOME');
                         } else if (text.includes('book now')) {
                             onNavigate('BOOKING');
-                        } else if (text.includes('find services') || text.includes('explore')) {
+                        } else if (text.includes('find services') || text.includes('explore') || icon === 'search') {
                             onNavigate('FIND_SERVICES');
                         } else if (text.includes('view profile')) {
                             onNavigate('PROVIDER_PROFILE');
-                        } else if (text.includes('get started')) {
+                        } else if (text.includes('get started') || text.includes('sign up as provider')) {
                             if (screenKey === 'PROVIDER_WELCOME') onNavigate('PROVIDER_SETUP');
                             else onNavigate('SIGNUP');
-                        } else if (text.includes('complete setup') || text.includes('finish')) {
+                        } else if (text.includes('complete setup') || text.includes('finish') || text.includes('save & continue')) {
                             onNavigate('PROVIDER_DASHBOARD');
-                        } else if (text.includes('home') || target.querySelector('.material-symbols-outlined')?.innerText === 'home') {
+                        } else if (text.includes('home') || icon === 'home') {
                             onNavigate('CLIENT_HOME');
-                        } else if (text.includes('bookings') || target.querySelector('.material-symbols-outlined')?.innerText === 'calendar_today') {
+                        } else if (text.includes('bookings') || icon === 'calendar_today' || icon === 'calendar_month') {
                             onNavigate('MY_BOOKINGS');
-                        } else if (text.includes('messages') || target.querySelector('.material-symbols-outlined')?.innerText === 'mail') {
+                        } else if (text.includes('messages') || icon === 'mail' || icon === 'chat') {
                             onNavigate('MESSAGES');
-                        } else if (text.includes('profile') || target.querySelector('.material-symbols-outlined')?.innerText === 'person') {
+                        } else if (text.includes('profile') || icon === 'person') {
                             onNavigate('PROFILE');
+                        } else if (text.includes('manage users')) {
+                            onNavigate('MANAGE_USERS');
+                        } else if (text.includes('manage bookings')) {
+                            onNavigate('MANAGE_BOOKINGS');
+                        } else if (text.includes('emergency clean') || icon === 'bolt') {
+                            onNavigate('EMERGENCY_MODE');
                         }
                     };
 
                     container.addEventListener('click', handleGlobalClick);
+
+                    // 3. Handle Login/Signup Toggle in the signup screen
+                    if (screenKey === 'SIGNUP' || screenKey === 'LOGIN') {
+                        const radios = container.querySelectorAll('input[name="auth-mode"]');
+                        radios.forEach(radio => {
+                            radio.addEventListener('change', (e) => {
+                                const mode = e.target.value;
+                                const labels = container.querySelectorAll('label');
+                                labels.forEach(l => {
+                                    const span = l.querySelector('span');
+                                    if (!span) return;
+                                    const lText = span.innerText.trim();
+                                    if (lText === 'Login') {
+                                        l.className = mode === 'login' ? 'group flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-full px-4 relative shadow-sm transition-all duration-200 bg-primary' : 'group flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-full px-4 relative transition-all duration-200';
+                                        span.className = mode === 'login' ? 'z-10 text-sm font-semibold text-white' : 'z-10 text-sm font-medium text-text-subtle group-hover:text-text-main dark:text-gray-400 dark:group-hover:text-white transition-colors';
+                                    } else if (lText === 'Sign Up') {
+                                        l.className = mode === 'signup' ? 'group flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-full px-4 relative shadow-sm transition-all duration-200 bg-primary' : 'group flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-full px-4 relative transition-all duration-200';
+                                        span.className = mode === 'signup' ? 'z-10 text-sm font-semibold text-white' : 'z-10 text-sm font-medium text-text-subtle group-hover:text-text-main dark:text-gray-400 dark:group-hover:text-white transition-colors';
+                                    }
+                                });
+
+                                // Update Button Text
+                                const btn = container.querySelector('button.bg-primary span');
+                                if (btn) btn.innerText = mode === 'login' ? 'Log In' : 'Create Account';
+
+                                // Hide/Show fields
+                                const allInputs = container.querySelectorAll('.relative');
+                                allInputs.forEach(div => {
+                                    const input = div.querySelector('input');
+                                    if (!input) return;
+                                    const placeholder = input.placeholder;
+                                    if (mode === 'login') {
+                                        if (placeholder === 'Full Name' || placeholder === 'Phone Number') div.style.display = 'none';
+                                    } else {
+                                        div.style.display = 'block';
+                                    }
+                                });
+                                const terms = container.querySelector('label.flex.items-start');
+                                if (terms) terms.style.display = mode === 'login' ? 'none' : 'flex';
+                            });
+                        });
+                    }
+
                     return () => container.removeEventListener('click', handleGlobalClick);
                 }
             }, [html, loading, screenKey]);
@@ -245,21 +321,33 @@
         };
 
         const App = () => {
-            const [screen, setScreen] = useState('WELCOME');
+            const [history, setHistory] = useState(['WELCOME']);
+            const screen = history[history.length - 1];
             const [devMenuOpen, setDevMenuOpen] = useState(false);
+
+            const navigate = (newScreen) => {
+                if (newScreen === screen) return;
+                setHistory(prev => [...prev, newScreen]);
+            };
+
+            const goBack = () => {
+                if (history.length > 1) {
+                    setHistory(prev => prev.slice(0, -1));
+                }
+            };
 
             useEffect(() => {
                 const handleExternalNavigate = (e) => {
-                    if (SCREEN_MAP[e.detail]) setScreen(e.detail);
+                    if (SCREEN_MAP[e.detail]) navigate(e.detail);
                 };
                 window.addEventListener('navigate', handleExternalNavigate);
                 return () => window.removeEventListener('navigate', handleExternalNavigate);
-            }, []);
+            }, [screen]);
 
             return (
                 <div className="app-shell">
                     <div className="screen-container">
-                        <Screen screenKey={screen} onNavigate={setScreen} />
+                        <Screen screenKey={screen} onNavigate={navigate} onBack={goBack} />
                     </div>
 
                     {/* Quick Access Dev Menu */}
@@ -268,12 +356,37 @@
                     </div>
 
                     {devMenuOpen && (
-                        <div className="dev-menu">
-                            <div className="text-[10px] font-bold text-gray-400 mb-2 px-3 uppercase tracking-wider">Switch Flow</div>
-                            <button onClick={() => { setScreen('WELCOME'); setDevMenuOpen(false); }}>Welcome Screen</button>
-                            <button onClick={() => { setScreen('CLIENT_HOME'); setDevMenuOpen(false); }}>Client App</button>
-                            <button onClick={() => { setScreen('PROVIDER_WELCOME'); setDevMenuOpen(false); }}>Provider App</button>
-                            <button onClick={() => { setScreen('ADMIN_LOGIN'); setDevMenuOpen(false); }}>Admin Panel</button>
+                        <div className="dev-menu max-h-[70vh] overflow-y-auto">
+                            <div className="text-[10px] font-bold text-gray-400 mb-2 px-3 uppercase tracking-wider">Client Flow</div>
+                            <button onClick={() => { navigate('WELCOME'); setDevMenuOpen(false); }}>Welcome</button>
+                            <button onClick={() => { navigate('SIGNUP'); setDevMenuOpen(false); }}>Login / Signup</button>
+                            <button onClick={() => { navigate('CLIENT_HOME'); setDevMenuOpen(false); }}>Home</button>
+                            <button onClick={() => { navigate('FIND_SERVICES'); setDevMenuOpen(false); }}>Find Services</button>
+                            <button onClick={() => { navigate('MY_BOOKINGS'); setDevMenuOpen(false); }}>My Bookings</button>
+                            <button onClick={() => { navigate('MESSAGES'); setDevMenuOpen(false); }}>Messages</button>
+                            <button onClick={() => { navigate('PROFILE'); setDevMenuOpen(false); }}>Profile</button>
+
+                            <div className="text-[10px] font-bold text-gray-400 my-2 px-3 uppercase tracking-wider border-t pt-2">Provider Flow</div>
+                            <button onClick={() => { navigate('PROVIDER_WELCOME'); setDevMenuOpen(false); }}>Provider Welcome</button>
+                            <button onClick={() => { navigate('PROVIDER_SETUP'); setDevMenuOpen(false); }}>Provider Setup</button>
+                            <button onClick={() => { navigate('PROVIDER_DASHBOARD'); setDevMenuOpen(false); }}>Provider Dashboard</button>
+                            <button onClick={() => { navigate('MY_SCHEDULE'); setDevMenuOpen(false); }}>My Schedule</button>
+                            <button onClick={() => { navigate('BOOKING_REQUESTS'); setDevMenuOpen(false); }}>Booking Requests</button>
+
+                            <div className="text-[10px] font-bold text-gray-400 my-2 px-3 uppercase tracking-wider border-t pt-2">Admin Flow</div>
+                            <button onClick={() => { navigate('ADMIN_LOGIN'); setDevMenuOpen(false); }}>Admin Login</button>
+                            <button onClick={() => { navigate('ADMIN_DASHBOARD'); setDevMenuOpen(false); }}>Admin Dashboard</button>
+                            <button onClick={() => { navigate('MANAGE_USERS'); setDevMenuOpen(false); }}>Manage Users</button>
+                            <button onClick={() => { navigate('MANAGE_BOOKINGS'); setDevMenuOpen(false); }}>Manage Bookings</button>
+
+                            <div className="text-[10px] font-bold text-gray-400 my-2 px-3 uppercase tracking-wider border-t pt-2">Features</div>
+                            <button onClick={() => { navigate('EMERGENCY_MODE'); setDevMenuOpen(false); }}>Emergency Mode</button>
+                            <button onClick={() => { navigate('SMART_SEARCH'); setDevMenuOpen(false); }}>Smart Search</button>
+                            <button onClick={() => { navigate('REALTIME_TRACKING'); setDevMenuOpen(false); }}>Real-time Tracking</button>
+                            <button onClick={() => { navigate('PHOTO_VERIFICATION'); setDevMenuOpen(false); }}>Photo Verification</button>
+                            <button onClick={() => { navigate('EASY_PAYMENTS'); setDevMenuOpen(false); }}>Easy Payments</button>
+                            <button onClick={() => { navigate('LANGUAGE_SUPPORT'); setDevMenuOpen(false); }}>Language Support</button>
+
                             <div className="mt-2 pt-2 border-t border-gray-100 text-[9px] text-center text-gray-400">
                                 Prototype Navigation Control
                             </div>
