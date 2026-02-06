@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>My Bookings</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#42b0f0",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101b22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "1.5rem", "xl": "2rem", "2xl": "2.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-family: 'Material Symbols Outlined';
+        }.no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display antialiased text-slate-900 dark:text-white">
+<div class="relative flex h-screen w-full flex-col overflow-hidden max-w-md mx-auto bg-background-light dark:bg-background-dark shadow-2xl">
+<div class="h-12 w-full bg-background-light dark:bg-background-dark shrink-0"></div>
+<div class="flex items-center bg-background-light dark:bg-background-dark px-4 pb-4 justify-between shrink-0">
+<div class="w-8"></div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight flex-1 text-center">My Bookings</h2>
+<div class="w-8"></div>
+</div>
+<div class="px-4 pb-4 shrink-0">
+<div class="flex p-1 bg-slate-200 dark:bg-slate-800 rounded-full">
+<button class="flex-1 py-2 px-4 rounded-full bg-white dark:bg-slate-700 shadow-sm text-primary font-bold text-sm transition-all">
+                    Upcoming
+                </button>
+<button class="flex-1 py-2 px-4 rounded-full text-slate-500 dark:text-slate-400 font-medium text-sm hover:text-slate-700 dark:hover:text-slate-200 transition-all">
+                    Completed
+                </button>
+<button class="flex-1 py-2 px-4 rounded-full text-slate-500 dark:text-slate-400 font-medium text-sm hover:text-slate-700 dark:hover:text-slate-200 transition-all">
+                    Cancelled
+                </button>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto no-scrollbar px-4 pb-24 space-y-4">
+<div class="bg-white dark:bg-slate-900 rounded-xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-slate-100 dark:border-slate-800 flex flex-col gap-4 relative">
+<div class="flex justify-between items-start">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="bg-primary/10 text-primary text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider">Confirmed</span>
+</div>
+<h3 class="text-slate-900 dark:text-white text-lg font-bold">Home Cleaning</h3>
+</div>
+<div class="flex gap-2">
+<div class="bg-primary/10 rounded-full p-2 text-primary">
+<span class="material-symbols-outlined text-2xl">cleaning_services</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3 text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-lg">
+<span class="material-symbols-outlined text-primary">calendar_month</span>
+<div class="flex flex-col">
+<span class="text-xs font-medium uppercase tracking-wide opacity-70">Date &amp; Time</span>
+<span class="text-sm font-semibold text-slate-800 dark:text-slate-200">Oct 24, 10:00 AM</span>
+</div>
+</div>
+<div class="flex items-center gap-3 border-t border-slate-100 dark:border-slate-800 pt-3">
+<div class="h-10 w-10 rounded-full bg-slate-200 overflow-hidden relative">
+<img alt="Portrait of Sarah Jenkins, a professional cleaner" class="object-cover w-full h-full" data-alt="Portrait of Sarah Jenkins, a professional cleaner" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGpnUWIadI2OoTWaRmw2CPBjXjGQjTD4T2lNE9g1TbHYMpzUR2pCUIdO7puj3WIcCfkNoifAzN7PiF_OiRnhj8-3lLV3GncVEL7VzP4yQ1F6ndOblJAHgct_DJUq-ZXgbq3mV9SDoKyweH4lCKFBDLMBW2qHYBSbMTQAup_IRFZgbfk2n59rCfz8bmEPIByVIe0CVayFz3kcpXzr23sP9G7yW9InqPfJv_ZaZdtFkoR_UcYg3iTcJmL2LT8MEXDY3O804EgwxBrpFf"/>
+</div>
+<div class="flex-1">
+<p class="text-slate-900 dark:text-white text-sm font-bold">Sarah Jenkins</p>
+<p class="text-slate-500 text-xs">Professional Cleaner</p>
+</div>
+<div class="flex items-center gap-1 bg-yellow-50 dark:bg-yellow-900/20 px-2 py-1 rounded-md">
+<span class="material-symbols-filled text-yellow-400 text-sm">star</span>
+<span class="text-slate-700 dark:text-yellow-100 text-xs font-bold">4.8</span>
+</div>
+</div>
+<div class="flex gap-3 mt-1">
+<button class="flex-1 h-10 rounded-full border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-white text-sm font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                        Reschedule
+                    </button>
+<button class="flex-1 h-10 rounded-full bg-primary text-white text-sm font-bold shadow-md shadow-blue-200 dark:shadow-none hover:bg-blue-500 transition-colors">
+                        View Details
+                    </button>
+</div>
+<button class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-red-50 text-red-600 dark:bg-red-900/20 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors mt-1 border border-red-100 dark:border-red-900/40">
+<span class="material-symbols-outlined text-xl">flag</span>
+<span class="text-sm font-semibold">Report Provider</span>
+</button>
+</div>
+<div class="bg-white dark:bg-slate-900 rounded-xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-slate-100 dark:border-slate-800 flex flex-col gap-4 relative">
+<div class="flex justify-between items-start">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="bg-primary/10 text-primary text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider">Confirmed</span>
+</div>
+<h3 class="text-slate-900 dark:text-white text-lg font-bold">Plumbing Repair</h3>
+</div>
+<div class="flex gap-2">
+<div class="bg-orange-100 dark:bg-orange-900/30 rounded-full p-2 text-orange-500">
+<span class="material-symbols-outlined text-2xl">plumbing</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3 text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-lg">
+<span class="material-symbols-outlined text-primary">schedule</span>
+<div class="flex flex-col">
+<span class="text-xs font-medium uppercase tracking-wide opacity-70">Date &amp; Time</span>
+<span class="text-sm font-semibold text-slate-800 dark:text-slate-200">Oct 28, 02:00 PM</span>
+</div>
+</div>
+<div class="flex items-center gap-3 border-t border-slate-100 dark:border-slate-800 pt-3">
+<div class="h-10 w-10 rounded-full bg-slate-200 overflow-hidden relative">
+<img alt="Portrait of Mike Turner, a plumbing specialist" class="object-cover w-full h-full" data-alt="Portrait of Mike Turner, a plumbing specialist" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA60wyR2OSGz_Sr9nR7hR93ppM79RXBEg54jdVDuq1Mkpbkpr072jcGpJiO_L7eDuQzqPIdA4Wz8X0Y2Ryf_S13UTYsCpc-R-ey0P4xe--RJKqfiC3IQ18mkTzalKLpW9ZTk4YgJaCitWngcuMFrO4ykPTsqayxBvfvwAwvbrzPpcl_hTDlrgGcsl9cJR03DKjqU70lkrUPoQSva1tsn94v7jx1EGqwdQi9TmXWDuJS9JnLzaVNyipjKXxyzNGzZ1f-jJkuhsHTO2Ua"/>
+</div>
+<div class="flex-1">
+<p class="text-slate-900 dark:text-white text-sm font-bold">Mike Turner</p>
+<p class="text-slate-500 text-xs">Master Plumber</p>
+</div>
+<div class="flex items-center gap-1 bg-yellow-50 dark:bg-yellow-900/20 px-2 py-1 rounded-md">
+<span class="material-symbols-filled text-yellow-400 text-sm">star</span>
+<span class="text-slate-700 dark:text-yellow-100 text-xs font-bold">5.0</span>
+</div>
+</div>
+<div class="flex gap-3 mt-1">
+<button class="flex-1 h-10 rounded-full border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-white text-sm font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                        Reschedule
+                    </button>
+<button class="flex-1 h-10 rounded-full bg-primary text-white text-sm font-bold shadow-md shadow-blue-200 dark:shadow-none hover:bg-blue-500 transition-colors">
+                        View Details
+                    </button>
+</div>
+<button class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-red-50 text-red-600 dark:bg-red-900/20 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors mt-1 border border-red-100 dark:border-red-900/40">
+<span class="material-symbols-outlined text-xl">flag</span>
+<span class="text-sm font-semibold">Report Provider</span>
+</button>
+</div>
+<div class="bg-white dark:bg-slate-900 rounded-xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)] border border-slate-100 dark:border-slate-800 flex flex-col gap-4 opacity-90">
+<div class="flex justify-between items-start">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-400 text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider">Payment Pending</span>
+</div>
+<h3 class="text-slate-900 dark:text-white text-lg font-bold">Gardening</h3>
+</div>
+<div class="bg-green-100 dark:bg-green-900/30 rounded-full p-2 text-green-600 dark:text-green-400">
+<span class="material-symbols-outlined text-2xl">yard</span>
+</div>
+</div>
+<div class="flex items-center gap-3 text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-lg">
+<span class="material-symbols-outlined text-primary">event</span>
+<div class="flex flex-col">
+<span class="text-xs font-medium uppercase tracking-wide opacity-70">Date &amp; Time</span>
+<span class="text-sm font-semibold text-slate-800 dark:text-slate-200">Nov 02, 09:00 AM</span>
+</div>
+</div>
+<div class="flex items-center gap-3 border-t border-slate-100 dark:border-slate-800 pt-3">
+<div class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-500">
+<span class="material-symbols-outlined text-sm">person</span>
+</div>
+<div class="flex-1">
+<p class="text-slate-900 dark:text-white text-sm font-bold">Assigning...</p>
+<p class="text-slate-500 text-xs">Provider will be assigned soon</p>
+</div>
+</div>
+<div class="flex gap-3 mt-1">
+<button class="flex-1 h-10 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-sm font-bold shadow-md hover:opacity-90 transition-opacity">
+                        Complete Payment
+                    </button>
+</div>
+</div>
+<div class="h-8"></div>
+</div>
+<div class="absolute bottom-0 w-full bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 pb-5 pt-2 px-4 shrink-0">
+<div class="flex justify-between items-center px-2">
+<button class="flex flex-col items-center gap-1 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors w-16">
+<span class="material-symbols-outlined text-[26px]">home</span>
+<span class="text-[10px] font-medium">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors w-16">
+<span class="material-symbols-outlined text-[26px]">search</span>
+<span class="text-[10px] font-medium">Search</span>
+</button>
+<button class="flex flex-col items-center gap-1 p-2 text-primary w-16">
+<span class="material-symbols-filled text-[26px]">calendar_month</span>
+<span class="text-[10px] font-bold">Bookings</span>
+</button>
+<button class="flex flex-col items-center gap-1 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors w-16">
+<span class="material-symbols-outlined text-[26px]">person</span>
+<span class="text-[10px] font-medium">Profile</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>

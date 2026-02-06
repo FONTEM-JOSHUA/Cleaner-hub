@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Track Your Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#42b0f0",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101b22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>body {
+    font-family: "Inter", sans-serif
+    }
+/* Custom map styling simulation */
+.map-container {
+    position: relative;
+    overflow: hidden
+    }
+.map-bg {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuDVww8obJB2P8o58EH6tMuWTSyxBQVMUsAnMOYk0UBmoOCnYnhILhRHujogV9BarFmEwSqEwR97Fz2g5B5II2tBW7zVm5Bcl_fcszQ7XbTtafZTCVwf-Uc_bn_3gAXEUlgeiZHqxZrwZ5KOaM5HHiT8EXU2Y96opgs1VIVCRNfDfOkpOFSSugxRCy513CnjhbUgfXEThJo1yDTXWUKNoLyHwn4lVKhkaYyd-FARIaNM21XmlkhcFOE188dl8HTPnIB62BX1zSBX60a4);
+    /* Placeholder for map logic */
+    background-size: cover;
+    background-position: center
+    }
+/* Simulating iOS safe areas */
+.safe-top {
+    padding-top: env(safe-area-inset-top, 20px)
+    }
+.safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 20px)
+    }</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-[#111518] dark:text-white font-display">
+<div class="relative flex h-screen w-full flex-col overflow-hidden bg-background-light dark:bg-background-dark">
+<!-- Top Bar (Floating on top of Map) -->
+<div class="absolute top-0 left-0 right-0 z-20 safe-top">
+<div class="flex items-center p-4">
+<button class="flex size-10 shrink-0 items-center justify-center rounded-full bg-white dark:bg-gray-800 shadow-md text-[#111518] dark:text-white transition hover:bg-gray-50 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined">arrow_back_ios_new</span>
+</button>
+<div class="flex-1 text-center pr-10">
+<span class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-bold shadow-sm">Track Your Pro</span>
+</div>
+</div>
+</div>
+<!-- Map Area -->
+<div class="relative flex-1 w-full map-container bg-gray-200 dark:bg-gray-900 group/map">
+<!-- Simulated Map Background -->
+<div class="absolute inset-0 w-full h-full bg-cover bg-center opacity-80 dark:opacity-60" data-alt="Map showing city streets with a blue route line" data-location="San Francisco" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDFj2GyyvFaCoqhogNonM6HxVDzDd0qgHoFWSS-21jNjmeZhI9ax6CIBOPethiVUyvivfOGHjNk414ZF_rpyWcTMwWRSOn4hcIO3-CztQYy3NHMj-Fp8oHUT3147KwuspAsFCgvOEGOeUPjwWPfOthgIxqWPqd9PPC86nd5W8t-DSlpQBCYM_2xMx_I8eq3Z6p3bDytxP1mLrnPE4NmpbwP7OKNJebNoykL6UhsA13G1xbqwYgWr1p3L38gbHFQdMBiBevV8bwYktce');">
+</div>
+<!-- Provider Pin (Simulated) -->
+<div class="absolute top-[40%] left-[45%] flex flex-col items-center transform -translate-x-1/2 -translate-y-1/2">
+<div class="relative flex items-center justify-center size-12 bg-primary text-white rounded-full shadow-lg border-4 border-white dark:border-gray-800 animate-bounce">
+<span class="material-symbols-outlined text-[24px]">local_taxi</span>
+</div>
+<div class="bg-white dark:bg-gray-800 px-2 py-1 rounded text-xs font-bold shadow mt-1">5 min</div>
+</div>
+<!-- Destination Pin -->
+<div class="absolute top-[60%] left-[60%] flex flex-col items-center">
+<div class="size-4 bg-black dark:bg-white rounded-full border-2 border-white dark:border-gray-800 shadow-lg ring-4 ring-primary/30"></div>
+</div>
+</div>
+<!-- Bottom Sheet / Tracking Card -->
+<div class="z-10 w-full bg-white dark:bg-[#1e2933] rounded-t-3xl shadow-[0_-4px_20px_rgba(0,0,0,0.1)] transition-transform duration-300 ease-in-out transform translate-y-0">
+<!-- Drag Handle -->
+<div class="w-full flex justify-center pt-3 pb-1">
+<div class="w-12 h-1.5 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
+</div>
+<!-- Main Content Area -->
+<div class="px-5 pb-6 pt-2 safe-bottom">
+<!-- Status & Time -->
+<div class="flex flex-col gap-1 mb-6 text-center sm:text-left">
+<div class="flex items-center justify-center sm:justify-start gap-2 mb-2">
+<span class="flex size-2 rounded-full bg-primary animate-pulse"></span>
+<p class="text-primary text-sm font-semibold uppercase tracking-wider">On the way</p>
+</div>
+<h2 class="text-[#111518] dark:text-white text-3xl font-bold leading-tight">Arriving in 12 mins</h2>
+<p class="text-gray-500 dark:text-gray-400 text-sm">Estimated arrival: 10:30 AM</p>
+</div>
+<!-- Progress Bar -->
+<div class="mb-6">
+<div class="relative h-2 w-full rounded-full bg-gray-100 dark:bg-gray-700 overflow-hidden">
+<div class="absolute left-0 top-0 h-full bg-primary transition-all duration-1000 ease-out" style="width: 65%;"></div>
+</div>
+<div class="flex justify-between mt-2 text-xs text-gray-400 font-medium">
+<span>Confirmed</span>
+<span class="text-primary">On Way</span>
+<span>Arrived</span>
+<span>Started</span>
+</div>
+</div>
+<!-- Provider Card -->
+<div class="flex items-center justify-between gap-4 rounded-xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 p-4 shadow-sm">
+<div class="flex items-center gap-4">
+<div class="relative">
+<div class="size-14 rounded-full bg-gray-200 bg-cover bg-center border-2 border-white dark:border-gray-600 shadow-sm" data-alt="Portrait of service provider Jane Doe" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD3RfcTrMm1TaOQpfD0IZ4iKnVkROI-0HkrsNROqfcCu_Gx4N7l6AWKwZ93Nw4zl1jPlFT9qHTk6o8teoHKrJjxVhKrx6VYZ1UVt-k5LUlwtxFr6EEFv_WOAHw1bSLnBg0I5VIvTdDRVieGBKzlH4xgo8Z-XmpnWZu4YJ1MnrshG-XjkThgJsScn3Bu6jR-iI6JdajESsQlv9HkyBYi3AI8zAZqqPmRg16_vDTc4Oepa7JopeatmSoeUX09pm__EmMlSwGywKplxSam');">
+</div>
+<div class="absolute -bottom-1 -right-1 flex items-center justify-center bg-white dark:bg-gray-800 rounded-full p-0.5 shadow-sm">
+<span class="material-symbols-outlined text-yellow-400 text-[14px]">star</span>
+</div>
+</div>
+<div class="flex flex-col">
+<p class="text-[#111518] dark:text-white text-base font-bold leading-tight">Jane Doe</p>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-yellow-500 text-[14px] fill-current">star</span>
+<p class="text-gray-500 dark:text-gray-400 text-sm font-medium">4.9 <span class="text-gray-300 dark:text-gray-600">•</span> 120 Reviews</p>
+</div>
+<p class="text-xs text-primary font-medium mt-0.5">Expert Cleaner</p>
+</div>
+</div>
+<div class="flex gap-2">
+<button aria-label="Message" class="flex size-10 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-primary transition-colors">
+<span class="material-symbols-outlined">chat_bubble</span>
+</button>
+<button aria-label="Call" class="flex size-10 items-center justify-center rounded-full bg-primary hover:bg-sky-600 text-white shadow-md shadow-primary/30 transition-colors">
+<span class="material-symbols-outlined">call</span>
+</button>
+</div>
+</div>
+<!-- Address Snippet -->
+<div class="mt-4 flex items-start gap-3 px-1">
+<span class="material-symbols-outlined text-gray-400 mt-0.5">location_on</span>
+<div>
+<p class="text-xs text-gray-400 uppercase font-semibold">Service Location</p>
+<p class="text-sm font-medium text-[#111518] dark:text-white">123 Maple Street, San Francisco, CA</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Mobile Navigation Bar (Simulated) -->
+<div class="bg-white dark:bg-background-dark border-t border-gray-100 dark:border-gray-800 pb-safe-bottom safe-bottom">
+<div class="grid grid-cols-4 pt-3 pb-1">
+<button class="flex flex-col items-center justify-center gap-1 text-gray-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-medium">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 text-primary">
+<span class="material-symbols-outlined fill-current">calendar_month</span>
+<span class="text-[10px] font-medium">Bookings</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 text-gray-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">chat</span>
+<span class="text-[10px] font-medium">Inbox</span>
+</button>
+<button class="flex flex-col items-center justify-center gap-1 text-gray-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-medium">Profile</span>
+</button>
+</div>
+</div>
+</div>
+</body></html>
