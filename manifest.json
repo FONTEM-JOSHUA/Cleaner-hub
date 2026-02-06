@@ -1,0 +1,16 @@
+{
+  "name": "Cleaners Hub",
+  "short_name": "CleanersHub",
+  "description": "The harmony network, where cleaners meet client",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1d4ed8",
+  "icons": [
+    {
+      "src": "https://lh3.googleusercontent.com/aida-public/AB6AXuAphL22aO1ALvIs3E9twpLVYzJYEgtLxkJ-e8JVjZliR0z8sWasLTZugI0FpOQZaoE_Vr7lHfKNTkMKL4RcsU-xebTfiCZNZrxkOywEuFxuZHdXx0WPBU9GTY5bnDjJ5DWelubJBAiA_iZB8FLNzvMhIlr6FoJcTZVCPQerMLYfUGnaJDhLJf4W30dDfCae3ztZ_q6iPEC7KWqLKa3MZelnvJDCO0VBupG6jDDhQ9WumxKCUVbvw5VUro8GHygyN8GfAaP1kPW2T-HG",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
