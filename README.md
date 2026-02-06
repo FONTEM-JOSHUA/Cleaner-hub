@@ -480,6 +480,9 @@ Security:
 · Background checks for providers
 · Privacy controls for users
 · Admin access logging
+· Content Security Policy (CSP) & Subresource Integrity (SRI) [Implementation Requirement]
+· Rate limiting on sensitive endpoints (Login, Signup, Reset Password) [Implementation Requirement]
+· Protection against OWASP Top 10 vulnerabilities (XSS, CSRF, Injection) [Implementation Requirement]
 
 
 
