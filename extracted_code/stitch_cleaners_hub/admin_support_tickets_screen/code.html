@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Support Tickets</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#42b0f0",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101b22",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2630",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "1rem", "lg": "1.5rem", "xl": "2rem", "2xl": "2.5rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white antialiased overflow-x-hidden">
+    <div class="sticky top-0 z-50 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md border-b border-gray-200/50 dark:border-gray-800/50 px-4 py-3">
+        <div class="flex items-center justify-between">
+            <button class="flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition">
+                <span class="material-symbols-outlined text-slate-900 dark:text-white">arrow_back</span>
+            </button>
+            <h2 class="text-lg font-bold leading-tight">Support Tickets</h2>
+            <div class="size-10"></div>
+        </div>
+        <!-- Search -->
+        <div class="mt-4 px-2">
+            <div class="relative">
+                <span class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-gray-400">search</span>
+                <input class="w-full bg-white dark:bg-surface-dark border-none rounded-full pl-12 pr-4 py-3 text-sm shadow-sm" placeholder="Search tickets..."/>
+            </div>
+        </div>
+    </div>
+
+    <div class="px-4 py-6 max-w-lg mx-auto">
+        <!-- Ticket Tabs -->
+        <div class="flex gap-4 mb-6 overflow-x-auto no-scrollbar pb-2">
+            <button class="px-5 py-2 rounded-full bg-primary text-white font-bold text-sm">Open (12)</button>
+            <button class="px-5 py-2 rounded-full bg-surface-light dark:bg-surface-dark text-gray-500 font-bold text-sm shadow-sm">In Progress</button>
+            <button class="px-5 py-2 rounded-full bg-surface-light dark:bg-surface-dark text-gray-500 font-bold text-sm shadow-sm">Closed</button>
+        </div>
+
+        <!-- Ticket List -->
+        <div class="space-y-4">
+            <div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-4 shadow-sm border border-l-4 border-l-red-500 border-gray-100 dark:border-gray-800">
+                <div class="flex justify-between items-start mb-2">
+                    <h3 class="font-bold text-sm">#4829 - Payment Failed</h3>
+                    <span class="text-[10px] font-bold text-red-500 uppercase tracking-widest bg-red-50 dark:bg-red-900/20 px-2 py-1 rounded">Urgent</span>
+                </div>
+                <p class="text-xs text-gray-500 mb-4">Client Sarah Jenkins reported a failed transaction during booking.</p>
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center gap-2">
+                        <div class="size-6 rounded-full bg-gray-200 bg-cover" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBmICRVBvCr70hwVLP-Duh00kY3A1WCX3OrAyfsQcoaaIc7moV7C1u8I10LcOCt_pAKbMfarSWwSgh60siNHOggNV65TpjCk-E3DyZgk7j52tso7sB_vAk8uzjnpAd1SI__76xmPNpnuFLAVHp8py20y24TE9JU9PFiRzwI_U_IxYznW_ExXKnZamkWH2sWGf7oaFNtigyrEJ___BWG0l1S2QoQgFwSXatTYn25D7cjXXWDh6xyk9x79-1Kf_v92RwCWu1STnBbmXBw')"></div>
+                        <span class="text-[10px] font-medium">Sarah Jenkins</span>
+                    </div>
+                    <button class="text-primary text-xs font-bold">Reply</button>
+                </div>
+            </div>
+
+            <div class="bg-surface-light dark:bg-surface-dark rounded-2xl p-4 shadow-sm border border-l-4 border-l-yellow-500 border-gray-100 dark:border-gray-800">
+                <div class="flex justify-between items-start mb-2">
+                    <h3 class="font-bold text-sm">#4828 - Dispute: No show</h3>
+                    <span class="text-[10px] font-bold text-yellow-500 uppercase tracking-widest bg-yellow-50 dark:bg-yellow-900/20 px-2 py-1 rounded">Moderate</span>
+                </div>
+                <p class="text-xs text-gray-500 mb-4">Client Mike Turner claims provider didn't arrive for the scheduled job.</p>
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center gap-2">
+                        <div class="size-6 rounded-full bg-gray-200 bg-cover" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB87-5JD_FRJRV1evQGmY6pRR_3RrIkl8oYUaOsIzClMj5iBDxPFGXQ8y3IXkoK1Ykbi6MvN25DZyvJM-FRyWf7ysleJUNKnbxt4dzFdehgU7yac3J2oIjJdS_dO5lMWZrPPjkvA5bECf9Z3bP0bsIkD3S2PucAYVCZKZtmo2A6c5rRHhdQvWpclHc5BThiYVDhAPdiDHheoN0krNo-bKgrGVqO8LHos3WNvg98OI05U43Phj6Fv56Cs8quN1P7vD5gBLt0zCD5z1HB')"></div>
+                        <span class="text-[10px] font-medium">Mike Turner</span>
+                    </div>
+                    <button class="text-primary text-xs font-bold">Reply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -14,3 +14,10 @@ Thumbs.db
 
 # Verification
 verification/
+
+# Dependencies
+node_modules
+pnpm-lock.yaml
+
+# Assets
+screenshot_*.png

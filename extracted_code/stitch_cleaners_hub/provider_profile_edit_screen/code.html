@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Edit Provider Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#42b0f0",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101b22",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2630",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "1rem", "lg": "1.5rem", "xl": "2rem", "2xl": "2.5rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white antialiased overflow-x-hidden">
+    <div class="sticky top-0 z-50 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md border-b border-gray-200/50 dark:border-gray-800/50 px-4 py-3">
+        <div class="flex items-center justify-between">
+            <button class="flex size-10 items-center justify-center rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition">
+                <span class="material-symbols-outlined text-slate-900 dark:text-white">arrow_back</span>
+            </button>
+            <h2 class="text-lg font-bold leading-tight">Edit Profile</h2>
+            <button class="text-primary font-bold text-sm">Save</button>
+        </div>
+    </div>
+
+    <div class="px-4 pb-32 pt-6 flex flex-col gap-6 max-w-lg mx-auto">
+        <!-- Profile Photo & Bio -->
+        <div class="bg-surface-light dark:bg-surface-dark rounded-xl p-6 shadow-sm">
+            <div class="flex flex-col items-center justify-center mb-6">
+                <div class="relative group cursor-pointer">
+                    <div class="h-28 w-28 rounded-full overflow-hidden border-4 border-background-light dark:border-background-dark shadow-md">
+                        <img alt="User profile" class="h-full w-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIhG6GhKKuON6mParHEC0_48Jz1_WYV_wWFupVDFn9D6r3pWMCQhr9NIXzIoqcKjLddtw0jC9X8PRQmSKG-V0B2wxt02q2TXZ85IA9woqHcIpMS6-dW6_9yOh-FwgdQs5bHqgppMeZOBjj8bR-RE33Hm3eIdiU5FEoyHCF9xE-SXM40uoKGfSzsdNtADJlz3IuatSQdkiTajjtgB4nb3SAQGr0VVfvhqpFdgKPTD-ekM_Llm1XN7-5BviVu1F6pGIiGc7NYepccBvG"/>
+                    </div>
+                    <div class="absolute bottom-1 right-1 bg-primary text-white rounded-full p-2 shadow-lg border-2 border-surface-light dark:border-surface-dark">
+                        <span class="material-symbols-outlined text-sm font-bold">camera_alt</span>
+                    </div>
+                </div>
+            </div>
+            <div class="space-y-4">
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-sm font-medium ml-2 text-gray-600 dark:text-gray-300">Name</label>
+                    <input class="w-full bg-background-light dark:bg-background-dark border-none rounded-full px-5 py-3 text-sm focus:ring-2 focus:ring-primary/50 dark:text-white" value="Maria Garcia" type="text"/>
+                </div>
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-sm font-medium ml-2 text-gray-600 dark:text-gray-300">Bio</label>
+                    <textarea class="w-full bg-background-light dark:bg-background-dark border-none rounded-2xl px-5 py-3 text-sm focus:ring-2 focus:ring-primary/50 dark:text-white h-24">Dedicated professional cleaner with 5+ years experience.</textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Services & Prices -->
+        <div class="bg-surface-light dark:bg-surface-dark rounded-xl p-6 shadow-sm">
+            <h3 class="text-lg font-bold mb-4">Services & Prices</h3>
+            <div class="space-y-3">
+                <div class="flex items-center justify-between p-3 bg-background-light dark:bg-background-dark rounded-xl">
+                    <span class="text-sm font-medium">Standard Cleaning</span>
+                    <span class="text-sm font-bold text-primary">$25/hr</span>
+                </div>
+                <div class="flex items-center justify-between p-3 bg-background-light dark:bg-background-dark rounded-xl">
+                    <span class="text-sm font-medium">Deep Cleaning</span>
+                    <span class="text-sm font-bold text-primary">$40/hr</span>
+                </div>
+                <button class="w-full py-2 border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-xl text-sm text-gray-500 font-medium">+ Add Service</button>
+            </div>
+        </div>
+
+        <!-- Work Photos -->
+        <div class="bg-surface-light dark:bg-surface-dark rounded-xl p-6 shadow-sm">
+            <h3 class="text-lg font-bold mb-4">Work Photos</h3>
+            <div class="grid grid-cols-3 gap-2">
+                <div class="aspect-square bg-gray-200 dark:bg-gray-800 rounded-lg overflow-hidden">
+                    <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLjueoL7Kz007H6NyZFlSJ_mQspf0RtDosExCq_U7hC98Rx-MAoP3k3R7s81wYZ_weQ21s_w2NFK1aA4dSrnisBHQakPexYX7ZIhubka0vQhqcKHPTJwtIIOHDV15j_cH8YydRVwqrpX4JMVB9bwf0yCAMLNLeVFR3OVZ8amDsi78tvSug5GfKXXJmYFI3y5tSRrQVFOjJO80RaFcEaBS7bRAEjOBZh8Xv7i1Udgo0tWV68ChPZu9E9SRntgqGmXe24YyjusNlpAh_"/>
+                </div>
+                <div class="aspect-square bg-gray-200 dark:bg-gray-800 rounded-lg flex items-center justify-center cursor-pointer">
+                    <span class="material-symbols-outlined text-gray-400">add_a_photo</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Certifications -->
+        <div class="bg-surface-light dark:bg-surface-dark rounded-xl p-6 shadow-sm">
+            <h3 class="text-lg font-bold mb-4">Certifications</h3>
+            <div class="flex items-center gap-3 p-3 bg-background-light dark:bg-background-dark rounded-xl">
+                <span class="material-symbols-outlined text-primary">verified</span>
+                <span class="text-sm font-medium">Professional Cleaner Cert</span>
+            </div>
+        </div>
+
+        <!-- Team Members -->
+        <div class="bg-surface-light dark:bg-surface-dark rounded-xl p-6 shadow-sm">
+            <h3 class="text-lg font-bold mb-4">Team Members</h3>
+            <p class="text-sm text-gray-500 mb-4">You are currently working as an individual.</p>
+            <button class="w-full py-2 border-2 border-primary text-primary rounded-xl text-sm font-bold">Add Team Member</button>
+        </div>
+
+        <!-- Bank Details -->
+        <div class="bg-surface-light dark:bg-surface-dark rounded-xl p-6 shadow-sm">
+            <h3 class="text-lg font-bold mb-4">Bank Details</h3>
+            <div class="flex items-center justify-between p-3 bg-background-light dark:bg-background-dark rounded-xl">
+                <div class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-gray-400">account_balance</span>
+                    <span class="text-sm font-medium">Chase **** 4829</span>
+                </div>
+                <button class="text-primary text-xs font-bold">Edit</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
