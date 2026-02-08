@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Reports & Analytics - Admin - Cleaners Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#87CEEB",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101b22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-[#F5F5F5] dark:bg-background-dark text-[#111518] dark:text-white font-display">
+    <div class="flex flex-col min-h-screen pb-24">
+        <!-- Header -->
+        <div class="flex items-center bg-white dark:bg-[#1A2633] p-4 pt-6 justify-between sticky top-0 z-10 shadow-sm">
+            <div class="flex items-center gap-3">
+                <button class="material-symbols-outlined text-[#111518] dark:text-white">arrow_back</button>
+                <h1 class="text-xl font-bold">Financial Reports</h1>
+            </div>
+            <button class="material-symbols-outlined text-primary">calendar_today</button>
+        </div>
+
+        <!-- Key Metrics -->
+        <div class="p-4 grid grid-cols-2 gap-4">
+            <div class="bg-white dark:bg-[#1A2633] p-4 rounded-2xl shadow-sm">
+                <p class="text-[10px] text-gray-400 uppercase font-bold">Monthly Revenue</p>
+                <p class="text-xl font-bold text-primary">$124,500</p>
+                <div class="flex items-center gap-1 mt-1 text-green-500 text-[10px]">
+                    <span class="material-symbols-outlined text-xs">trending_up</span>
+                    <span>+12.5%</span>
+                </div>
+            </div>
+            <div class="bg-white dark:bg-[#1A2633] p-4 rounded-2xl shadow-sm">
+                <p class="text-[10px] text-gray-400 uppercase font-bold">Avg. Ticket</p>
+                <p class="text-xl font-bold text-primary">$68.20</p>
+                <div class="flex items-center gap-1 mt-1 text-red-500 text-[10px]">
+                    <span class="material-symbols-outlined text-xs">trending_down</span>
+                    <span>-2.1%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Revenue Chart Placeholder -->
+        <div class="px-4 pb-4">
+            <div class="bg-white dark:bg-[#1A2633] p-6 rounded-2xl shadow-sm">
+                <h2 class="font-bold mb-4">Revenue Growth</h2>
+                <div class="h-48 w-full bg-blue-50/30 dark:bg-blue-900/10 rounded-xl relative overflow-hidden flex items-end px-4">
+                    <svg class="absolute inset-0 w-full h-full" viewBox="0 0 400 200" preserveAspectRatio="none">
+                        <path d="M0 150 Q50 140 100 120 T200 80 T300 100 T400 50 L400 200 L0 200 Z" fill="#87CEEB22" />
+                        <path d="M0 150 Q50 140 100 120 T200 80 T300 100 T400 50" fill="none" stroke="#87CEEB" stroke-width="3" />
+                    </svg>
+                    <div class="flex justify-between w-full relative z-10 text-[10px] text-gray-400 pb-2">
+                        <span>Jan</span><span>Mar</span><span>May</span><span>Jul</span><span>Sep</span><span>Nov</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Breakdown by Service -->
+        <div class="px-4">
+            <h2 class="font-bold mb-3 px-1">Revenue by Service</h2>
+            <div class="bg-white dark:bg-[#1A2633] rounded-2xl overflow-hidden shadow-sm">
+                <div class="p-4 flex items-center justify-between border-b border-gray-50 dark:border-gray-800">
+                    <div class="flex items-center gap-3">
+                        <div class="size-3 rounded-full bg-blue-400"></div>
+                        <span class="text-sm">Cleaning</span>
+                    </div>
+                    <span class="text-sm font-bold">58%</span>
+                </div>
+                <div class="p-4 flex items-center justify-between border-b border-gray-50 dark:border-gray-800">
+                    <div class="flex items-center gap-3">
+                        <div class="size-3 rounded-full bg-orange-400"></div>
+                        <span class="text-sm">Caregiving</span>
+                    </div>
+                    <span class="text-sm font-bold">24%</span>
+                </div>
+                <div class="p-4 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="size-3 rounded-full bg-green-400"></div>
+                        <span class="text-sm">Cooking</span>
+                    </div>
+                    <span class="text-sm font-bold">18%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-4">
+            <button class="w-full bg-primary text-white font-bold py-4 rounded-2xl shadow-md active:scale-95 transition-transform">
+                Export Full Report (PDF)
+            </button>
+        </div>
+    </div>
+</body>
+</html>

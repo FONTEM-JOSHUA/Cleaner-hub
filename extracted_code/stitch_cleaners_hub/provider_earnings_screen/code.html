@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>My Earnings - Cleaners Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#87CEEB",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101b22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-[#F5F5F5] dark:bg-background-dark text-[#111518] dark:text-white font-display">
+    <div class="flex flex-col min-h-screen pb-24">
+        <!-- Header -->
+        <div class="flex items-center bg-white dark:bg-[#1A2633] p-4 pt-6 justify-between sticky top-0 z-10 shadow-sm">
+            <div class="flex items-center gap-3">
+                <button class="material-symbols-outlined text-[#111518] dark:text-white">arrow_back</button>
+                <h1 class="text-xl font-bold">My Earnings</h1>
+            </div>
+            <button class="material-symbols-outlined text-primary">download</button>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="p-4 grid grid-cols-2 gap-4">
+            <div class="bg-white dark:bg-[#1A2633] p-4 rounded-2xl shadow-sm border border-transparent dark:border-gray-800">
+                <p class="text-gray-500 text-sm">Total Earned</p>
+                <p class="text-2xl font-bold text-green-600 mt-1">$4,250</p>
+            </div>
+            <div class="bg-white dark:bg-[#1A2633] p-4 rounded-2xl shadow-sm border border-transparent dark:border-gray-800">
+                <p class="text-gray-500 text-sm">Pending</p>
+                <p class="text-2xl font-bold text-orange-500 mt-1">$320</p>
+            </div>
+        </div>
+
+        <!-- Earnings Chart Placeholder -->
+        <div class="px-4 pb-4">
+            <div class="bg-white dark:bg-[#1A2633] p-4 rounded-2xl shadow-sm border border-transparent dark:border-gray-800">
+                <h2 class="font-bold mb-4">Earnings Overview</h2>
+                <div class="h-40 w-full flex items-end gap-2 pb-2 border-b border-gray-100">
+                    <div class="flex-1 bg-primary/20 rounded-t h-20"></div>
+                    <div class="flex-1 bg-primary/40 rounded-t h-28"></div>
+                    <div class="flex-1 bg-primary/60 rounded-t h-32"></div>
+                    <div class="flex-1 bg-primary/40 rounded-t h-24"></div>
+                    <div class="flex-1 bg-primary/80 rounded-t h-36"></div>
+                    <div class="flex-1 bg-primary/60 rounded-t h-30"></div>
+                    <div class="flex-1 bg-primary h-40"></div>
+                </div>
+                <div class="flex justify-between mt-2 text-[10px] text-gray-400">
+                    <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transaction History -->
+        <div class="px-4">
+            <h2 class="font-bold mb-3">Recent Transactions</h2>
+            <div class="flex flex-col gap-2">
+                <div class="bg-white dark:bg-[#1A2633] p-4 rounded-2xl shadow-sm flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="size-10 rounded-full bg-blue-50 flex items-center justify-center text-primary">
+                            <span class="material-symbols-outlined">cleaning_services</span>
+                        </div>
+                        <div>
+                            <p class="font-bold text-sm">Deep Cleaning</p>
+                            <p class="text-xs text-gray-400">Oct 24, 2023</p>
+                        </div>
+                    </div>
+                    <p class="font-bold text-green-600">+$85.00</p>
+                </div>
+                <div class="bg-white dark:bg-[#1A2633] p-4 rounded-2xl shadow-sm flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="size-10 rounded-full bg-orange-50 flex items-center justify-center text-orange-500">
+                            <span class="material-symbols-outlined">flatware</span>
+                        </div>
+                        <div>
+                            <p class="font-bold text-sm">Meal Preparation</p>
+                            <p class="text-xs text-gray-400">Oct 23, 2023</p>
+                        </div>
+                    </div>
+                    <p class="font-bold text-green-600">+$45.00</p>
+                </div>
+                <div class="bg-white dark:bg-[#1A2633] p-4 rounded-2xl shadow-sm flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="size-10 rounded-full bg-blue-50 flex items-center justify-center text-primary">
+                            <span class="material-symbols-outlined">cleaning_services</span>
+                        </div>
+                        <div>
+                            <p class="font-bold text-sm">Standard Cleaning</p>
+                            <p class="text-xs text-gray-400">Oct 22, 2023</p>
+                        </div>
+                    </div>
+                    <p class="font-bold text-green-600">+$60.00</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payout Button -->
+        <div class="p-4 mt-auto">
+            <button class="w-full bg-primary text-white font-bold py-4 rounded-2xl shadow-lg active:scale-95 transition-transform">
+                Request Payout
+            </button>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Support Tickets - Admin - Cleaners Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#87CEEB",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101b22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-[#F5F5F5] dark:bg-background-dark text-[#111518] dark:text-white font-display">
+    <div class="flex flex-col min-h-screen pb-24">
+        <!-- Header -->
+        <div class="flex items-center bg-white dark:bg-[#1A2633] p-4 pt-6 justify-between sticky top-0 z-10 shadow-sm">
+            <div class="flex items-center gap-3">
+                <button class="material-symbols-outlined text-[#111518] dark:text-white">arrow_back</button>
+                <h1 class="text-xl font-bold">Support Tickets</h1>
+            </div>
+            <span class="material-symbols-outlined text-primary">filter_list</span>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="flex gap-2 p-4 overflow-x-auto no-scrollbar">
+            <button class="px-4 py-2 rounded-full bg-primary text-white text-xs font-bold shrink-0">Open (12)</button>
+            <button class="px-4 py-2 rounded-full bg-white dark:bg-gray-800 text-gray-500 text-xs font-bold shrink-0 shadow-sm">In Progress (5)</button>
+            <button class="px-4 py-2 rounded-full bg-white dark:bg-gray-800 text-gray-500 text-xs font-bold shrink-0 shadow-sm">Resolved (142)</button>
+        </div>
+
+        <!-- Ticket List -->
+        <div class="flex flex-col gap-3 px-4">
+            <!-- Ticket 1 -->
+            <div class="bg-white dark:bg-[#1A2633] p-4 rounded-2xl shadow-sm border-l-4 border-red-500">
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-[10px] font-bold text-gray-400">TKT-8291</span>
+                    <span class="text-[10px] font-bold text-red-500 uppercase">High Priority</span>
+                </div>
+                <h3 class="font-bold text-sm mb-1">Provider didn't show up</h3>
+                <p class="text-xs text-gray-500 line-clamp-2 mb-3">Client Sarah Jenkins reports that the cleaner Maria S. didn't arrive for the scheduled deep cleaning...</p>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <div class="size-6 rounded-full bg-blue-100 flex items-center justify-center text-[10px] font-bold text-primary">SJ</div>
+                        <span class="text-[10px] font-medium">Sarah Jenkins</span>
+                    </div>
+                    <button class="text-xs font-bold text-primary">Assign to Me</button>
+                </div>
+            </div>
+
+            <!-- Ticket 2 -->
+            <div class="bg-white dark:bg-[#1A2633] p-4 rounded-2xl shadow-sm border-l-4 border-orange-400">
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-[10px] font-bold text-gray-400">TKT-8288</span>
+                    <span class="text-[10px] font-bold text-orange-400 uppercase">Medium</span>
+                </div>
+                <h3 class="font-bold text-sm mb-1">Payment Dispute</h3>
+                <p class="text-xs text-gray-500 line-clamp-2 mb-3">Provider claims the job took 2 hours longer than estimated and wants a custom quote adjustment...</p>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <div class="size-6 rounded-full bg-blue-100 flex items-center justify-center text-[10px] font-bold text-primary">MC</div>
+                        <span class="text-[10px] font-medium">Michael Chen</span>
+                    </div>
+                    <button class="text-xs font-bold text-primary">Assign to Me</button>
+                </div>
+            </div>
+
+            <!-- Ticket 3 -->
+            <div class="bg-white dark:bg-[#1A2633] p-4 rounded-2xl shadow-sm border-l-4 border-gray-300">
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-[10px] font-bold text-gray-400">TKT-8285</span>
+                    <span class="text-[10px] font-bold text-gray-400 uppercase">Low</span>
+                </div>
+                <h3 class="font-bold text-sm mb-1">App crashing on login</h3>
+                <p class="text-xs text-gray-500 line-clamp-2 mb-3">User is using an iPhone 8 and says the app closes immediately after entering credentials...</p>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <div class="size-6 rounded-full bg-blue-100 flex items-center justify-center text-[10px] font-bold text-primary">ER</div>
+                        <span class="text-[10px] font-medium">Emily Rodriguez</span>
+                    </div>
+                    <button class="text-xs font-bold text-primary">Assign to Me</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
