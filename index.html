@@ -129,13 +129,25 @@
             'PROFILE': 'profile_screen_for_client_app/code.html'
         };
 
+        // In-memory cache to store fetched screen content and styles
+        const screenCache = {};
+
         const Screen = ({ screenKey, onNavigate }) => {
-            const [html, setHtml] = useState('');
-            const [styles, setStyles] = useState('');
-            const [loading, setLoading] = useState(true);
+            // Initialize state from cache if available
+            const [html, setHtml] = useState(screenCache[screenKey]?.html || '');
+            const [styles, setStyles] = useState(screenCache[screenKey]?.styles || '');
+            const [loading, setLoading] = useState(!screenCache[screenKey]);
             const containerRef = useRef(null);
 
             useEffect(() => {
+                // If already in cache, no need to fetch again
+                if (screenCache[screenKey]) {
+                    setHtml(screenCache[screenKey].html);
+                    setStyles(screenCache[screenKey].styles);
+                    setLoading(false);
+                    return;
+                }
+
                 const fetchContent = async () => {
                     setLoading(true);
                     try {
@@ -150,13 +162,18 @@
                         const styleContent = Array.from(doc.querySelectorAll('style'))
                             .map(s => s.innerHTML)
                             .join('\n');
-                        setStyles(styleContent);
 
-                        // Extract Body Content (excluding scripts which we'll handle separately)
+                        // Extract Body Content
                         const bodyContent = doc.body.innerHTML;
-                        setHtml(bodyContent);
 
-                        // We'll handle scripts in a separate useEffect
+                        // Store in cache for future use
+                        screenCache[screenKey] = {
+                            html: bodyContent,
+                            styles: styleContent
+                        };
+
+                        setStyles(styleContent);
+                        setHtml(bodyContent);
                     } catch (error) {
                         console.error('Failed to load screen:', error);
                         setHtml('<div class="p-10 text-center">Failed to load screen.</div>');
