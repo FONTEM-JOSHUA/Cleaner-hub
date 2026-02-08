@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Verify Providers - Admin - Cleaners Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#87CEEB",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101b22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-[#F5F5F5] dark:bg-background-dark text-[#111518] dark:text-white font-display">
+    <div class="flex flex-col min-h-screen pb-24">
+        <!-- Header -->
+        <div class="flex items-center bg-white dark:bg-[#1A2633] p-4 pt-6 justify-between sticky top-0 z-10 shadow-sm">
+            <div class="flex items-center gap-3">
+                <button class="material-symbols-outlined text-[#111518] dark:text-white">arrow_back</button>
+                <h1 class="text-xl font-bold">Provider Verifications</h1>
+            </div>
+            <div class="relative">
+                <span class="material-symbols-outlined text-gray-400">search</span>
+            </div>
+        </div>
+
+        <!-- Pending Count -->
+        <div class="p-4 bg-orange-50 dark:bg-orange-900/20 border-b border-orange-100 dark:border-orange-800 flex justify-between items-center">
+            <p class="text-orange-700 dark:text-orange-400 font-medium">8 Providers awaiting approval</p>
+            <span class="bg-orange-500 text-white text-xs px-2 py-0.5 rounded-full font-bold">8</span>
+        </div>
+
+        <!-- Provider List -->
+        <div class="flex flex-col gap-4 p-4">
+            <!-- Provider Card 1 -->
+            <div class="bg-white dark:bg-[#1A2633] rounded-2xl p-4 shadow-sm border border-transparent dark:border-gray-800">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="size-12 rounded-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDwA32pnxxTyjbyqvL4E3ovoRtzqfJZ2K8uNemqGLig8J1hGuYXBD0e3wpsR2i5JW5TxKqkXbjPf0py4RPokK_VzI_-GnkPGMnwRz7gW9dVTLXpRqyDXLUZldZzpGBQfvCu9lCixfzqIcFWYlz82chLLVsf_j8dwfytTBxepK-fvV00-19qZPAGrPP34LBD7jLHku0mCpQSGcDSbRDC4k0NdT6T5e76OsNl-gF5cwlSd2rB6JEwxikDi5tcjWRAV964SqjWW1aHbsCV');"></div>
+                        <div>
+                            <p class="font-bold">Johnathan Doe</p>
+                            <p class="text-xs text-gray-500">Service: Home Cleaning</p>
+                        </div>
+                    </div>
+                    <span class="text-[10px] font-bold text-gray-400">2h ago</span>
+                </div>
+                <div class="bg-gray-50 dark:bg-gray-800/50 p-3 rounded-xl mb-4 flex gap-2">
+                    <div class="flex-1 text-center border-r border-gray-200 dark:border-gray-700">
+                        <p class="text-[10px] text-gray-400 uppercase">ID Verified</p>
+                        <span class="material-symbols-outlined text-green-500 text-sm">check_circle</span>
+                    </div>
+                    <div class="flex-1 text-center">
+                        <p class="text-[10px] text-gray-400 uppercase">Background</p>
+                        <span class="material-symbols-outlined text-orange-500 text-sm">pending</span>
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <button class="flex-1 bg-green-500 text-white font-bold py-2 rounded-xl text-sm active:scale-95 transition-transform">Approve</button>
+                    <button class="flex-1 bg-red-50 text-red-500 font-bold py-2 rounded-xl text-sm active:scale-95 transition-transform">Decline</button>
+                    <button class="size-10 bg-gray-100 flex items-center justify-center rounded-xl material-symbols-outlined">visibility</button>
+                </div>
+            </div>
+
+            <!-- Provider Card 2 -->
+            <div class="bg-white dark:bg-[#1A2633] rounded-2xl p-4 shadow-sm border border-transparent dark:border-gray-800">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="size-12 rounded-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDFuq9bulH-_P8nvFzpm2-H6FOMgxvtY4cCmHsOxH5WZ3BQYdsUVrAcNvgawQo1G30LYQkusPmvB9oDvuLTqBHJOWkGzMt_1ob4dq5J1Rbg74RFPNVlY7ydUD3qe0H92YQvIOenAuwXD4-77JLhIF06mEw_WiNPZIBP6hW-kUpM8yP-g6npBGs3-NrDmH7iE-sDLYl2gqAqMW906SQZ_KQrg8VYnUUt2McXozJhOzwp8NiQ6ITxZkgQKZzUeIa9TJ0yrqYR5g6r-McL');"></div>
+                        <div>
+                            <p class="font-bold">Mary Smith</p>
+                            <p class="text-xs text-gray-500">Service: Child Care</p>
+                        </div>
+                    </div>
+                    <span class="text-[10px] font-bold text-gray-400">5h ago</span>
+                </div>
+                <div class="bg-gray-50 dark:bg-gray-800/50 p-3 rounded-xl mb-4 flex gap-2">
+                    <div class="flex-1 text-center border-r border-gray-200 dark:border-gray-700">
+                        <p class="text-[10px] text-gray-400 uppercase">ID Verified</p>
+                        <span class="material-symbols-outlined text-green-500 text-sm">check_circle</span>
+                    </div>
+                    <div class="flex-1 text-center">
+                        <p class="text-[10px] text-gray-400 uppercase">Background</p>
+                        <span class="material-symbols-outlined text-green-500 text-sm">check_circle</span>
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <button class="flex-1 bg-green-500 text-white font-bold py-2 rounded-xl text-sm active:scale-95 transition-transform">Approve</button>
+                    <button class="flex-1 bg-red-50 text-red-500 font-bold py-2 rounded-xl text-sm active:scale-95 transition-transform">Decline</button>
+                    <button class="size-10 bg-gray-100 flex items-center justify-center rounded-xl material-symbols-outlined">visibility</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

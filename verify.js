@@ -29,6 +29,20 @@ const { chromium } = require('playwright');
   await page.waitForTimeout(2000);
   await page.screenshot({ path: 'screenshot_admin_dashboard.png' });
 
+  console.log('Taking Emergency Mode screenshot...');
+  await page.evaluate(() => {
+    window.dispatchEvent(new CustomEvent('navigate', { detail: 'EMERGENCY_MODE' }));
+  });
+  await page.waitForTimeout(2000);
+  await page.screenshot({ path: 'screenshot_emergency_mode.png' });
+
+  console.log('Taking Provider Profile Edit screenshot...');
+  await page.evaluate(() => {
+    window.dispatchEvent(new CustomEvent('navigate', { detail: 'PROVIDER_PROFILE_EDIT' }));
+  });
+  await page.waitForTimeout(2000);
+  await page.screenshot({ path: 'screenshot_provider_profile_edit.png' });
+
   console.log('Screenshots taken.');
   await browser.close();
 })();
