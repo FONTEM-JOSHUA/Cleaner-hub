@@ -1,0 +1,3 @@
+## 2025-05-15 - [Accessibility & Contrast on Profile Screen]
+**Learning:** The initial "Sky Blue" (#87CEEB or similar) used for primary actions fails WCAG AA contrast standards (approx 2.3:1) when paired with white text. Switching to a deeper blue (#1d4ed8) significantly improves readability and accessibility. Also, using non-semantic divs for buttons is a common pattern in prototypes that hinders keyboard navigation; converting them to semantic buttons with focus states and tactile feedback (active:scale-95) greatly improves the UX.
+**Action:** Always check contrast of primary actions and prefer semantic HTML buttons over interactive divs with click listeners.
