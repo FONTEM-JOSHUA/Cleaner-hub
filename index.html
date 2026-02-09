@@ -10,6 +10,13 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com">
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="dns-prefetch" href="https://lh3.googleusercontent.com">
+
     <!-- Load Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Load Material Icons and Symbols -->
@@ -111,6 +118,10 @@
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
+        // In-memory cache to prevent redundant fetches and parsing
+        const screenCache = {};
+        const parser = new DOMParser();
+
         const SCREEN_MAP = {
             'WELCOME': 'welcome_screen/code.html',
             'SIGNUP': 'login/signup_screen/code.html',
@@ -137,26 +148,41 @@
 
             useEffect(() => {
                 const fetchContent = async () => {
+                    // Check cache first
+                    if (screenCache[screenKey]) {
+                        setHtml(screenCache[screenKey].html);
+                        setStyles(screenCache[screenKey].styles);
+                        setLoading(false);
+                        return;
+                    }
+
                     setLoading(true);
                     try {
                         const path = `extracted_code/stitch_cleaners_hub/${SCREEN_MAP[screenKey]}`;
                         const response = await fetch(path);
                         const text = await response.text();
 
-                        const parser = new DOMParser();
                         const doc = parser.parseFromString(text, 'text/html');
 
                         // Extract Styles
                         const styleContent = Array.from(doc.querySelectorAll('style'))
                             .map(s => s.innerHTML)
                             .join('\n');
-                        setStyles(styleContent);
 
-                        // Extract Body Content (excluding scripts which we'll handle separately)
+                        // Optimize Images (Bolt's touch - done once per screen before caching)
+                        doc.querySelectorAll('img').forEach(img => {
+                            if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
+                            if (!img.hasAttribute('decoding')) img.setAttribute('decoding', 'async');
+                        });
+
+                        // Extract Body Content
                         const bodyContent = doc.body.innerHTML;
-                        setHtml(bodyContent);
 
-                        // We'll handle scripts in a separate useEffect
+                        // Cache the results
+                        screenCache[screenKey] = { html: bodyContent, styles: styleContent };
+
+                        setStyles(styleContent);
+                        setHtml(bodyContent);
                     } catch (error) {
                         console.error('Failed to load screen:', error);
                         setHtml('<div class="p-10 text-center">Failed to load screen.</div>');
