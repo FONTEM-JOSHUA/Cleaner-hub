@@ -66,28 +66,28 @@
 <div class="flex-1 flex flex-col px-6 py-4 pb-8">
 <!-- Headline -->
 <div class="text-center mb-6">
-<h1 class="text-xl font-semibold text-text-main dark:text-white">Find your perfect helper</h1>
-<p class="text-text-subtle dark:text-gray-400 text-sm mt-1">Join our community of trusted professionals</p>
+<h1 class="text-xl font-semibold text-text-main dark:text-white" id="auth-title">Find your perfect helper</h1>
+<p class="text-text-subtle dark:text-gray-400 text-sm mt-1" id="auth-subtitle">Join our community of trusted professionals</p>
 </div>
 <!-- Segmented Control -->
 <div class="mb-6">
 <div class="flex h-12 w-full items-center justify-center rounded-full bg-background-light dark:bg-background-dark p-1">
-<!-- Login Tab (Inactive Style) -->
-<label class="group flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-full px-4 relative transition-all duration-200">
+<!-- Login Tab -->
+<label id="login-tab" class="group flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-full px-4 relative transition-all duration-200">
 <span class="z-10 text-sm font-medium text-text-subtle group-hover:text-text-main dark:text-gray-400 dark:group-hover:text-white transition-colors">Login</span>
-<input class="invisible absolute w-0 h-0" name="auth-mode" type="radio" value="login"/>
+<input class="sr-only" name="auth-mode" type="radio" value="login" onchange="toggleAuthMode('login')"/>
 </label>
-<!-- Sign Up Tab (Active Style) -->
-<label class="group flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-full px-4 relative shadow-sm transition-all duration-200 bg-primary">
+<!-- Sign Up Tab -->
+<label id="signup-tab" class="group flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-full px-4 relative shadow-sm transition-all duration-200 bg-primary">
 <span class="z-10 text-sm font-semibold text-white">Sign Up</span>
-<input checked="" class="invisible absolute w-0 h-0" name="auth-mode" type="radio" value="signup"/>
+<input checked="" class="sr-only" name="auth-mode" type="radio" value="signup" onchange="toggleAuthMode('signup')"/>
 </label>
 </div>
 </div>
-<!-- Form Fields (Signup Mode) -->
+<!-- Form Fields -->
 <div class="flex flex-col gap-4">
-<!-- Full Name -->
-<div class="relative">
+<!-- Full Name (Signup only) -->
+<div class="relative" id="name-field">
 <div class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-text-subtle">
 <span class="material-symbols-outlined text-[20px]">person</span>
 </div>
@@ -98,10 +98,10 @@
 <div class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-text-subtle">
 <span class="material-symbols-outlined text-[20px]">mail</span>
 </div>
-<input class="w-full bg-background-light dark:bg-background-dark text-text-main dark:text-white placeholder:text-text-subtle/70 rounded-full h-12 pl-11 pr-4 border-none focus:ring-2 focus:ring-primary/50 text-base" placeholder="Email Address" type="email"/>
+<input class="w-full bg-background-light dark:bg-background-dark text-text-main dark:text-white placeholder:text-text-subtle/70 rounded-full h-12 pl-11 pr-4 border-none focus:ring-2 focus:ring-primary/50 text-base" placeholder="Email or Phone" type="text"/>
 </div>
-<!-- Phone -->
-<div class="relative">
+<!-- Phone (Signup only) -->
+<div class="relative" id="phone-field">
 <div class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-text-subtle">
 <span class="material-symbols-outlined text-[20px]">call</span>
 </div>
@@ -117,8 +117,12 @@
 <span class="material-symbols-outlined text-[20px]">visibility_off</span>
 </button>
 </div>
-<!-- Terms & Conditions Checkbox -->
-<label class="flex items-start gap-3 mt-1 px-2 cursor-pointer group">
+<!-- Forgot Password (Login only) -->
+<div class="text-right hidden" id="forgot-password">
+    <a href="#" class="text-xs text-primary font-medium hover:underline">Forgot Password?</a>
+</div>
+<!-- Terms & Conditions Checkbox (Signup only) -->
+<label class="flex items-start gap-3 mt-1 px-2 cursor-pointer group" id="terms-field">
 <div class="relative flex items-center">
 <input class="peer h-5 w-5 cursor-pointer appearance-none rounded-md border border-gray-300 dark:border-gray-600 bg-transparent checked:border-primary checked:bg-primary transition-all" type="checkbox"/>
 <span class="material-symbols-outlined pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[16px] text-white opacity-0 peer-checked:opacity-100">check</span>
@@ -130,11 +134,59 @@
 </div>
 <!-- Action Button -->
 <div class="mt-8">
-<button class="w-full h-12 bg-primary hover:bg-primary-dark active:scale-[0.98] transition-all text-white font-semibold text-base rounded-full shadow-lg shadow-primary/20 flex items-center justify-center gap-2">
-<span>Create Account</span>
+<button class="w-full h-12 bg-primary hover:bg-primary-dark active:scale-[0.98] transition-all text-white font-semibold text-base rounded-full shadow-lg shadow-primary/20 flex items-center justify-center gap-2" id="submit-btn">
+<span id="submit-text">Create Account</span>
 <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
 </button>
 </div>
+
+<script>
+function toggleAuthMode(mode) {
+    const loginTab = document.getElementById('login-tab');
+    const signupTab = document.getElementById('signup-tab');
+    const nameField = document.getElementById('name-field');
+    const phoneField = document.getElementById('phone-field');
+    const termsField = document.getElementById('terms-field');
+    const forgotPassword = document.getElementById('forgot-password');
+    const submitText = document.getElementById('submit-text');
+    const title = document.getElementById('auth-title');
+    const subtitle = document.getElementById('auth-subtitle');
+
+    if (mode === 'login') {
+        loginTab.classList.add('bg-primary');
+        loginTab.querySelector('span').classList.replace('text-text-subtle', 'text-white');
+        loginTab.querySelector('span').classList.add('font-semibold');
+
+        signupTab.classList.remove('bg-primary');
+        signupTab.querySelector('span').classList.replace('text-white', 'text-text-subtle');
+        signupTab.querySelector('span').classList.remove('font-semibold');
+
+        nameField.classList.add('hidden');
+        phoneField.classList.add('hidden');
+        termsField.classList.add('hidden');
+        forgotPassword.classList.remove('hidden');
+        submitText.innerText = 'Login';
+        title.innerText = 'Welcome Back';
+        subtitle.innerText = 'Log in to continue to your dashboard';
+    } else {
+        signupTab.classList.add('bg-primary');
+        signupTab.querySelector('span').classList.replace('text-text-subtle', 'text-white');
+        signupTab.querySelector('span').classList.add('font-semibold');
+
+        loginTab.classList.remove('bg-primary');
+        loginTab.querySelector('span').classList.replace('text-white', 'text-text-subtle');
+        loginTab.querySelector('span').classList.remove('font-semibold');
+
+        nameField.classList.remove('hidden');
+        phoneField.classList.remove('hidden');
+        termsField.classList.remove('hidden');
+        forgotPassword.classList.add('hidden');
+        submitText.innerText = 'Create Account';
+        title.innerText = 'Find your perfect helper';
+        subtitle.innerText = 'Join our community of trusted professionals';
+    }
+}
+</script>
 <!-- Divider -->
 <div class="relative py-8">
 <div aria-hidden="true" class="absolute inset-0 flex items-center">
