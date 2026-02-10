@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Edit Provider Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#42b0f0",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101b22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "1.5rem",
+                        "xl": "2rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111518] dark:text-white antialiased">
+    <div class="relative mx-auto flex min-h-screen max-w-md flex-col bg-background-light dark:bg-background-dark overflow-x-hidden shadow-2xl pb-24">
+        <!-- Top App Bar -->
+        <div class="flex items-center justify-between bg-white dark:bg-[#101b22] p-4 pb-2 border-b border-gray-100 dark:border-gray-800 sticky top-0 z-10">
+            <button class="flex size-10 items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer text-gray-900 dark:text-white">
+                <span class="material-symbols-outlined text-2xl">arrow_back</span>
+            </button>
+            <h2 class="flex-1 text-center text-lg font-bold leading-tight tracking-tight text-gray-900 dark:text-white">Edit Profile</h2>
+            <div class="size-10"></div>
+        </div>
+
+        <!-- Form Content -->
+        <div class="p-4 space-y-6">
+            <!-- Profile Photo & Bio -->
+            <section class="bg-white dark:bg-[#15232d] p-5 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800">
+                <h3 class="font-bold text-sm mb-4">Profile Photo & Bio</h3>
+                <div class="flex flex-col items-center mb-6">
+                    <div class="relative">
+                        <div class="h-24 w-24 rounded-full bg-cover bg-center border-4 border-white dark:border-gray-700 shadow-md" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA2fePn5fB9HaKRpTGeXFtP32ryFKi9jnWnlQZUxrq4IhDBTJAocT65UHDZ7b2-kEljPBlaNLYtlhThVl3G53SlNsD4FjBHZipWrKUGleLjBu6NJdmRVvxi75N1a02qft25LdUj3-4VxvbxOx7IJ0J6rzGJYcG9JVQhY878m1xfiq4V8dvPzYYmi565__pK15gjjYAb_fJ1IE3vB11FsTJ0oGTj6OYMrDWwluYnQB2eGOe1_sLa1-eQkH7ljm0ID33Hh5RdJX8uqMy9')"></div>
+                        <button class="absolute bottom-0 right-0 bg-primary text-white p-1.5 rounded-full shadow-md border-2 border-white dark:border-gray-800">
+                            <span class="material-symbols-outlined text-xs">edit</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <label class="text-xs font-bold text-gray-400 uppercase ml-1">About Me / Bio</label>
+                        <textarea class="w-full mt-1 bg-gray-50 dark:bg-gray-800 border-none rounded-xl text-sm p-3 focus:ring-2 focus:ring-primary/50 min-h-[100px]" placeholder="Describe your experience and services...">Hi! I'm Sarah, a dedicated cleaning specialist with over 5 years of experience in residential and commercial cleaning.</textarea>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Services & Prices -->
+            <section class="bg-white dark:bg-[#15232d] p-5 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-bold text-sm">Services & Prices</h3>
+                    <button class="text-primary text-xs font-bold">+ Add New</button>
+                </div>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-xl">
+                        <div>
+                            <p class="text-sm font-bold">Standard Cleaning</p>
+                            <p class="text-[10px] text-gray-500">$30/hour</p>
+                        </div>
+                        <button class="text-gray-400"><span class="material-symbols-outlined text-lg">edit</span></button>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-xl">
+                        <div>
+                            <p class="text-sm font-bold">Deep Clean</p>
+                            <p class="text-[10px] text-gray-500">$45/hour</p>
+                        </div>
+                        <button class="text-gray-400"><span class="material-symbols-outlined text-lg">edit</span></button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Work Photos -->
+            <section class="bg-white dark:bg-[#15232d] p-5 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800">
+                <h3 class="font-bold text-sm mb-4">Work Gallery (Before/After)</h3>
+                <div class="grid grid-cols-3 gap-2">
+                    <div class="aspect-square bg-gray-100 dark:bg-gray-800 rounded-lg bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCLjueoL7Kz007H6NyZFlSJ_mQspf0RtDosExCq_U7hC98Rx-MAoP3k3R7s81wYZ_weQ21s_w2NFK1aA4dSrnisBHQakPexYX7ZIhubka0vQhqcKHPTJwtIIOHDV15j_cH8YydRVwqrpX4JMVB9bwf0yCAMLNLeVFR3OVZ8amDsi78tvSug5GfKXXJmYFI3y5tSRrQVFOjJO80RaFcEaBS7bRAEjOBZh8Xv7i1Udgo0tWV68ChPZu9E9SRntgqGmXe24YyjusNlpAh_')"></div>
+                    <div class="aspect-square bg-gray-100 dark:bg-gray-800 rounded-lg bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDq0Ufw_XfOVHP8R2VZokXckG0xczcfamO1Dt20-C5zjyQogmAOKatZd6Bfu8Fi5CI7Ds3u7n2hVVVHK6RQPkxXcWcxVOizlEh1KNvJtA9B_AnUnoQFNMIBBHLnio3SoqM_4zn7paaGSUXHpHz6AG8_zEItMtnmqBmvMm0afTOdtPXLFYWTxkefgT-qIAI7Foon9W0hNPj_uQA0AwmFNCkfOfoSyx3H2y1kG5rFyxUaRZmbIJ15tcY9wD5aLyEcYVgM7PeevM3ftI6P')"></div>
+                    <button class="aspect-square bg-gray-50 dark:bg-gray-800 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-lg flex items-center justify-center text-gray-400">
+                        <span class="material-symbols-outlined">add_a_photo</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Certifications -->
+            <section class="bg-white dark:bg-[#15232d] p-5 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-bold text-sm">Certifications</h3>
+                    <button class="text-primary text-xs font-bold">+ Upload</button>
+                </div>
+                <div class="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-xl">
+                    <span class="material-symbols-outlined text-primary">verified</span>
+                    <p class="text-xs font-medium">Professional Cleaner Certification.pdf</p>
+                </div>
+            </section>
+
+            <!-- Team Members -->
+            <section class="bg-white dark:bg-[#15232d] p-5 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-bold text-sm">Team Members</h3>
+                    <button class="text-primary text-xs font-bold">+ Add</button>
+                </div>
+                <div class="flex -space-x-3 overflow-hidden p-1">
+                    <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white dark:ring-gray-800 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEL6osIC8PkM-akTkUWlpICTGw594DkqGZyPtfrPp1cvpJUlnepSZzOWTAVDpJHghx_dDQU134MTuJ26MPY98-0smFiuBwdfX2GkxPIlWTofjQKQlLeAjLw-XklWJSUKVBcx5wvgj4xwCPOuzst2m2zW6qYDnzqDyBP1dd5zdkkzpVmAbObw6rdHR1NVaaD6g6NJccluJrISku6y0UYZ9tnyhvuGMekku2POBpQeGJCWkVW0rjC-KNcOKklyHaN6FLdP2JWlHP8yVB" alt=""/>
+                    <img class="inline-block h-10 w-10 rounded-full ring-2 ring-white dark:ring-gray-800 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHfMc_lsRdg0zS0swFX_VOweElzsjl4IKavKC-Fy9NJqHTse2qKXlB6c0cFOKmH_e2LaHBih3bjT6RSTTKxTYGGX7QFYxhwBQerBCnMdeRgN9djYzf5NwsNte5sqKSS01l0NJuY8bVLUI6ujyJZ-2EiLAXWdT5z999A4k2SIX2koIgW3_RYM66i7eZ4vpHdyfqJsws5nBVjqoctB9xsBafHAf-TuGNl-_0TVHDJU1pIf0UdQN8WyRx6PRCdWoIarbW4w9sVygr2coZ" alt=""/>
+                </div>
+            </section>
+
+            <!-- Bank Details -->
+            <section class="bg-white dark:bg-[#15232d] p-5 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800">
+                <h3 class="font-bold text-sm mb-4">Bank Details (Payouts)</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="text-xs font-bold text-gray-400 uppercase ml-1">Account Holder</label>
+                        <input class="w-full mt-1 bg-gray-50 dark:bg-gray-800 border-none rounded-full h-10 px-4 text-sm focus:ring-2 focus:ring-primary/50" value="Sarah Jenkins" type="text"/>
+                    </div>
+                    <div>
+                        <label class="text-xs font-bold text-gray-400 uppercase ml-1">Bank Name</label>
+                        <input class="w-full mt-1 bg-gray-50 dark:bg-gray-800 border-none rounded-full h-10 px-4 text-sm focus:ring-2 focus:ring-primary/50" value="Chase Bank" type="text"/>
+                    </div>
+                    <div>
+                        <label class="text-xs font-bold text-gray-400 uppercase ml-1">Account Number</label>
+                        <input class="w-full mt-1 bg-gray-50 dark:bg-gray-800 border-none rounded-full h-10 px-4 text-sm focus:ring-2 focus:ring-primary/50" value="**** 4567" type="text"/>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Sticky Footer -->
+        <div class="fixed bottom-0 left-0 right-0 p-4 bg-white dark:bg-[#101b22] border-t border-gray-100 dark:border-gray-800 z-30">
+            <button class="w-full h-12 bg-primary text-white font-bold rounded-full shadow-lg shadow-blue-200 dark:shadow-none hover:bg-sky-500 transition-colors">Save Changes</button>
+        </div>
+    </div>
+</body>
+</html>
