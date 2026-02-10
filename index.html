@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cleaner Hub - Home Service Professional Platform</title>
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com">
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="dns-prefetch" href="https://unpkg.com">
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+
     <!-- Load React, ReactDOM, and Babel from CDN -->
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
@@ -129,6 +139,10 @@
             'PROFILE': 'profile_screen_for_client_app/code.html'
         };
 
+        // Reuse DOMParser and implement screen caching to improve performance
+        const parser = new DOMParser();
+        const screenCache = {};
+
         const Screen = ({ screenKey, onNavigate }) => {
             const [html, setHtml] = useState('');
             const [styles, setStyles] = useState('');
@@ -137,23 +151,43 @@
 
             useEffect(() => {
                 const fetchContent = async () => {
+                    // Return from cache if available to avoid redundant network requests and parsing
+                    if (screenCache[screenKey]) {
+                        setHtml(screenCache[screenKey].html);
+                        setStyles(screenCache[screenKey].styles);
+                        setLoading(false);
+                        return;
+                    }
+
                     setLoading(true);
                     try {
                         const path = `extracted_code/stitch_cleaners_hub/${SCREEN_MAP[screenKey]}`;
                         const response = await fetch(path);
                         const text = await response.text();
 
-                        const parser = new DOMParser();
                         const doc = parser.parseFromString(text, 'text/html');
+
+                        // Performance optimization: Add lazy loading and async decoding to all images
+                        doc.querySelectorAll('img').forEach(img => {
+                            if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
+                            if (!img.hasAttribute('decoding')) img.setAttribute('decoding', 'async');
+                        });
 
                         // Extract Styles
                         const styleContent = Array.from(doc.querySelectorAll('style'))
                             .map(s => s.innerHTML)
                             .join('\n');
-                        setStyles(styleContent);
 
                         // Extract Body Content (excluding scripts which we'll handle separately)
                         const bodyContent = doc.body.innerHTML;
+
+                        // Cache the results
+                        screenCache[screenKey] = {
+                            html: bodyContent,
+                            styles: styleContent
+                        };
+
+                        setStyles(styleContent);
                         setHtml(bodyContent);
 
                         // We'll handle scripts in a separate useEffect
