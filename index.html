@@ -21,6 +21,7 @@
             margin: 0;
             font-family: 'Inter', 'Montserrat', sans-serif;
             background-color: #f5f5f5;
+            overflow-x: hidden;
         }
         #root {
             min-height: 100vh;
@@ -34,25 +35,49 @@
             position: relative;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }
         .screen-container {
             flex: 1;
-            overflow-y: auto;
-            overflow-x: hidden;
+            position: relative;
+            overflow: hidden;
         }
+
+        .screen-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            background: white;
+            animation: slideIn 0.3s ease-out forwards;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        .slide-back {
+            animation: slideBack 0.3s ease-out forwards;
+        }
+
+        @keyframes slideBack {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+
         /* Custom scrollbar for a better look */
-        .screen-container::-webkit-scrollbar {
+        .screen-wrapper::-webkit-scrollbar {
             width: 4px;
         }
-        .screen-container::-webkit-scrollbar-track {
+        .screen-wrapper::-webkit-scrollbar-track {
             background: transparent;
         }
-        .screen-container::-webkit-scrollbar-thumb {
-            background: #888;
+        .screen-wrapper::-webkit-scrollbar-thumb {
+            background: #87CEEB;
             border-radius: 2px;
-        }
-        .screen-container::-webkit-scrollbar-thumb:hover {
-            background: #555;
         }
 
         /* Floating Action Menu for Demo */
@@ -103,6 +128,22 @@
             background: #f0f9ff;
             color: #87CEEB;
         }
+
+        /* Ripple effect */
+        .ripple {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -120,18 +161,49 @@
             'PROVIDER_PROFILE': 'service_provider_profile_screen_for_client_app/code.html',
             'BOOKING': 'booking_screen_for_client_app/code.html',
             'MY_BOOKINGS': 'my_bookings_screen_for_client_app_1/code.html',
+            'MY_BOOKINGS_2': 'my_bookings_screen_for_client_app_2/code.html',
+            'MY_BOOKINGS_3': 'my_bookings_screen_for_client_app_3/code.html',
             'PROVIDER_WELCOME': 'provider_welcome_screen/code.html',
             'PROVIDER_SETUP': 'provider_setup_screen/code.html',
             'PROVIDER_DASHBOARD': 'provider_dashboard_screen_1/code.html',
+            'PROVIDER_DASHBOARD_2': 'provider_dashboard_screen_2/code.html',
             'ADMIN_LOGIN': 'admin_login_screen/code.html',
             'ADMIN_DASHBOARD': 'admin_dashboard_screen_1/code.html',
+            'ADMIN_DASHBOARD_2': 'admin_dashboard_screen_2/code.html',
+            'ADMIN_DASHBOARD_3': 'admin_dashboard_screen_3/code.html',
+            'ADMIN_DASHBOARD_4': 'admin_dashboard_screen_4/code.html',
             'MESSAGES': 'messages_screen_for_client_app/code.html',
-            'PROFILE': 'profile_screen_for_client_app/code.html'
+            'PROFILE': 'profile_screen_for_client_app/code.html',
+            'OFFLINE_MODE': 'offline_mode_feature_screen/code.html',
+            'REPORT_PROVIDER': 'report_provider_screen_for_client_app/code.html',
+            'PROVIDER_PUBLIC_PROFILE': 'provider_profile_(public_view)_screen/code.html',
+            'QUICK_REBOOKING': 'quick_rebooking_feature_screen/code.html',
+            'BOOKING_REQUESTS': 'booking_requests_screen_for_provider_app/code.html',
+            'MANAGE_BOOKINGS': 'manage_bookings_screen_for_admin_app/code.html',
+            'EMERGENCY_MODE': 'emergency_mode_feature_screen/code.html',
+            'EASY_PAYMENTS': 'easy_payments_feature_screen/code.html',
+            'ADMIN_PROFILE_EDIT': 'admin_profile_edit_screen/code.html',
+            'REAL_TIME_TRACKING': 'real-time_tracking_screen/code.html',
+            'REPORT_CONFIRMATION': 'report_confirmation_screen/code.html',
+            'MULTI_LANGUAGE': 'multi-language_support_screen/code.html',
+            'CREATE_CHANNEL': 'create_new_channel_flow_(provider/admin_app)_/code.html',
+            'PHOTO_VERIFICATION': 'photo_verification_feature_screen/code.html',
+            'SMART_NOTIFICATIONS': 'smart_notifications_feature_screen/code.html',
+            'FAMILY_SHARING': 'family_sharing_feature_screen/code.html',
+            'CHANNEL_MEMBER_MGMT': 'channel_member_management_screen_(provider/admin_app)_/code.html',
+            'REPORT_CLIENT': 'report_client_screen_for_provider_app/code.html',
+            'CLIENT_REPORT_CONFIRMATION': 'client_report_confirmation_screen_(provider_app)_/code.html',
+            'SMART_SEARCH': 'smart_search_screen/code.html',
+            'CHANNELS': 'channels_screen_(client_app_flow)_/code.html',
+            'MY_CLIENTS': 'my_clients_screen_for_provider_app_(with_report_feature)/code.html',
+            'APP_SETTINGS': 'app_settings_screen_for_admin_app/code.html',
+            'MY_SCHEDULE': 'my_schedule_screen_for_provider_app/code.html',
+            'MANAGE_USERS': 'manage_users_screen_for_admin_app/code.html',
+            'CHANNEL_MGMT': 'channel_management_screen_(provider/admin_app)_/code.html'
         };
 
-        const Screen = ({ screenKey, onNavigate }) => {
+        const Screen = ({ screenKey, onNavigate, onBack }) => {
             const [html, setHtml] = useState('');
-            const [styles, setStyles] = useState('');
             const [loading, setLoading] = useState(true);
             const containerRef = useRef(null);
 
@@ -146,17 +218,28 @@
                         const parser = new DOMParser();
                         const doc = parser.parseFromString(text, 'text/html');
 
-                        // Extract Styles
-                        const styleContent = Array.from(doc.querySelectorAll('style'))
-                            .map(s => s.innerHTML)
-                            .join('\n');
-                        setStyles(styleContent);
+                        // Clean up existing screen assets
+                        document.querySelectorAll('[data-screen-assets]').forEach(el => el.remove());
 
-                        // Extract Body Content (excluding scripts which we'll handle separately)
-                        const bodyContent = doc.body.innerHTML;
-                        setHtml(bodyContent);
+                        // Inject Styles
+                        doc.querySelectorAll('style').forEach(s => {
+                            const newStyle = document.createElement('style');
+                            newStyle.innerHTML = s.innerHTML;
+                            newStyle.setAttribute('data-screen-assets', 'true');
+                            document.head.appendChild(newStyle);
+                        });
 
-                        // We'll handle scripts in a separate useEffect
+                        // Inject Head Scripts (especially Tailwind configs)
+                        doc.querySelectorAll('head script').forEach(s => {
+                            const newScript = document.createElement('script');
+                            Array.from(s.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+                            newScript.innerHTML = s.innerHTML;
+                            newScript.setAttribute('data-screen-assets', 'true');
+                            document.head.appendChild(newScript);
+                        });
+
+                        // Extract Body Content
+                        setHtml(doc.body.innerHTML);
                     } catch (error) {
                         console.error('Failed to load screen:', error);
                         setHtml('<div class="p-10 text-center">Failed to load screen.</div>');
@@ -166,58 +249,142 @@
                 fetchContent();
             }, [screenKey]);
 
-            // Execute scripts and attach listeners
             useEffect(() => {
                 if (!loading && containerRef.current) {
                     const container = containerRef.current;
 
-                    // 1. Manually execute any script tags found in the HTML
-                    // Note: This is simplified for the demo/prototype
+                    // Execute body scripts
                     const scripts = container.querySelectorAll('script');
                     scripts.forEach(oldScript => {
                         const newScript = document.createElement('script');
                         Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
-                        newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+                        newScript.innerHTML = oldScript.innerHTML;
                         oldScript.parentNode.replaceChild(newScript, oldScript);
                     });
 
-                    // 2. Attach Click Listeners for Navigation
+                    // Login/Signup Toggle Heuristic
+                    if (screenKey === 'LOGIN' || screenKey === 'SIGNUP') {
+                        const authModeRadios = container.querySelectorAll('input[name="auth-mode"]');
+                        if (authModeRadios.length > 0) {
+                            const targetValue = screenKey.toLowerCase();
+                            authModeRadios.forEach(radio => {
+                                if (radio.value === targetValue) {
+                                    radio.checked = true;
+                                    // Trigger any visual changes if needed
+                                    const label = radio.closest('label');
+                                    if (label) {
+                                        // Update classes based on what's in the original HTML
+                                        const siblingLabel = Array.from(authModeRadios).find(r => r.value !== targetValue)?.closest('label');
+                                        if (siblingLabel) {
+                                            siblingLabel.className = siblingLabel.className.replace('bg-primary', '').replace('shadow-sm', '').replace('text-white', 'text-text-subtle');
+                                        }
+                                        label.className += ' bg-primary shadow-sm';
+                                        label.querySelector('span').className = label.querySelector('span').className.replace('text-text-subtle', 'text-white').replace('font-medium', 'font-semibold');
+                                    }
+                                }
+                            });
+
+                            // Adjust form for Login mode
+                            if (screenKey === 'LOGIN') {
+                                container.querySelectorAll('input[placeholder*="Name"], input[placeholder*="Phone"]').forEach(el => {
+                                    const wrapper = el.parentElement;
+                                    if (wrapper) wrapper.style.display = 'none';
+                                });
+                                container.querySelectorAll('label').forEach(label => {
+                                    if (label.innerText.includes('Terms')) label.style.display = 'none';
+                                });
+
+                                const mainBtn = container.querySelector('.mt-8 button span');
+                                if (mainBtn) mainBtn.innerText = 'Log In';
+
+                                const headline = container.querySelector('h1');
+                                if (headline) headline.innerText = 'Welcome Back';
+
+                                const subhead = container.querySelector('p');
+                                if (subhead) subhead.innerText = 'Sign in to continue';
+                            }
+                        }
+                    }
+
                     const handleGlobalClick = (e) => {
+                        // Ripple effect
+                        const rect = e.target.getBoundingClientRect();
+                        const ripple = document.createElement('span');
+                        ripple.className = 'ripple';
+                        ripple.style.left = `${e.clientX - rect.left}px`;
+                        ripple.style.top = `${e.clientY - rect.top}px`;
+                        if (e.target.appendChild) {
+                            // e.target.appendChild(ripple);
+                            // setTimeout(() => ripple.remove(), 600);
+                        }
+
                         const target = e.target.closest('button, a, [role="button"]');
                         if (!target) return;
 
-                        const text = target.innerText.trim().toLowerCase();
+                        // Normalize text: collapse all whitespace/newlines to single spaces
+                        const text = target.innerText.replace(/\s+/g, ' ').trim().toLowerCase();
+                        const placeholder = target.querySelector('input')?.placeholder?.toLowerCase() || '';
 
-                        // Navigation Logic Heuristics
+                        // Navigation Logic
                         if (text.includes('sign up') || text.includes('create account')) {
-                            if (text.includes('provider')) onNavigate('PROVIDER_WELCOME');
-                            else onNavigate('SIGNUP');
-                        } else if (text.includes('log in') || text.includes('login') || text.includes('sign in')) {
+                            if (text.includes('provider')) {
+                                if (screenKey === 'PROVIDER_WELCOME') onNavigate('PROVIDER_SETUP');
+                                else onNavigate('PROVIDER_WELCOME');
+                            } else {
+                                if (screenKey === 'SIGNUP') onNavigate('CLIENT_HOME');
+                                else onNavigate('SIGNUP');
+                            }
+                        } else if (text.includes('log in') || text.includes('login') || text.includes('sign in') || text.includes('→')) {
                             if (text.includes('admin')) onNavigate('ADMIN_LOGIN');
                             else if (screenKey === 'ADMIN_LOGIN') onNavigate('ADMIN_DASHBOARD');
-                            else if (screenKey === 'WELCOME') onNavigate('LOGIN');
-                            else onNavigate('CLIENT_HOME');
+                            else if (screenKey === 'PROVIDER_WELCOME' && text.includes('provider')) onNavigate('PROVIDER_DASHBOARD');
+                            else if (screenKey === 'WELCOME' || screenKey === 'SIGNUP' || screenKey === 'PROVIDER_WELCOME' || screenKey === 'LOGIN') {
+                                if (screenKey === 'LOGIN' || (screenKey === 'SIGNUP' && text.includes('→'))) onNavigate('CLIENT_HOME');
+                                else onNavigate('LOGIN');
+                            } else {
+                                onNavigate('CLIENT_HOME');
+                            }
                         } else if (text.includes('continue as guest')) {
                             onNavigate('CLIENT_HOME');
-                        } else if (text.includes('book now')) {
+                        } else if (text.includes('book now') || text.includes('instant schedule')) {
                             onNavigate('BOOKING');
-                        } else if (text.includes('find services') || text.includes('explore')) {
+                        } else if (text.includes('find services') || text.includes('explore') || text.includes('browse categories')) {
                             onNavigate('FIND_SERVICES');
                         } else if (text.includes('view profile')) {
                             onNavigate('PROVIDER_PROFILE');
                         } else if (text.includes('get started')) {
                             if (screenKey === 'PROVIDER_WELCOME') onNavigate('PROVIDER_SETUP');
                             else onNavigate('SIGNUP');
-                        } else if (text.includes('complete setup') || text.includes('finish')) {
+                        } else if (text.includes('complete setup') || text.includes('finish') || text.includes('save & continue')) {
                             onNavigate('PROVIDER_DASHBOARD');
                         } else if (text.includes('home') || target.querySelector('.material-symbols-outlined')?.innerText === 'home') {
                             onNavigate('CLIENT_HOME');
-                        } else if (text.includes('bookings') || target.querySelector('.material-symbols-outlined')?.innerText === 'calendar_today') {
+                        } else if (text.includes('bookings') || target.querySelector('.material-symbols-outlined')?.innerText === 'calendar_today' || target.querySelector('.material-symbols-outlined')?.innerText === 'confirmation_number') {
                             onNavigate('MY_BOOKINGS');
-                        } else if (text.includes('messages') || target.querySelector('.material-symbols-outlined')?.innerText === 'mail') {
+                        } else if (text.includes('messages') || target.querySelector('.material-symbols-outlined')?.innerText === 'mail' || target.querySelector('.material-symbols-outlined')?.innerText === 'chat_bubble') {
                             onNavigate('MESSAGES');
                         } else if (text.includes('profile') || target.querySelector('.material-symbols-outlined')?.innerText === 'person') {
                             onNavigate('PROFILE');
+                        } else if (text.includes('emergency') || text.includes('urgent')) {
+                            onNavigate('EMERGENCY_MODE');
+                        } else if (text.includes('manage users')) {
+                            onNavigate('MANAGE_USERS');
+                        } else if (text.includes('manage bookings')) {
+                            onNavigate('MANAGE_BOOKINGS');
+                        } else if (text.includes('verify providers')) {
+                            onNavigate('PHOTO_VERIFICATION');
+                        } else if (text.includes('settings')) {
+                            onNavigate('APP_SETTINGS');
+                        } else if (text.includes('my schedule')) {
+                            onNavigate('MY_SCHEDULE');
+                        } else if (text.includes('new requests')) {
+                            onNavigate('BOOKING_REQUESTS');
+                        } else if (text.includes('my clients')) {
+                            onNavigate('MY_CLIENTS');
+                        } else if (text.includes('arrow_back') || text.includes('back') || target.querySelector('.material-symbols-outlined')?.innerText === 'arrow_back') {
+                            onBack();
+                        } else if (text.includes('log out')) {
+                            onNavigate('WELCOME');
                         }
                     };
 
@@ -227,39 +394,52 @@
             }, [html, loading, screenKey]);
 
             return (
-                <div className="h-full flex flex-col">
-                    <style dangerouslySetInnerHTML={{ __html: styles }} />
-                    {loading ? (
-                        <div className="flex-1 flex items-center justify-center">
-                            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#87CEEB]"></div>
-                        </div>
-                    ) : (
-                        <div
-                            ref={containerRef}
-                            className="flex-1"
-                            dangerouslySetInnerHTML={{ __html: html }}
-                        />
-                    )}
-                </div>
+                <div
+                    ref={containerRef}
+                    className="h-full w-full"
+                    dangerouslySetInnerHTML={{ __html: html }}
+                />
             );
         };
 
         const App = () => {
-            const [screen, setScreen] = useState('WELCOME');
-            const [devMenuOpen, setDevMenuOpen] = useState(false);
+            const [history, setHistory] = useState(['WELCOME']);
+            const currentScreen = history[history.length - 1];
+            const [prevScreen, setPrevScreen] = useState(null);
+            const [isBack, setIsBack] = useState(false);
+
+            const navigate = (nextScreen) => {
+                if (nextScreen === currentScreen) return;
+                setPrevScreen(currentScreen);
+                setIsBack(false);
+                setHistory(prev => [...prev, nextScreen]);
+            };
+
+            const goBack = () => {
+                if (history.length > 1) {
+                    setPrevScreen(currentScreen);
+                    setIsBack(true);
+                    setHistory(prev => prev.slice(0, -1));
+                }
+            };
 
             useEffect(() => {
                 const handleExternalNavigate = (e) => {
-                    if (SCREEN_MAP[e.detail]) setScreen(e.detail);
+                    if (SCREEN_MAP[e.detail]) navigate(e.detail);
                 };
                 window.addEventListener('navigate', handleExternalNavigate);
                 return () => window.removeEventListener('navigate', handleExternalNavigate);
-            }, []);
+            }, [currentScreen]);
+
+            const [devMenuOpen, setDevMenuOpen] = useState(false);
 
             return (
                 <div className="app-shell">
                     <div className="screen-container">
-                        <Screen screenKey={screen} onNavigate={setScreen} />
+                        {/* Current Screen */}
+                        <div key={currentScreen} className={`screen-wrapper ${isBack ? 'slide-back' : ''}`}>
+                            <Screen screenKey={currentScreen} onNavigate={navigate} onBack={goBack} />
+                        </div>
                     </div>
 
                     {/* Quick Access Dev Menu */}
@@ -270,10 +450,10 @@
                     {devMenuOpen && (
                         <div className="dev-menu">
                             <div className="text-[10px] font-bold text-gray-400 mb-2 px-3 uppercase tracking-wider">Switch Flow</div>
-                            <button onClick={() => { setScreen('WELCOME'); setDevMenuOpen(false); }}>Welcome Screen</button>
-                            <button onClick={() => { setScreen('CLIENT_HOME'); setDevMenuOpen(false); }}>Client App</button>
-                            <button onClick={() => { setScreen('PROVIDER_WELCOME'); setDevMenuOpen(false); }}>Provider App</button>
-                            <button onClick={() => { setScreen('ADMIN_LOGIN'); setDevMenuOpen(false); }}>Admin Panel</button>
+                            <button onClick={() => { navigate('WELCOME'); setDevMenuOpen(false); }}>Welcome Screen</button>
+                            <button onClick={() => { navigate('CLIENT_HOME'); setDevMenuOpen(false); }}>Client App</button>
+                            <button onClick={() => { navigate('PROVIDER_WELCOME'); setDevMenuOpen(false); }}>Provider App</button>
+                            <button onClick={() => { navigate('ADMIN_LOGIN'); setDevMenuOpen(false); }}>Admin Panel</button>
                             <div className="mt-2 pt-2 border-t border-gray-100 text-[9px] text-center text-gray-400">
                                 Prototype Navigation Control
                             </div>
