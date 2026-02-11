@@ -1,0 +1,3 @@
+## 2026-02-11 - Optimized Screen Loading in Dynamic Prototype Shell
+**Learning:** In a static prototype shell that fetches and parses individual HTML screens, redundant network requests and DOM parsing significantly impact perceived performance during navigation. Additionally, re-executing third-party library scripts (like Tailwind CDN) on every screen load is unnecessary and slow.
+**Action:** Implement an in-memory `screenCache` for parsed HTML/styles, use a static `DOMParser` instance, and programmatically inject performance attributes (`loading="lazy"`, `decoding="async"`) during the parsing phase to optimize image rendering without modifying source files.

@@ -9,8 +9,11 @@
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <!-- Load Tailwind CSS -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
     <!-- Load Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Load Material Icons and Symbols -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
@@ -129,37 +132,56 @@
             'PROFILE': 'profile_screen_for_client_app/code.html'
         };
 
+        // In-memory cache for screens to avoid redundant network requests and DOM parsing
+        const screenCache = {};
+        // Single static DOMParser instance to minimize object allocation overhead
+        const parser = new DOMParser();
+
         const Screen = ({ screenKey, onNavigate }) => {
-            const [html, setHtml] = useState('');
-            const [styles, setStyles] = useState('');
+            const [content, setContent] = useState({ html: '', styles: '' });
             const [loading, setLoading] = useState(true);
             const containerRef = useRef(null);
 
             useEffect(() => {
                 const fetchContent = async () => {
+                    // Check cache first
+                    if (screenCache[screenKey]) {
+                        setContent(screenCache[screenKey]);
+                        setLoading(false);
+                        return;
+                    }
+
                     setLoading(true);
                     try {
                         const path = `extracted_code/stitch_cleaners_hub/${SCREEN_MAP[screenKey]}`;
                         const response = await fetch(path);
                         const text = await response.text();
 
-                        const parser = new DOMParser();
                         const doc = parser.parseFromString(text, 'text/html');
+
+                        // Performance optimization: lazy load and async decode all images
+                        doc.querySelectorAll('img').forEach(img => {
+                            img.setAttribute('loading', 'lazy');
+                            img.setAttribute('decoding', 'async');
+                        });
 
                         // Extract Styles
                         const styleContent = Array.from(doc.querySelectorAll('style'))
                             .map(s => s.innerHTML)
                             .join('\n');
-                        setStyles(styleContent);
 
                         // Extract Body Content (excluding scripts which we'll handle separately)
                         const bodyContent = doc.body.innerHTML;
-                        setHtml(bodyContent);
 
-                        // We'll handle scripts in a separate useEffect
+                        const newContent = { html: bodyContent, styles: styleContent };
+                        screenCache[screenKey] = newContent;
+                        setContent(newContent);
                     } catch (error) {
                         console.error('Failed to load screen:', error);
-                        setHtml('<div class="p-10 text-center">Failed to load screen.</div>');
+                        setContent({
+                            html: '<div class="p-10 text-center">Failed to load screen.</div>',
+                            styles: ''
+                        });
                     }
                     setLoading(false);
                 };
@@ -224,11 +246,11 @@
                     container.addEventListener('click', handleGlobalClick);
                     return () => container.removeEventListener('click', handleGlobalClick);
                 }
-            }, [html, loading, screenKey]);
+            }, [content.html, loading, screenKey]);
 
             return (
                 <div className="h-full flex flex-col">
-                    <style dangerouslySetInnerHTML={{ __html: styles }} />
+                    <style dangerouslySetInnerHTML={{ __html: content.styles }} />
                     {loading ? (
                         <div className="flex-1 flex items-center justify-center">
                             <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#87CEEB]"></div>
@@ -237,7 +259,7 @@
                         <div
                             ref={containerRef}
                             className="flex-1"
-                            dangerouslySetInnerHTML={{ __html: html }}
+                            dangerouslySetInnerHTML={{ __html: content.html }}
                         />
                     )}
                 </div>
