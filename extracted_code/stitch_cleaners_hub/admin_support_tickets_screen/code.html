@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Support Tickets</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#42b0f0",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101b22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen font-display text-[#111518] dark:text-white">
+    <div class="sticky top-0 z-10 bg-white dark:bg-[#1a2633] border-b border-[#f0f3f4] dark:border-[#2a3b4d] px-4 py-3 flex items-center">
+        <button class="flex items-center justify-center size-10 rounded-full hover:bg-gray-100 dark:hover:bg-[#34485e] mr-2">
+            <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <h1 class="text-lg font-bold">Support Tickets</h1>
+    </div>
+
+    <div class="p-4">
+        <!-- Tabs -->
+        <div class="flex border-b border-gray-200 dark:border-gray-700 mb-4">
+            <button class="flex-1 pb-3 text-sm font-bold border-b-2 border-primary text-primary">Open (5)</button>
+            <button class="flex-1 pb-3 text-sm font-medium text-gray-500">In Progress (2)</button>
+            <button class="flex-1 pb-3 text-sm font-medium text-gray-500">Closed</button>
+        </div>
+
+        <!-- Ticket List -->
+        <div class="space-y-3">
+            <div class="bg-white dark:bg-[#1a2633] p-4 rounded-xl shadow-sm border border-l-4 border-l-red-500 dark:border-[#2a3b4d] dark:border-l-red-500">
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-red-500">Urgent</span>
+                    <span class="text-[10px] text-gray-400">#TK-4829 • 10m ago</span>
+                </div>
+                <h3 class="text-sm font-bold mb-1">Payment not processed</h3>
+                <p class="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 mb-3">Customer Sarah J. reports that her payment was deducted but the booking shows as pending.</p>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <div class="size-6 rounded-full bg-gray-200 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/a/default-user')"></div>
+                        <span class="text-xs font-medium">Sarah Jenkins</span>
+                    </div>
+                    <button class="text-xs font-bold text-primary">Respond</button>
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-[#1a2633] p-4 rounded-xl shadow-sm border border-l-4 border-l-orange-500 dark:border-[#2a3b4d] dark:border-l-orange-500">
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-orange-500">Medium</span>
+                    <span class="text-[10px] text-gray-400">#TK-4825 • 2h ago</span>
+                </div>
+                <h3 class="text-sm font-bold mb-1">Provider no-show</h3>
+                <p class="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 mb-3">Michael T. claims the cleaner did not arrive at the scheduled time of 10 AM.</p>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <div class="size-6 rounded-full bg-gray-200 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/a/default-user')"></div>
+                        <span class="text-xs font-medium">Michael Torres</span>
+                    </div>
+                    <button class="text-xs font-bold text-primary">Respond</button>
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-[#1a2633] p-4 rounded-xl shadow-sm border border-l-4 border-l-blue-500 dark:border-[#2a3b4d] dark:border-l-blue-500">
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-blue-500">Low</span>
+                    <span class="text-[10px] text-gray-400">#TK-4820 • 5h ago</span>
+                </div>
+                <h3 class="text-sm font-bold mb-1">Account update help</h3>
+                <p class="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 mb-3">How do I change my primary phone number for SMS notifications?</p>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <div class="size-6 rounded-full bg-gray-200 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/a/default-user')"></div>
+                        <span class="text-xs font-medium">Emily Chen</span>
+                    </div>
+                    <button class="text-xs font-bold text-primary">Respond</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

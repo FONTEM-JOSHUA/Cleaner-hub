@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>My Earnings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#42b0f0",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101b22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "1rem", "lg": "1.5rem", "xl": "2rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white antialiased">
+    <div class="sticky top-0 z-50 bg-white/95 dark:bg-[#1a2630]/95 backdrop-blur-md border-b border-gray-200/50 dark:border-gray-800/50 px-4 py-3 flex items-center">
+        <button class="flex size-10 items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+            <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <h2 class="text-lg font-bold ml-2">My Earnings</h2>
+    </div>
+
+    <div class="p-4 space-y-6">
+        <!-- Total Balance -->
+        <div class="bg-primary rounded-3xl p-8 text-white shadow-lg shadow-primary/20 relative overflow-hidden">
+            <div class="relative z-10">
+                <p class="text-blue-100 text-sm font-medium opacity-80">Total Balance</p>
+                <p class="text-4xl font-black mt-1">$1,240.50</p>
+                <button class="mt-6 bg-white text-primary px-6 py-2 rounded-full font-bold text-sm">Withdraw</button>
+            </div>
+            <div class="absolute right-[-20px] bottom-[-20px] size-40 bg-white/10 rounded-full blur-3xl"></div>
+        </div>
+
+        <!-- Weekly Summary -->
+        <div class="bg-white dark:bg-[#1a2630] rounded-2xl p-6 shadow-sm">
+            <h3 class="text-base font-bold mb-4">Weekly Summary</h3>
+            <div class="flex items-end justify-between h-32 gap-2">
+                <div class="w-full bg-primary/10 rounded-t-lg h-[40%]"></div>
+                <div class="w-full bg-primary/10 rounded-t-lg h-[60%]"></div>
+                <div class="w-full bg-primary/10 rounded-t-lg h-[45%]"></div>
+                <div class="w-full bg-primary/10 rounded-t-lg h-[80%]"></div>
+                <div class="w-full bg-primary rounded-t-lg h-[95%]"></div>
+                <div class="w-full bg-primary/10 rounded-t-lg h-[20%]"></div>
+                <div class="w-full bg-primary/10 rounded-t-lg h-[10%]"></div>
+            </div>
+            <div class="flex justify-between mt-3 text-[10px] text-gray-400 font-bold uppercase tracking-wider">
+                <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
+            </div>
+        </div>
+
+        <!-- Transaction History -->
+        <div>
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-base font-bold">Recent Transactions</h3>
+                <button class="text-primary text-xs font-bold">View All</button>
+            </div>
+            <div class="space-y-3">
+                <div class="bg-white dark:bg-[#1a2630] p-4 rounded-xl flex items-center justify-between shadow-sm">
+                    <div class="flex items-center gap-3">
+                        <div class="size-10 bg-green-50 dark:bg-green-900/20 rounded-full flex items-center justify-center text-green-600">
+                            <span class="material-symbols-outlined">add</span>
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold">Deep Cleaning</p>
+                            <p class="text-[10px] text-gray-400">Nov 14, 2023 • 2:30 PM</p>
+                        </div>
+                    </div>
+                    <p class="text-sm font-black text-emerald-600">+$85.00</p>
+                </div>
+                <div class="bg-white dark:bg-[#1a2630] p-4 rounded-xl flex items-center justify-between shadow-sm">
+                    <div class="flex items-center gap-3">
+                        <div class="size-10 bg-green-50 dark:bg-green-900/20 rounded-full flex items-center justify-center text-green-600">
+                            <span class="material-symbols-outlined">add</span>
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold">Regular Cleaning</p>
+                            <p class="text-[10px] text-gray-400">Nov 13, 2023 • 10:00 AM</p>
+                        </div>
+                    </div>
+                    <p class="text-sm font-black text-emerald-600">+$60.00</p>
+                </div>
+                <div class="bg-white dark:bg-[#1a2630] p-4 rounded-xl flex items-center justify-between shadow-sm">
+                    <div class="flex items-center gap-3">
+                        <div class="size-10 bg-blue-50 dark:bg-blue-900/20 rounded-full flex items-center justify-center text-primary">
+                            <span class="material-symbols-outlined">account_balance_wallet</span>
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold">Withdrawal</p>
+                            <p class="text-[10px] text-gray-400">Nov 10, 2023 • 04:15 PM</p>
+                        </div>
+                    </div>
+                    <p class="text-sm font-black text-gray-400">-$500.00</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,6 @@
+127.0.0.1 - - [12/Feb/2026 08:11:18] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [12/Feb/2026 08:11:19] "GET /extracted_code/stitch_cleaners_hub/welcome_screen/code.html HTTP/1.1" 200 -
+127.0.0.1 - - [12/Feb/2026 08:11:19] "GET /extracted_code/stitch_cleaners_hub/provider_welcome_screen/code.html HTTP/1.1" 200 -
+127.0.0.1 - - [12/Feb/2026 08:11:19] "GET /extracted_code/stitch_cleaners_hub/provider_setup_screen/code.html HTTP/1.1" 200 -
+127.0.0.1 - - [12/Feb/2026 08:11:19] "GET /extracted_code/stitch_cleaners_hub/provider_dashboard_screen_1/code.html HTTP/1.1" 200 -
+127.0.0.1 - - [12/Feb/2026 08:11:20] "GET /extracted_code/stitch_cleaners_hub/provider_earnings_screen/code.html HTTP/1.1" 200 -

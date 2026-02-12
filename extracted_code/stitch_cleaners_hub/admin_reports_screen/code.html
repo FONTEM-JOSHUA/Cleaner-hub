@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Financial Reports</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#42b0f0",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101b22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen font-display text-[#111518] dark:text-white">
+    <div class="sticky top-0 z-10 bg-white dark:bg-[#1a2633] border-b border-[#f0f3f4] dark:border-[#2a3b4d] px-4 py-3 flex items-center">
+        <button class="flex items-center justify-center size-10 rounded-full hover:bg-gray-100 dark:hover:bg-[#34485e] mr-2">
+            <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <h1 class="text-lg font-bold">Financial Reports</h1>
+    </div>
+
+    <div class="p-4 space-y-6">
+        <!-- Summary Cards -->
+        <div class="grid grid-cols-2 gap-4">
+            <div class="bg-white dark:bg-[#1a2633] p-4 rounded-xl shadow-sm border border-transparent dark:border-[#2a3b4d]">
+                <p class="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase">Total Revenue</p>
+                <p class="text-2xl font-bold text-emerald-600 dark:text-emerald-400 mt-1">$45,230</p>
+                <p class="text-[10px] text-green-500 font-bold mt-1">+12% from last month</p>
+            </div>
+            <div class="bg-white dark:bg-[#1a2633] p-4 rounded-xl shadow-sm border border-transparent dark:border-[#2a3b4d]">
+                <p class="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase">Platform Fee</p>
+                <p class="text-2xl font-bold text-primary mt-1">$6,784</p>
+                <p class="text-[10px] text-primary font-bold mt-1">15% avg. rate</p>
+            </div>
+        </div>
+
+        <!-- Revenue Chart Placeholder -->
+        <div class="bg-white dark:bg-[#1a2633] p-4 rounded-xl shadow-sm border border-transparent dark:border-[#2a3b4d]">
+            <h2 class="text-sm font-bold mb-4">Revenue Overview</h2>
+            <div class="h-40 flex items-end justify-between gap-2 px-2">
+                <div class="w-full bg-primary/20 rounded-t-sm h-[30%]"></div>
+                <div class="w-full bg-primary/20 rounded-t-sm h-[45%]"></div>
+                <div class="w-full bg-primary/20 rounded-t-sm h-[35%]"></div>
+                <div class="w-full bg-primary/20 rounded-t-sm h-[60%]"></div>
+                <div class="w-full bg-primary/20 rounded-t-sm h-[50%]"></div>
+                <div class="w-full bg-primary/20 rounded-t-sm h-[75%]"></div>
+                <div class="w-full bg-primary rounded-t-sm h-[90%]"></div>
+            </div>
+            <div class="flex justify-between mt-2 px-1 text-[10px] text-gray-400">
+                <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+            </div>
+        </div>
+
+        <!-- Top Services -->
+        <div class="bg-white dark:bg-[#1a2633] p-4 rounded-xl shadow-sm border border-transparent dark:border-[#2a3b4d]">
+            <h2 class="text-sm font-bold mb-4">Top Earning Services</h2>
+            <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="size-8 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center text-primary">
+                            <span class="material-symbols-outlined text-sm">cleaning_services</span>
+                        </div>
+                        <span class="text-sm font-medium">Deep Cleaning</span>
+                    </div>
+                    <span class="text-sm font-bold">$12,400</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="size-8 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center text-orange-600">
+                            <span class="material-symbols-outlined text-sm">cooking</span>
+                        </div>
+                        <span class="text-sm font-medium">Meal Prep</span>
+                    </div>
+                    <span class="text-sm font-bold">$8,250</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="size-8 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center text-purple-600">
+                            <span class="material-symbols-outlined text-sm">local_laundry_service</span>
+                        </div>
+                        <span class="text-sm font-medium">Laundry</span>
+                    </div>
+                    <span class="text-sm font-bold">$4,120</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

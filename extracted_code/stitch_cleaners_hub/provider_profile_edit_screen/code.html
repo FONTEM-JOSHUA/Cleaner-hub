@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Edit Profile - Provider</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#42b0f0",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101b22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "1rem", "lg": "1.5rem", "xl": "2rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white antialiased">
+    <!-- Header -->
+    <div class="sticky top-0 z-50 bg-white/95 dark:bg-[#1a2630]/95 backdrop-blur-md border-b border-gray-200/50 dark:border-gray-800/50 px-4 py-3">
+        <div class="flex items-center justify-between">
+            <button class="flex size-10 items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </button>
+            <h2 class="text-lg font-bold">Edit Profile</h2>
+            <button class="text-primary font-bold text-sm">Save</button>
+        </div>
+    </div>
+
+    <div class="px-4 py-6 space-y-6 max-w-lg mx-auto pb-32">
+        <!-- Profile & Bio -->
+        <div class="bg-white dark:bg-[#1a2630] rounded-xl p-6 shadow-sm">
+            <div class="flex flex-col items-center mb-6">
+                <div class="relative">
+                    <div class="size-24 rounded-full overflow-hidden border-4 border-primary/20">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIhG6GhKKuON6mParHEC0_48Jz1_WYV_wWFupVDFn9D6r3pWMCQhr9NIXzIoqcKjLddtw0jC9X8PRQmSKG-V0B2wxt02q2TXZ85IA9woqHcIpMS6-dW6_9yOh-FwgdQs5bHqgppMeZOBjj8bR-RE33Hm3eIdiU5FEoyHCF9xE-SXM40uoKGfSzsdNtADJlz3IuatSQdkiTajjtgB4nb3SAQGr0VVfvhqpFdgKPTD-ekM_Llm1XN7-5BviVu1F6pGIiGc7NYepccBvG" class="size-full object-cover">
+                    </div>
+                    <button class="absolute bottom-0 right-0 bg-primary text-white p-1.5 rounded-full border-2 border-white dark:border-[#1a2630]">
+                        <span class="material-symbols-outlined text-sm">edit</span>
+                    </button>
+                </div>
+                <p class="text-xs text-gray-400 mt-2">Maria Rodriguez</p>
+            </div>
+
+            <div class="space-y-4">
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-sm font-medium text-gray-500">Bio</label>
+                    <textarea class="w-full bg-background-light dark:bg-background-dark border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary/50 min-h-[100px]" placeholder="Tell clients about your experience...">Professional cleaner with 5+ years of experience in residential and office deep cleaning. Specialized in eco-friendly products.</textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Services & Prices -->
+        <div class="bg-white dark:bg-[#1a2630] rounded-xl p-6 shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-base font-bold">Services & Prices</h3>
+                <button class="text-primary text-xs font-bold">+ Add Service</button>
+            </div>
+            <div class="space-y-3">
+                <div class="flex items-center justify-between p-3 bg-background-light dark:bg-background-dark rounded-xl">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary">mop</span>
+                        <span class="text-sm font-medium">Deep Cleaning</span>
+                    </div>
+                    <span class="text-sm font-bold">$25/hr</span>
+                </div>
+                <div class="flex items-center justify-between p-3 bg-background-light dark:bg-background-dark rounded-xl">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary">local_laundry_service</span>
+                        <span class="text-sm font-medium">Laundry</span>
+                    </div>
+                    <span class="text-sm font-bold">$15/hr</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Certifications -->
+        <div class="bg-white dark:bg-[#1a2630] rounded-xl p-6 shadow-sm">
+            <h3 class="text-base font-bold mb-4">Certifications</h3>
+            <div class="flex items-center gap-3 p-3 border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl justify-center cursor-pointer">
+                <span class="material-symbols-outlined text-gray-400">upload_file</span>
+                <span class="text-xs font-medium text-gray-500">Upload Training Certificate</span>
+            </div>
+        </div>
+
+        <!-- Team Members -->
+        <div class="bg-white dark:bg-[#1a2630] rounded-xl p-6 shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-base font-bold">Team Members</h3>
+                <button class="text-primary text-xs font-bold">+ Add</button>
+            </div>
+            <div class="flex items-center gap-2">
+                <div class="size-10 rounded-full bg-gray-200"></div>
+                <div class="size-10 rounded-full bg-gray-200"></div>
+                <div class="size-10 rounded-full border-2 border-dashed border-gray-300 flex items-center justify-center text-gray-300">
+                    <span class="material-symbols-outlined text-sm">add</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bank Details -->
+        <div class="bg-white dark:bg-[#1a2630] rounded-xl p-6 shadow-sm">
+            <h3 class="text-base font-bold mb-4">Bank Details</h3>
+            <div class="space-y-4">
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-sm font-medium text-gray-500">Bank Name</label>
+                    <input type="text" value="Chase Bank" class="w-full bg-background-light dark:bg-background-dark border-none rounded-full px-5 py-3 text-sm">
+                </div>
+                <div class="flex flex-col gap-1.5">
+                    <label class="text-sm font-medium text-gray-500">Account Number</label>
+                    <input type="password" value="**********" class="w-full bg-background-light dark:bg-background-dark border-none rounded-full px-5 py-3 text-sm">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
