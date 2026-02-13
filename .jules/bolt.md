@@ -1,0 +1,3 @@
+## 2025-02-13 - [Multi-layered shell optimization]
+**Learning:** In a static "stitching" architecture where screens are fetched as HTML fragments, combining resource hints, in-memory caching, background pre-fetching, and programmatic asset optimization provides a synergistic performance boost that makes the app feel like a local native application.
+**Action:** Always consider pre-fetching critical paths during idle time when working with dynamic content loading systems. Use helper functions for DOM parsing to ensure consistent optimization across different loading triggers (initial load vs. pre-fetch).
