@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Earnings - Provider</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #F5F5F5; }
+        .primary-color { color: #87CEEB; }
+        .primary-bg { background-color: #87CEEB; }
+    </style>
+</head>
+<body class="bg-[#F5F5F5]">
+    <div class="flex flex-col min-h-screen max-w-md mx-auto bg-white shadow-xl">
+        <!-- Header -->
+        <header class="flex items-center p-4 border-b sticky top-0 bg-white z-10">
+            <button class="material-symbols-outlined p-2 hover:bg-gray-100 rounded-full">arrow_back</button>
+            <h1 class="text-lg font-bold flex-1 text-center">My Earnings</h1>
+            <div class="size-10"></div>
+        </header>
+
+        <div class="p-4 space-y-6">
+            <!-- Total Earnings Card -->
+            <div class="primary-bg p-6 rounded-3xl text-white shadow-lg shadow-blue-100 relative overflow-hidden">
+                <div class="absolute -right-4 -top-4 w-24 h-24 bg-white/10 rounded-full"></div>
+                <p class="text-xs font-bold opacity-80 uppercase tracking-widest">Available Balance</p>
+                <p class="text-4xl font-black mt-2">$1,240.50</p>
+                <div class="mt-6 flex gap-3">
+                    <button class="flex-1 bg-white text-[#87CEEB] py-3 rounded-xl text-sm font-bold active:scale-95 transition-transform">Withdraw</button>
+                    <button class="flex-1 bg-white/20 text-white py-3 rounded-xl text-sm font-bold active:scale-95 transition-transform">Details</button>
+                </div>
+            </div>
+
+            <!-- Earnings Stats -->
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-gray-50 p-4 rounded-2xl border border-gray-100">
+                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">This Week</p>
+                    <p class="text-xl font-bold text-gray-800 mt-1">$450.00</p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-2xl border border-gray-100">
+                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Completed</p>
+                    <p class="text-xl font-bold text-gray-800 mt-1">12 Jobs</p>
+                </div>
+            </div>
+
+            <!-- Transaction History -->
+            <div class="space-y-4">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-sm font-bold text-gray-800">Recent Transactions</h3>
+                    <button class="primary-color text-xs font-bold">View All</button>
+                </div>
+
+                <div class="space-y-3">
+                    <!-- Transaction 1 -->
+                    <div class="flex items-center gap-4 p-3 border rounded-2xl hover:bg-gray-50 transition-colors">
+                        <div class="w-10 h-10 bg-green-50 rounded-full flex items-center justify-center text-green-500">
+                            <span class="material-symbols-outlined">add</span>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-bold">House Cleaning</p>
+                            <p class="text-[10px] text-gray-400">Nov 14, 2023 • 2:00 PM</p>
+                        </div>
+                        <p class="text-sm font-bold text-green-500">+$60.00</p>
+                    </div>
+
+                    <!-- Transaction 2 -->
+                    <div class="flex items-center gap-4 p-3 border rounded-2xl hover:bg-gray-50 transition-colors">
+                        <div class="w-10 h-10 bg-green-50 rounded-full flex items-center justify-center text-green-500">
+                            <span class="material-symbols-outlined">add</span>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-bold">Deep Clean (Escrow)</p>
+                            <p class="text-[10px] text-gray-400">Nov 13, 2023 • 10:00 AM</p>
+                        </div>
+                        <p class="text-sm font-bold text-green-500">+$120.00</p>
+                    </div>
+
+                    <!-- Transaction 3 -->
+                    <div class="flex items-center gap-4 p-3 border rounded-2xl hover:bg-gray-50 transition-colors">
+                        <div class="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center text-blue-500">
+                            <span class="material-symbols-outlined">account_balance_wallet</span>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-bold">Withdrawal to Bank</p>
+                            <p class="text-[10px] text-gray-400">Nov 10, 2023 • 4:30 PM</p>
+                        </div>
+                        <p class="text-sm font-bold text-gray-800">-$500.00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="h-20"></div>
+    </div>
+</body>
+</html>

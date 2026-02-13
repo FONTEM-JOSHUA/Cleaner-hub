@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Provider Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #F5F5F5; }
+        .primary-color { color: #87CEEB; }
+        .primary-bg { background-color: #87CEEB; }
+    </style>
+</head>
+<body class="bg-white">
+    <div class="flex flex-col min-h-screen">
+        <!-- Header -->
+        <header class="flex items-center p-4 border-b sticky top-0 bg-white z-10">
+            <button class="material-symbols-outlined p-2 hover:bg-gray-100 rounded-full">arrow_back</button>
+            <h1 class="text-lg font-bold flex-1 text-center">Edit Profile</h1>
+            <button class="primary-color font-bold px-2">Save</button>
+        </header>
+
+        <div class="p-4 space-y-6 pb-24">
+            <!-- Profile Photo & Bio -->
+            <section class="space-y-4">
+                <h2 class="text-sm font-bold text-gray-500 uppercase tracking-wider">Profile Photo & Bio</h2>
+                <div class="flex flex-col items-center">
+                    <div class="relative">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmAxW84hzqWorJuCPzDIaAy5-Xp1rHZALB8GriEsYu6Nr-RE816CaNObvnuCagoGtlpnptuLZU8JxGmLKeHoRc3NXR2RZaEnucFI_SKWtz3g11lJBPZ2l00PS2dS5vqyagCR45vhS7Hrut3lQFMX4QOMIMNq0l0Vypfe2_ldc21xeCvdk2lU-0uRm5BI_BRp-lgrDVH0Z7vZd5alqZHw8tV8-e62UDYWKBiyuK_E8UTb6adpGLjIec0QgAsdZsaADK64LCjlc9X8Jp"
+                             class="w-24 h-24 rounded-full object-cover border-4 border-[#87CEEB]/20">
+                        <button class="absolute bottom-0 right-0 primary-bg text-white p-1 rounded-full border-2 border-white material-symbols-outlined text-sm">edit</button>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-sm font-medium">Professional Bio</label>
+                    <textarea class="w-full border rounded-xl p-3 text-sm h-32" placeholder="Describe your experience and services...">Hi! I'm Sarah, a dedicated cleaner and organizer with over 5 years of professional experience...</textarea>
+                </div>
+            </section>
+
+            <hr>
+
+            <!-- Services & Prices -->
+            <section class="space-y-4">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-sm font-bold text-gray-500 uppercase tracking-wider">Services & Prices</h2>
+                    <button class="primary-color text-sm font-bold">+ Add New</button>
+                </div>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between p-3 border rounded-xl">
+                        <div>
+                            <p class="font-bold">Standard Cleaning</p>
+                            <p class="text-xs text-gray-500">$30/hr</p>
+                        </div>
+                        <button class="material-symbols-outlined text-gray-400">edit</button>
+                    </div>
+                    <div class="flex items-center justify-between p-3 border rounded-xl">
+                        <div>
+                            <p class="font-bold">Deep Clean</p>
+                            <p class="text-xs text-gray-500">$45/hr</p>
+                        </div>
+                        <button class="material-symbols-outlined text-gray-400">edit</button>
+                    </div>
+                </div>
+            </section>
+
+            <hr>
+
+            <!-- Work Photos -->
+            <section class="space-y-4">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-sm font-bold text-gray-500 uppercase tracking-wider">Work Photos</h2>
+                    <button class="primary-color text-sm font-bold">Upload</button>
+                </div>
+                <div class="grid grid-cols-3 gap-2">
+                    <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLjueoL7Kz007H6NyZFlSJ_mQspf0RtDosExCq_U7hC98Rx-MAoP3k3R7s81wYZ_weQ21s_w2NFK1aA4dSrnisBHQakPexYX7ZIhubka0vQhqcKHPTJwtIIOHDV15j_cH8YydRVwqrpX4JMVB9bwf0yCAMLNLeVFR3OVZ8amDsi78tvSug5GfKXXJmYFI3y5tSRrQVFOjJO80RaFcEaBS7bRAEjOBZh8Xv7i1Udgo0tWV68ChPZu9E9SRntgqGmXe24YyjusNlpAh_" class="w-full h-full object-cover">
+                    </div>
+                    <div class="aspect-square bg-gray-100 rounded-lg overflow-hidden">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDq0Ufw_XfOVHP8R2VZokXckG0xczcfamO1Dt20-C5zjyQogmAOKatZd6Bfu8Fi5CI7Ds3u7n2hVVVHK6RQPkxXcWcxVOizlEh1KNvJtA9B_AnUnoQFNMIBBHLnio3SoqM_4zn7paaGSUXHpHz6AG8_zEItMtnmqBmvMm0afTOdtPXLFYWTxkefgT-qIAI7Foon9W0hNPj_uQA0AwmFNCkfOfoSyx3H2y1kG5rFyxUaRZmbIJ15tcY9wD5aLyEcYVgM7PeevM3ftI6P" class="w-full h-full object-cover">
+                    </div>
+                    <div class="aspect-square border-2 border-dashed border-gray-200 rounded-lg flex items-center justify-center text-gray-300">
+                        <span class="material-symbols-outlined">add</span>
+                    </div>
+                </div>
+            </section>
+
+            <hr>
+
+            <!-- Certifications -->
+            <section class="space-y-4">
+                <h2 class="text-sm font-bold text-gray-500 uppercase tracking-wider">Certifications</h2>
+                <div class="flex items-center gap-3 p-3 bg-blue-50 rounded-xl border border-[#87CEEB]/30">
+                    <span class="material-symbols-outlined primary-color">verified_user</span>
+                    <div class="flex-1">
+                        <p class="text-sm font-bold">Professional Cleaning Certificate</p>
+                        <p class="text-xs text-gray-500">Verified on Oct 12, 2023</p>
+                    </div>
+                </div>
+                <button class="w-full py-3 border-2 border-dashed border-gray-200 rounded-xl text-gray-400 text-sm font-bold flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined text-sm">upload_file</span>
+                    Upload New Certificate
+                </button>
+            </section>
+
+            <hr>
+
+            <!-- Team Members -->
+            <section class="space-y-4">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-sm font-bold text-gray-500 uppercase tracking-wider">Team Members</h2>
+                    <button class="primary-color text-sm font-bold">+ Invite</button>
+                </div>
+                <div class="space-y-2">
+                    <div class="flex items-center gap-3 p-2">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGwAHwQTGICqxh5xocoxmn-9iJ7SIG-qXung_UfLZn4rTgZ4BJuBgme7010-ksuC6LDpQBQtpLT8FLl8FR1th1O_5nTQmNEnPBzCBpsglJh8FX66J92F6UiapjgHFyj4qX0umyosamfhFVeSGxyCU08YDmQENVTeJMN0N_G4sD0C2qck8RZJSZDRE1Tgz3HY8xjt9jiOgOPbFHvgsbvYDH59fGf9-lPDno7PGjg-4cstTu3Wgj_GWffuu2z5z_0GdhYQfGbRcOYe-Q" class="w-10 h-10 rounded-full">
+                        <div class="flex-1">
+                            <p class="text-sm font-bold">Mike T.</p>
+                            <p class="text-xs text-gray-500">Junior Cleaner</p>
+                        </div>
+                        <button class="material-symbols-outlined text-gray-400">close</button>
+                    </div>
+                </div>
+            </section>
+
+            <hr>
+
+            <!-- Bank Details -->
+            <section class="space-y-4">
+                <h2 class="text-sm font-bold text-gray-500 uppercase tracking-wider">Bank Details</h2>
+                <div class="p-4 border rounded-xl space-y-3 bg-gray-50">
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-500">Bank Name</span>
+                        <span class="font-medium">Chase Bank</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-500">Account Ending</span>
+                        <span class="font-medium">•••• 4829</span>
+                    </div>
+                    <button class="w-full py-2 primary-color text-xs font-bold border border-[#87CEEB] rounded-lg mt-2">Change Payout Method</button>
+                </div>
+            </section>
+        </div>
+
+        <!-- Sticky Footer -->
+        <footer class="fixed bottom-0 left-0 w-full p-4 bg-white border-t z-20">
+            <button class="w-full primary-bg text-white font-bold py-3 rounded-xl shadow-lg active:scale-95 transition-transform">Confirm Changes</button>
+        </footer>
+    </div>
+</body>
+</html>
