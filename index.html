@@ -10,6 +10,18 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#87CEEB',
+                        'primary-dark': '#6FB3D9',
+                    }
+                }
+            }
+        }
+    </script>
     <!-- Load Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Load Material Icons and Symbols -->
@@ -53,6 +65,21 @@
         }
         .screen-container::-webkit-scrollbar-thumb:hover {
             background: #555;
+        }
+
+        /* Transitions */
+        .screen-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .slide-in {
+            animation: slideIn 0.3s ease-out forwards;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
 
         /* Floating Action Menu for Demo */
@@ -126,12 +153,14 @@
             'ADMIN_LOGIN': 'admin_login_screen/code.html',
             'ADMIN_DASHBOARD': 'admin_dashboard_screen_1/code.html',
             'MESSAGES': 'messages_screen_for_client_app/code.html',
-            'PROFILE': 'profile_screen_for_client_app/code.html'
+            'PROFILE': 'profile_screen_for_client_app/code.html',
+            'MANAGE_USERS': 'manage_users_screen_for_admin_app/code.html',
+            'MANAGE_BOOKINGS': 'manage_bookings_screen_for_admin_app/code.html',
+            'ADMIN_SETTINGS': 'app_settings_screen_for_admin_app/code.html'
         };
 
-        const Screen = ({ screenKey, onNavigate }) => {
+        const Screen = ({ screenKey, onNavigate, onBack }) => {
             const [html, setHtml] = useState('');
-            const [styles, setStyles] = useState('');
             const [loading, setLoading] = useState(true);
             const containerRef = useRef(null);
 
@@ -146,17 +175,28 @@
                         const parser = new DOMParser();
                         const doc = parser.parseFromString(text, 'text/html');
 
-                        // Extract Styles
-                        const styleContent = Array.from(doc.querySelectorAll('style'))
-                            .map(s => s.innerHTML)
-                            .join('\n');
-                        setStyles(styleContent);
+                        // Clean up previous screen assets
+                        document.querySelectorAll('[data-screen-assets]').forEach(el => el.remove());
 
-                        // Extract Body Content (excluding scripts which we'll handle separately)
-                        const bodyContent = doc.body.innerHTML;
-                        setHtml(bodyContent);
+                        // Extract and Inject Styles
+                        doc.querySelectorAll('style').forEach(s => {
+                            const newStyle = document.createElement('style');
+                            newStyle.innerHTML = s.innerHTML;
+                            newStyle.setAttribute('data-screen-assets', 'true');
+                            document.head.appendChild(newStyle);
+                        });
 
-                        // We'll handle scripts in a separate useEffect
+                        // Handle Tailwind config if present
+                        const twConfig = doc.querySelector('#tailwind-config');
+                        if (twConfig) {
+                            const newScript = document.createElement('script');
+                            newScript.innerHTML = twConfig.innerHTML;
+                            newScript.setAttribute('data-screen-assets', 'true');
+                            document.head.appendChild(newScript);
+                        }
+
+                        // Extract Body Content
+                        setHtml(doc.body.innerHTML);
                     } catch (error) {
                         console.error('Failed to load screen:', error);
                         setHtml('<div class="p-10 text-center">Failed to load screen.</div>');
@@ -171,25 +211,70 @@
                 if (!loading && containerRef.current) {
                     const container = containerRef.current;
 
-                    // 1. Manually execute any script tags found in the HTML
-                    // Note: This is simplified for the demo/prototype
+                    // 1. Auth Mode Patching
+                    if (screenKey === 'LOGIN' || screenKey === 'SIGNUP') {
+                        const isLogin = screenKey === 'LOGIN';
+                        const labels = container.querySelectorAll('label');
+                        labels.forEach(label => {
+                            const input = label.querySelector('input[name="auth-mode"]');
+                            if (input) {
+                                const mode = input.value;
+                                if ((isLogin && mode === 'login') || (!isLogin && mode === 'signup')) {
+                                    label.classList.add('bg-primary', 'shadow-sm');
+                                    label.querySelector('span')?.classList.remove('text-text-subtle');
+                                    label.querySelector('span')?.classList.add('text-white', 'font-semibold');
+                                    input.checked = true;
+                                } else {
+                                    label.classList.remove('bg-primary', 'shadow-sm');
+                                    label.querySelector('span')?.classList.remove('text-white', 'font-semibold');
+                                    label.querySelector('span')?.classList.add('text-text-subtle');
+                                    input.checked = false;
+                                }
+                            }
+                        });
+
+                        const fields = container.querySelectorAll('.relative');
+                        fields.forEach(field => {
+                            const input = field.querySelector('input');
+                            if (input && (input.placeholder === 'Full Name' || input.placeholder === 'Phone Number')) {
+                                field.style.display = isLogin ? 'none' : 'block';
+                            }
+                        });
+
+                        const submitBtn = container.querySelector('button.bg-primary span');
+                        if (submitBtn) {
+                            submitBtn.innerText = isLogin ? 'Log In' : 'Create Account';
+                        }
+
+                        const footerLink = container.querySelector('.mt-auto a, .pt-6 a');
+                        if (footerLink) {
+                            footerLink.innerText = isLogin ? 'Sign Up' : 'Login';
+                        }
+                    }
+
+                    // 2. Manually execute any script tags found in the HTML
                     const scripts = container.querySelectorAll('script');
                     scripts.forEach(oldScript => {
+                        if (oldScript.id === 'tailwind-config') return;
                         const newScript = document.createElement('script');
                         Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
                         newScript.appendChild(document.createTextNode(oldScript.innerHTML));
                         oldScript.parentNode.replaceChild(newScript, oldScript);
                     });
 
-                    // 2. Attach Click Listeners for Navigation
+                    // 3. Attach Click Listeners for Navigation
                     const handleGlobalClick = (e) => {
                         const target = e.target.closest('button, a, [role="button"]');
                         if (!target) return;
 
-                        const text = target.innerText.trim().toLowerCase();
+                        // Normalize text: collapse multiple spaces and newlines
+                        const text = target.innerText.replace(/\s+/g, ' ').trim().toLowerCase();
+                        const icon = target.querySelector('.material-symbols-outlined, .material-icons-round')?.innerText.trim();
 
                         // Navigation Logic Heuristics
-                        if (text.includes('sign up') || text.includes('create account')) {
+                        if (text.includes('arrow_back') || text === 'back' || icon === 'arrow_back') {
+                            onBack();
+                        } else if (text.includes('sign up') || text.includes('create account')) {
                             if (text.includes('provider')) onNavigate('PROVIDER_WELCOME');
                             else onNavigate('SIGNUP');
                         } else if (text.includes('log in') || text.includes('login') || text.includes('sign in')) {
@@ -201,7 +286,7 @@
                             onNavigate('CLIENT_HOME');
                         } else if (text.includes('book now')) {
                             onNavigate('BOOKING');
-                        } else if (text.includes('find services') || text.includes('explore')) {
+                        } else if (text.includes('find services') || text.includes('explore') || icon === 'search') {
                             onNavigate('FIND_SERVICES');
                         } else if (text.includes('view profile')) {
                             onNavigate('PROVIDER_PROFILE');
@@ -210,14 +295,21 @@
                             else onNavigate('SIGNUP');
                         } else if (text.includes('complete setup') || text.includes('finish')) {
                             onNavigate('PROVIDER_DASHBOARD');
-                        } else if (text.includes('home') || target.querySelector('.material-symbols-outlined')?.innerText === 'home') {
-                            onNavigate('CLIENT_HOME');
-                        } else if (text.includes('bookings') || target.querySelector('.material-symbols-outlined')?.innerText === 'calendar_today') {
-                            onNavigate('MY_BOOKINGS');
-                        } else if (text.includes('messages') || target.querySelector('.material-symbols-outlined')?.innerText === 'mail') {
+                        } else if (text.includes('home') || icon === 'home' || icon === 'dashboard') {
+                            if (screenKey.startsWith('ADMIN')) onNavigate('ADMIN_DASHBOARD');
+                            else if (screenKey.startsWith('PROVIDER')) onNavigate('PROVIDER_DASHBOARD');
+                            else onNavigate('CLIENT_HOME');
+                        } else if (text.includes('bookings') || icon === 'calendar_today' || icon === 'event_note' || icon === 'confirmation_number') {
+                            if (screenKey.startsWith('ADMIN')) onNavigate('MANAGE_BOOKINGS');
+                            else onNavigate('MY_BOOKINGS');
+                        } else if (text.includes('messages') || icon === 'mail' || icon === 'chat_bubble') {
                             onNavigate('MESSAGES');
-                        } else if (text.includes('profile') || target.querySelector('.material-symbols-outlined')?.innerText === 'person') {
+                        } else if (text.includes('profile') || icon === 'person') {
                             onNavigate('PROFILE');
+                        } else if (text.includes('manage users') || icon === 'manage_accounts') {
+                            onNavigate('MANAGE_USERS');
+                        } else if (text.includes('settings') || icon === 'settings') {
+                            onNavigate('ADMIN_SETTINGS');
                         }
                     };
 
@@ -228,7 +320,6 @@
 
             return (
                 <div className="h-full flex flex-col">
-                    <style dangerouslySetInnerHTML={{ __html: styles }} />
                     {loading ? (
                         <div className="flex-1 flex items-center justify-center">
                             <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#87CEEB]"></div>
@@ -245,21 +336,43 @@
         };
 
         const App = () => {
-            const [screen, setScreen] = useState('WELCOME');
+            const [history, setHistory] = useState(['WELCOME']);
             const [devMenuOpen, setDevMenuOpen] = useState(false);
+            const [animKey, setAnimKey] = useState(0);
+
+            const currentScreen = history[history.length - 1];
+
+            const navigate = (newScreen) => {
+                if (newScreen === currentScreen) return;
+                setHistory(prev => [...prev, newScreen]);
+                setAnimKey(prev => prev + 1);
+            };
+
+            const goBack = () => {
+                if (history.length > 1) {
+                    setHistory(prev => prev.slice(0, -1));
+                    setAnimKey(prev => prev + 1);
+                }
+            };
 
             useEffect(() => {
                 const handleExternalNavigate = (e) => {
-                    if (SCREEN_MAP[e.detail]) setScreen(e.detail);
+                    if (SCREEN_MAP[e.detail]) navigate(e.detail);
                 };
                 window.addEventListener('navigate', handleExternalNavigate);
                 return () => window.removeEventListener('navigate', handleExternalNavigate);
-            }, []);
+            }, [currentScreen]);
 
             return (
                 <div className="app-shell">
                     <div className="screen-container">
-                        <Screen screenKey={screen} onNavigate={setScreen} />
+                        <div key={animKey} className="h-full slide-in">
+                            <Screen
+                                screenKey={currentScreen}
+                                onNavigate={navigate}
+                                onBack={goBack}
+                            />
+                        </div>
                     </div>
 
                     {/* Quick Access Dev Menu */}
@@ -270,10 +383,10 @@
                     {devMenuOpen && (
                         <div className="dev-menu">
                             <div className="text-[10px] font-bold text-gray-400 mb-2 px-3 uppercase tracking-wider">Switch Flow</div>
-                            <button onClick={() => { setScreen('WELCOME'); setDevMenuOpen(false); }}>Welcome Screen</button>
-                            <button onClick={() => { setScreen('CLIENT_HOME'); setDevMenuOpen(false); }}>Client App</button>
-                            <button onClick={() => { setScreen('PROVIDER_WELCOME'); setDevMenuOpen(false); }}>Provider App</button>
-                            <button onClick={() => { setScreen('ADMIN_LOGIN'); setDevMenuOpen(false); }}>Admin Panel</button>
+                            <button onClick={() => { navigate('WELCOME'); setDevMenuOpen(false); }}>Welcome Screen</button>
+                            <button onClick={() => { navigate('CLIENT_HOME'); setDevMenuOpen(false); }}>Client App</button>
+                            <button onClick={() => { navigate('PROVIDER_WELCOME'); setDevMenuOpen(false); }}>Provider App</button>
+                            <button onClick={() => { navigate('ADMIN_LOGIN'); setDevMenuOpen(false); }}>Admin Panel</button>
                             <div className="mt-2 pt-2 border-t border-gray-100 text-[9px] text-center text-gray-400">
                                 Prototype Navigation Control
                             </div>
