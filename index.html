@@ -109,7 +109,7 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect, useRef } = React;
+        const { useState, useEffect, useRef, memo } = React;
 
         const SCREEN_MAP = {
             'WELCOME': 'welcome_screen/code.html',
@@ -129,50 +129,72 @@
             'PROFILE': 'profile_screen_for_client_app/code.html'
         };
 
-        const Screen = ({ screenKey, onNavigate }) => {
-            const [html, setHtml] = useState('');
-            const [styles, setStyles] = useState('');
-            const [loading, setLoading] = useState(true);
+        // Performance Optimization: Global caches and static parser instance
+        const contentCache = {}; // URL -> {html, styles}
+        const promiseCache = {}; // URL -> Promise
+        const staticParser = new DOMParser();
+
+        /**
+         * Process raw HTML text to extract styles and optimize content
+         */
+        const processScreenText = (text) => {
+            const doc = staticParser.parseFromString(text, 'text/html');
+            const styles = Array.from(doc.querySelectorAll('style'))
+                .map(s => {
+                    const content = s.innerHTML;
+                    s.remove();
+                    return content;
+                })
+                .join('\n');
+
+            doc.querySelectorAll('img').forEach(img => {
+                img.setAttribute('loading', 'lazy');
+                img.setAttribute('decoding', 'async');
+            });
+
+            return { html: doc.body.innerHTML, styles };
+        };
+
+        const Screen = memo(({ screenKey, onNavigate }) => {
+            const path = `extracted_code/stitch_cleaners_hub/${SCREEN_MAP[screenKey]}`;
+            const [content, setContent] = useState(contentCache[path] || null);
             const containerRef = useRef(null);
 
             useEffect(() => {
-                const fetchContent = async () => {
-                    setLoading(true);
+                if (contentCache[path]) {
+                    setContent(contentCache[path]);
+                    return;
+                }
+
+                const loadContent = async () => {
                     try {
-                        const path = `extracted_code/stitch_cleaners_hub/${SCREEN_MAP[screenKey]}`;
-                        const response = await fetch(path);
-                        const text = await response.text();
-
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(text, 'text/html');
-
-                        // Extract Styles
-                        const styleContent = Array.from(doc.querySelectorAll('style'))
-                            .map(s => s.innerHTML)
-                            .join('\n');
-                        setStyles(styleContent);
-
-                        // Extract Body Content (excluding scripts which we'll handle separately)
-                        const bodyContent = doc.body.innerHTML;
-                        setHtml(bodyContent);
-
-                        // We'll handle scripts in a separate useEffect
+                        if (!promiseCache[path]) {
+                            promiseCache[path] = fetch(path)
+                                .then(res => res.text())
+                                .then(text => {
+                                    contentCache[path] = processScreenText(text);
+                                    return contentCache[path];
+                                });
+                        }
+                        const processed = await promiseCache[path];
+                        setContent(processed);
                     } catch (error) {
                         console.error('Failed to load screen:', error);
-                        setHtml('<div class="p-10 text-center">Failed to load screen.</div>');
+                        setContent({
+                            html: '<div class="p-10 text-center text-red-500">Failed to load screen.</div>',
+                            styles: ''
+                        });
                     }
-                    setLoading(false);
                 };
-                fetchContent();
-            }, [screenKey]);
+                loadContent();
+            }, [path]);
 
             // Execute scripts and attach listeners
             useEffect(() => {
-                if (!loading && containerRef.current) {
+                if (content && containerRef.current) {
                     const container = containerRef.current;
 
                     // 1. Manually execute any script tags found in the HTML
-                    // Note: This is simplified for the demo/prototype
                     const scripts = container.querySelectorAll('script');
                     scripts.forEach(oldScript => {
                         const newScript = document.createElement('script');
@@ -183,7 +205,8 @@
 
                     // 2. Attach Click Listeners for Navigation
                     const handleGlobalClick = (e) => {
-                        const target = e.target.closest('button, a, [role="button"]');
+                        // Extended click detection to include .cursor-pointer containers
+                        const target = e.target.closest('button, a, [role="button"], .cursor-pointer');
                         if (!target) return;
 
                         const text = target.innerText.trim().toLowerCase();
@@ -224,12 +247,12 @@
                     container.addEventListener('click', handleGlobalClick);
                     return () => container.removeEventListener('click', handleGlobalClick);
                 }
-            }, [html, loading, screenKey]);
+            }, [content, screenKey, onNavigate]);
 
             return (
                 <div className="h-full flex flex-col">
-                    <style dangerouslySetInnerHTML={{ __html: styles }} />
-                    {loading ? (
+                    <style dangerouslySetInnerHTML={{ __html: content?.styles || '' }} />
+                    {!content ? (
                         <div className="flex-1 flex items-center justify-center">
                             <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#87CEEB]"></div>
                         </div>
@@ -237,12 +260,12 @@
                         <div
                             ref={containerRef}
                             className="flex-1"
-                            dangerouslySetInnerHTML={{ __html: html }}
+                            dangerouslySetInnerHTML={{ __html: content.html }}
                         />
                     )}
                 </div>
             );
-        };
+        });
 
         const App = () => {
             const [screen, setScreen] = useState('WELCOME');
@@ -254,6 +277,36 @@
                 };
                 window.addEventListener('navigate', handleExternalNavigate);
                 return () => window.removeEventListener('navigate', handleExternalNavigate);
+            }, []);
+
+            // Performance: Speculative pre-fetching during idle time
+            useEffect(() => {
+                if ('requestIdleCallback' in window) {
+                    const urls = [...new Set(Object.values(SCREEN_MAP))].map(p => `extracted_code/stitch_cleaners_hub/${p}`);
+                    let index = 0;
+
+                    const prefetchNext = () => {
+                        if (index >= urls.length) return;
+
+                        const path = urls[index++];
+                        if (!contentCache[path] && !promiseCache[path]) {
+                            promiseCache[path] = fetch(path)
+                                .then(res => res.text())
+                                .then(text => {
+                                    contentCache[path] = processScreenText(text);
+                                    return contentCache[path];
+                                })
+                                .catch(() => {})
+                                .finally(() => {
+                                    window.requestIdleCallback(prefetchNext);
+                                });
+                        } else {
+                            window.requestIdleCallback(prefetchNext);
+                        }
+                    };
+
+                    window.requestIdleCallback(prefetchNext);
+                }
             }, []);
 
             return (
