@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Edit Provider Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#87CEEB",
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-[#f5f5f5] dark:bg-[#101b22] font-inter">
+    <div class="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto bg-white dark:bg-[#101b22] shadow-sm">
+        <!-- Header -->
+        <div class="flex items-center bg-white dark:bg-[#101b22] p-4 pb-2 justify-between sticky top-0 z-10 border-b border-gray-100 dark:border-gray-800">
+            <div class="text-[#111518] dark:text-white flex size-12 shrink-0 items-center justify-start cursor-pointer transition-opacity hover:opacity-70">
+                <span class="material-symbols-outlined" style="font-size: 24px;">arrow_back_ios</span>
+            </div>
+            <h2 class="text-[#111518] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12">Edit Profile</h2>
+        </div>
+
+        <!-- Content -->
+        <div class="flex-1 overflow-y-auto pb-24">
+            <!-- Profile Photo -->
+            <div class="flex flex-col items-center p-6 bg-gray-50 dark:bg-[#1a2633]">
+                <div class="relative">
+                    <div class="h-24 w-24 rounded-full bg-gray-300 overflow-hidden border-4 border-white shadow-sm">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTDTdU4QmQTWohhchyrqbmC97b4E9oNzMPjpc3c1sywAYCR77QGzIHqOBIzx3Y8Vu-tZ7-hZreFNTKl8twEeGhJ-w1EKN4Kg87i1WIRDM3F8eJsrJGXJDzgQyweM_oVPWjzP3gvlGCJZej3H1qU60iiBxVZmYmvycj4mscB0X0L2wXPwK8RZPIMo4MeYd7u3916fCrecwUqJpQlFxIbxd1bils94OD79_VbV-HvDwYiU6Ctg19nnP43UepOo6jTxPhFueo4o6YkZnv" alt="Profile" class="h-full w-full object-cover">
+                    </div>
+                    <button class="absolute bottom-0 right-0 p-1.5 bg-primary text-white rounded-full border-2 border-white">
+                        <span class="material-symbols-outlined" style="font-size: 16px;">edit</span>
+                    </button>
+                </div>
+                <h3 class="mt-4 font-bold">Sarah Jenkins</h3>
+                <p class="text-xs text-gray-500">Verified Provider</p>
+            </div>
+
+            <!-- Form -->
+            <div class="p-4 space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Bio</label>
+                    <textarea class="w-full p-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#1a2633] focus:ring-primary focus:border-primary text-sm" rows="3">Professional cleaner with 5 years of experience in residential and commercial spaces.</textarea>
+                </div>
+
+                <div class="space-y-3">
+                    <label class="block text-xs font-bold text-gray-400 uppercase">Services & Prices</label>
+                    <div class="flex items-center justify-between p-3 bg-white dark:bg-[#1a2633] rounded-xl border border-gray-200 dark:border-gray-800">
+                        <span class="text-sm">Regular Cleaning</span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs text-gray-400">$</span>
+                            <input type="number" class="w-16 p-1 text-sm border-none bg-gray-50 dark:bg-gray-800 rounded" value="30">
+                            <span class="text-xs text-gray-400">/hr</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-white dark:bg-[#1a2633] rounded-xl border border-gray-200 dark:border-gray-800">
+                        <span class="text-sm">Deep Cleaning</span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs text-gray-400">$</span>
+                            <input type="number" class="w-16 p-1 text-sm border-none bg-gray-50 dark:bg-gray-800 rounded" value="45">
+                            <span class="text-xs text-gray-400">/hr</span>
+                        </div>
+                    </div>
+                    <button class="w-full py-2 border-2 border-dashed border-gray-200 dark:border-gray-800 text-gray-400 text-sm font-bold rounded-xl hover:bg-gray-50 transition-colors">+ Add Service</button>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Work Photos</label>
+                    <div class="grid grid-cols-4 gap-2">
+                        <div class="aspect-square bg-gray-100 rounded-lg"></div>
+                        <div class="aspect-square bg-gray-100 rounded-lg"></div>
+                        <button class="aspect-square border-2 border-dashed border-gray-200 flex items-center justify-center text-gray-300 rounded-lg">
+                            <span class="material-symbols-outlined">add</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Bank Details</label>
+                    <input type="text" class="w-full p-3 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-[#1a2633] text-sm" value="**** **** **** 4242" placeholder="Card Number or Account">
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Action -->
+        <div class="fixed bottom-0 left-0 w-full p-4 bg-white dark:bg-[#101b22] border-t border-gray-100 dark:border-gray-800">
+            <button class="w-full py-3 bg-primary text-white font-bold rounded-xl shadow-lg hover:bg-sky-400 transition-all">Save Changes</button>
+        </div>
+    </div>
+</body>
+</html>

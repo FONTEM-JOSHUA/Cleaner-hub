@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Chat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+</head>
+<body class="bg-[#f5f5f5] dark:bg-[#101b22] font-inter">
+    <div class="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto bg-white dark:bg-[#101b22] shadow-sm">
+        <div class="flex items-center bg-white dark:bg-[#101b22] p-4 pb-2 justify-between sticky top-0 z-10 border-b border-gray-100 dark:border-gray-800">
+            <div class="flex items-center gap-3">
+                <span class="material-symbols-outlined cursor-pointer">arrow_back_ios</span>
+                <div class="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center font-bold text-primary">SJ</div>
+                <h2 class="text-lg font-bold">Sarah Jenkins</h2>
+            </div>
+            <span class="material-symbols-outlined text-primary cursor-pointer">call</span>
+        </div>
+        <div class="flex-1 p-4 space-y-4 overflow-y-auto bg-gray-50 dark:bg-gray-900">
+            <div class="flex justify-start">
+                <div class="bg-white dark:bg-gray-800 p-3 rounded-2xl rounded-tl-none max-w-[80%] shadow-sm">
+                    <p class="text-sm">Hi! I'll be there in 15 minutes.</p>
+                    <p class="text-[10px] text-gray-400 mt-1 text-right">10:05 AM</p>
+                </div>
+            </div>
+            <div class="flex justify-end">
+                <div class="bg-primary text-white p-3 rounded-2xl rounded-tr-none max-w-[80%] shadow-md">
+                    <p class="text-sm">Great, thank you! The gate code is 1234.</p>
+                    <p class="text-[10px] opacity-70 mt-1 text-right">10:07 AM</p>
+                </div>
+            </div>
+        </div>
+        <div class="p-4 border-t border-gray-100 dark:border-gray-800 bg-white dark:bg-[#101b22] flex items-center gap-3">
+            <span class="material-symbols-outlined text-gray-400 cursor-pointer">add_circle</span>
+            <input type="text" class="flex-1 p-3 bg-gray-100 dark:bg-gray-800 border-none rounded-full text-sm" placeholder="Type a message..."/>
+            <span class="material-symbols-outlined text-primary cursor-pointer">send</span>
+        </div>
+    </div>
+</body>
+</html>
