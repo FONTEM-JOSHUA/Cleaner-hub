@@ -109,7 +109,44 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect, useRef } = React;
+        const { useState, useEffect, useRef, memo } = React;
+
+        // Performance Optimization: Global Caches
+        const contentCache = {};
+        const promiseCache = {};
+        const parser = new DOMParser();
+
+        /**
+         * Fetches, parses, and caches a screen's content.
+         * Returns a promise that resolves to the processed content.
+         */
+        const processScreen = async (key) => {
+            if (contentCache[key]) return contentCache[key];
+
+            const path = `extracted_code/stitch_cleaners_hub/${SCREEN_MAP[key]}`;
+            if (!promiseCache[path]) {
+                promiseCache[path] = fetch(path).then(res => res.text()).then(text => {
+                    const doc = parser.parseFromString(text, 'text/html');
+                    const processed = {
+                        html: doc.body.innerHTML,
+                        styles: Array.from(doc.querySelectorAll('style'))
+                            .map(s => s.innerHTML)
+                            .join('\n')
+                    };
+                    return processed;
+                });
+            }
+
+            try {
+                const result = await promiseCache[path];
+                contentCache[key] = result;
+                delete promiseCache[path];
+                return result;
+            } catch (error) {
+                delete promiseCache[path];
+                throw error;
+            }
+        };
 
         const SCREEN_MAP = {
             'WELCOME': 'welcome_screen/code.html',
@@ -129,41 +166,31 @@
             'PROFILE': 'profile_screen_for_client_app/code.html'
         };
 
-        const Screen = ({ screenKey, onNavigate }) => {
+        const Screen = memo(({ screenKey, onNavigate }) => {
             const [html, setHtml] = useState('');
             const [styles, setStyles] = useState('');
             const [loading, setLoading] = useState(true);
             const containerRef = useRef(null);
 
             useEffect(() => {
-                const fetchContent = async () => {
+                let isMounted = true;
+                const loadScreen = async () => {
                     setLoading(true);
                     try {
-                        const path = `extracted_code/stitch_cleaners_hub/${SCREEN_MAP[screenKey]}`;
-                        const response = await fetch(path);
-                        const text = await response.text();
-
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(text, 'text/html');
-
-                        // Extract Styles
-                        const styleContent = Array.from(doc.querySelectorAll('style'))
-                            .map(s => s.innerHTML)
-                            .join('\n');
-                        setStyles(styleContent);
-
-                        // Extract Body Content (excluding scripts which we'll handle separately)
-                        const bodyContent = doc.body.innerHTML;
-                        setHtml(bodyContent);
-
-                        // We'll handle scripts in a separate useEffect
+                        const { html, styles } = await processScreen(screenKey);
+                        if (isMounted) {
+                            setHtml(html);
+                            setStyles(styles);
+                        }
                     } catch (error) {
                         console.error('Failed to load screen:', error);
-                        setHtml('<div class="p-10 text-center">Failed to load screen.</div>');
+                        if (isMounted) setHtml('<div class="p-10 text-center">Failed to load screen.</div>');
+                    } finally {
+                        if (isMounted) setLoading(false);
                     }
-                    setLoading(false);
                 };
-                fetchContent();
+                loadScreen();
+                return () => { isMounted = false; };
             }, [screenKey]);
 
             // Execute scripts and attach listeners
@@ -242,11 +269,24 @@
                     )}
                 </div>
             );
-        };
+        });
 
         const App = () => {
             const [screen, setScreen] = useState('WELCOME');
             const [devMenuOpen, setDevMenuOpen] = useState(false);
+
+            // Speculative Pre-fetching
+            useEffect(() => {
+                const idleCallback = window.requestIdleCallback || ((cb) => setTimeout(cb, 1000));
+                const handle = idleCallback(() => {
+                    Object.keys(SCREEN_MAP).forEach(key => {
+                        processScreen(key).catch(e => console.warn(`Failed to prefetch ${key}`, e));
+                    });
+                });
+                return () => {
+                    if (window.cancelIdleCallback) window.cancelIdleCallback(handle);
+                };
+            }, []);
 
             useEffect(() => {
                 const handleExternalNavigate = (e) => {
