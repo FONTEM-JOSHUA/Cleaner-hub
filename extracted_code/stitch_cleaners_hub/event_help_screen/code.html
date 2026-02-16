@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Event Help - Cleaner Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#87CEEB",
+                        "background-light": "#ffffff",
+                        "background-dark": "#101b22",
+                        "surface-light": "#f6f7f8",
+                        "surface-dark": "#1c2a33",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white antialiased">
+    <div class="relative flex h-full min-h-screen w-full flex-col max-w-md mx-auto bg-background-light dark:bg-background-dark shadow-xl">
+        <!-- Header -->
+        <header class="flex items-center px-6 pt-12 pb-4 bg-background-light dark:bg-background-dark sticky top-0 z-10">
+            <button class="flex items-center justify-center size-10 rounded-full bg-surface-light dark:bg-surface-dark text-slate-900 dark:text-white" onclick="window.dispatchEvent(new CustomEvent('navigate', {detail: 'CLIENT_HOME'}))">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </button>
+            <h1 class="ml-4 text-xl font-bold">Event Help</h1>
+        </header>
+
+        <main class="flex-1 overflow-y-auto px-6 py-4">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold mb-2">Host the perfect event</h2>
+                <p class="text-slate-500 dark:text-slate-400">Professional assistance for parties, weddings, and gatherings.</p>
+            </div>
+
+            <!-- Categories -->
+            <div class="grid grid-cols-1 gap-4 mb-8">
+                <button class="flex items-center p-4 bg-surface-light dark:bg-surface-dark rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+                    <div class="size-12 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center mr-4">
+                        <span class="material-symbols-outlined text-2xl">celebration</span>
+                    </div>
+                    <div class="text-left">
+                        <h3 class="font-bold">Party Cleanup</h3>
+                        <p class="text-xs text-slate-500">Before & after event cleaning</p>
+                    </div>
+                </button>
+                <button class="flex items-center p-4 bg-surface-light dark:bg-surface-dark rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+                    <div class="size-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mr-4">
+                        <span class="material-symbols-outlined text-2xl">restaurant</span>
+                    </div>
+                    <div class="text-left">
+                        <h3 class="font-bold">Wait Staff & Serving</h3>
+                        <p class="text-xs text-slate-500">Professional servers for your guests</p>
+                    </div>
+                </button>
+                <button class="flex items-center p-4 bg-surface-light dark:bg-surface-dark rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+                    <div class="size-12 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center mr-4">
+                        <span class="material-symbols-outlined text-2xl">set_meal</span>
+                    </div>
+                    <div class="text-left">
+                        <h3 class="font-bold">Event Catering</h3>
+                        <p class="text-xs text-slate-500">Custom menus for any occasion</p>
+                    </div>
+                </button>
+                <button class="flex items-center p-4 bg-surface-light dark:bg-surface-dark rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+                    <div class="size-12 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center mr-4">
+                        <span class="material-symbols-outlined text-2xl">local_bar</span>
+                    </div>
+                    <div class="text-left">
+                        <h3 class="font-bold">Bartenders</h3>
+                        <p class="text-xs text-slate-500">Licensed drink specialists</p>
+                    </div>
+                </button>
+            </div>
+
+            <!-- Featured Banner -->
+            <div class="relative overflow-hidden rounded-3xl bg-primary p-6 text-white mb-8">
+                <div class="relative z-10">
+                    <h4 class="text-xl font-bold mb-2">Wedding Package</h4>
+                    <p class="text-sm text-blue-50 mb-4">Complete setup and cleanup for your special day.</p>
+                    <button class="bg-white text-primary font-bold px-6 py-2 rounded-full text-sm">Learn More</button>
+                </div>
+                <div class="absolute right-[-20px] top-[-20px] size-40 rounded-full bg-white/10 blur-2xl"></div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

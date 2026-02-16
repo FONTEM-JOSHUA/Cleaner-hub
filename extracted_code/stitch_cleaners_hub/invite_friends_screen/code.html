@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Invite Friends - Cleaner Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#87CEEB",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101b22",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white antialiased">
+    <div class="relative flex h-full min-h-screen w-full flex-col max-w-md mx-auto bg-background-light dark:bg-background-dark shadow-xl">
+        <!-- Header -->
+        <header class="flex items-center px-6 pt-12 pb-4 bg-transparent sticky top-0 z-10">
+            <button class="flex items-center justify-center size-10 rounded-full bg-white dark:bg-slate-800 shadow-sm" onclick="window.dispatchEvent(new CustomEvent('navigate', {detail: 'PROFILE'}))">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </button>
+            <h1 class="ml-4 text-xl font-bold">Invite Friends</h1>
+        </header>
+
+        <main class="flex-1 px-8 py-4 flex flex-col items-center text-center">
+            <div class="size-48 bg-blue-100 rounded-full flex items-center justify-center mb-8 relative">
+                <span class="material-symbols-outlined text-primary text-8xl">card_giftcard</span>
+                <div class="absolute -top-2 -right-2 size-16 bg-yellow-400 rounded-full border-4 border-white flex items-center justify-center font-bold text-white text-xl shadow-lg">$10</div>
+            </div>
+
+            <h2 class="text-3xl font-bold mb-4">Share the Love</h2>
+            <p class="text-slate-500 dark:text-slate-400 mb-8 leading-relaxed">
+                Invite your friends to Cleaner Hub and you'll both get <span class="text-primary font-bold">$10 credit</span> after their first completed booking.
+            </p>
+
+            <!-- Referral Code -->
+            <div class="w-full p-4 bg-white dark:bg-slate-800 rounded-2xl border-2 border-dashed border-primary mb-8">
+                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-2">Your Referral Code</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-2xl font-black tracking-widest text-primary">CLEAN10</span>
+                    <button class="flex items-center gap-1 text-primary hover:text-blue-600">
+                        <span class="material-symbols-outlined text-sm">content_copy</span>
+                        <span class="text-xs font-bold">COPY</span>
+                    </button>
+                </div>
+            </div>
+
+            <button class="w-full py-4 bg-primary text-white font-bold rounded-2xl shadow-lg shadow-primary/30 flex items-center justify-center gap-3">
+                <span class="material-symbols-outlined">share</span>
+                Invite Friends Now
+            </button>
+
+            <p class="mt-8 text-[10px] text-slate-400 px-4">
+                * Terms and conditions apply. Credit is valid for 90 days after issue.
+            </p>
+        </main>
+    </div>
+</body>
+</html>

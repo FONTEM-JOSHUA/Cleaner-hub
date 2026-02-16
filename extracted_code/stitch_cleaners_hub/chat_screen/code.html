@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Chat - Cleaner Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#87CEEB",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101b22",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1c2a33",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white antialiased h-screen">
+    <div class="relative flex h-full w-full flex-col max-w-md mx-auto bg-background-light dark:bg-background-dark shadow-xl overflow-hidden">
+        <!-- Header -->
+        <header class="flex items-center px-4 pt-12 pb-4 bg-white dark:bg-background-dark shadow-sm z-10">
+            <button class="flex items-center justify-center size-10 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition" onclick="window.dispatchEvent(new CustomEvent('navigate', {detail: 'MESSAGES'}))">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </button>
+            <div class="flex items-center ml-2 flex-1">
+                <div class="size-10 rounded-full bg-cover bg-center border-2 border-primary/20" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBmICRVBvCr70hwVLP-Duh00kY3A1WCX3OrAyfsQcoaaIc7moV7C1u8I10LcOCt_pAKbMfarSWwSgh60siNHOggNV65TpjCk-E3DyZgk7j52tso7sB_vAk8uzjnpAd1SI__76xmPNpnuFLAVHp8py20y24TE9JU9PFiRzwI_U_IxYznW_ExXKnZamkWH2sWGf7oaFNtigyrEJ___BWG0l1S2QoQgFwSXatTYn25D7cjXXWDh6xyk9x79-1Kf_v92RwCWu1STnBbmXBw');"></div>
+                <div class="ml-3">
+                    <h2 class="text-sm font-bold leading-tight">Sarah Jenkins</h2>
+                    <p class="text-[10px] text-green-500 font-medium">Online</p>
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <button class="size-10 rounded-full bg-green-50 text-green-600 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-[20px]">call</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Messages Area -->
+        <main class="flex-1 overflow-y-auto p-4 space-y-4">
+            <div class="flex justify-center">
+                <span class="bg-slate-200 dark:bg-slate-800 text-slate-500 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Today</span>
+            </div>
+
+            <!-- Received -->
+            <div class="flex items-end gap-2 max-w-[80%]">
+                <div class="bg-white dark:bg-surface-dark p-3 rounded-2xl rounded-bl-none shadow-sm border border-slate-100 dark:border-slate-800">
+                    <p class="text-sm">Hi! I'm on my way. Should be there in about 15 minutes.</p>
+                    <span class="text-[9px] text-slate-400 mt-1 block">10:45 AM</span>
+                </div>
+            </div>
+
+            <!-- Sent -->
+            <div class="flex items-end gap-2 max-w-[80%] ml-auto flex-row-reverse">
+                <div class="bg-primary text-white p-3 rounded-2xl rounded-br-none shadow-md">
+                    <p class="text-sm">Great! I've left the key under the mat as we discussed.</p>
+                    <div class="flex items-center justify-end gap-1 mt-1">
+                        <span class="text-[9px] text-blue-50">10:47 AM</span>
+                        <span class="material-symbols-outlined text-[12px] text-white">done_all</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Input Area -->
+        <footer class="p-4 bg-white dark:bg-background-dark border-t border-slate-100 dark:border-slate-800">
+            <div class="flex items-center gap-3">
+                <button class="flex items-center justify-center size-10 text-slate-400">
+                    <span class="material-symbols-outlined">add_circle</span>
+                </button>
+                <div class="flex-1 bg-slate-100 dark:bg-slate-800 rounded-full px-4 py-2">
+                    <input class="bg-transparent border-none focus:ring-0 text-sm w-full p-0" placeholder="Type a message..." type="text"/>
+                </div>
+                <button class="flex items-center justify-center size-10 bg-primary text-white rounded-full shadow-lg">
+                    <span class="material-symbols-outlined text-[20px]">send</span>
+                </button>
+            </div>
+
+            <!-- Quick Action Icons -->
+            <div class="flex justify-around mt-4 pt-2 border-t border-slate-50 dark:border-slate-900">
+                <button class="flex flex-col items-center gap-1 group">
+                    <div class="size-10 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-[20px]">photo_camera</span>
+                    </div>
+                    <span class="text-[9px] font-bold text-slate-400">PHOTO</span>
+                </button>
+                <button class="flex flex-col items-center gap-1 group">
+                    <div class="size-10 rounded-full bg-green-50 text-green-500 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-[20px]">location_on</span>
+                    </div>
+                    <span class="text-[9px] font-bold text-slate-400">LOCATION</span>
+                </button>
+                <button class="flex flex-col items-center gap-1 group">
+                    <div class="size-10 rounded-full bg-purple-50 text-purple-500 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-[20px]">mic</span>
+                    </div>
+                    <span class="text-[9px] font-bold text-slate-400">VOICE</span>
+                </button>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Edit Provider Profile - Cleaner Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#87CEEB",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101b22",
+                        "surface-light": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white antialiased">
+    <div class="relative flex h-full min-h-screen w-full flex-col max-w-md mx-auto bg-background-light dark:bg-background-dark shadow-xl">
+        <!-- Header -->
+        <header class="flex items-center px-6 pt-12 pb-4 bg-white dark:bg-background-dark sticky top-0 z-20 border-b border-slate-100 dark:border-slate-800">
+            <button class="flex items-center justify-center size-10 rounded-full bg-slate-100 dark:bg-slate-800" onclick="window.dispatchEvent(new CustomEvent('navigate', {detail: 'PROVIDER_DASHBOARD'}))">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </button>
+            <h1 class="ml-4 text-xl font-bold">Edit Profile</h1>
+            <button class="ml-auto text-primary font-bold text-sm">Save</button>
+        </header>
+
+        <main class="flex-1 overflow-y-auto p-6 space-y-8">
+            <!-- Profile Photo & Bio -->
+            <section>
+                <div class="flex flex-col items-center mb-6">
+                    <div class="relative group">
+                        <div class="size-32 rounded-full bg-cover bg-center border-4 border-white shadow-md" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCIhG6GhKKuON6mParHEC0_48Jz1_WYV_wWFupVDFn9D6r3pWMCQhr9NIXzIoqcKjLddtw0jC9X8PRQmSKG-V0B2wxt02q2TXZ85IA9woqHcIpMS6-dW6_9yOh-FwgdQs5bHqgppMeZOBjj8bR-RE33Hm3eIdiU5FEoyHCF9xE-SXM40uoKGfSzsdNtADJlz3IuatSQdkiTajjtgB4nb3SAQGr0VVfvhqpFdgKPTD-ekM_Llm1XN7-5BviVu1F6pGIiGc7NYepccBvG');"></div>
+                        <button class="absolute bottom-1 right-1 bg-primary text-white p-2 rounded-full shadow-lg border-2 border-white">
+                            <span class="material-symbols-outlined text-sm">camera_alt</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Professional Bio</label>
+                        <textarea class="w-full p-4 bg-white dark:bg-slate-800 rounded-2xl border-none shadow-sm text-sm" rows="3">Professional cleaner with 5+ years of experience specializing in deep cleaning and organization. Focused on eco-friendly products.</textarea>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Services & Prices -->
+            <section>
+                <h3 class="text-lg font-bold mb-4">Services & Prices</h3>
+                <div class="space-y-3">
+                    <div class="p-4 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 flex justify-between items-center">
+                        <div class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-primary">mop</span>
+                            <span class="text-sm font-medium">Standard Cleaning</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-sm font-bold">$25/hr</span>
+                            <span class="material-symbols-outlined text-slate-300">chevron_right</span>
+                        </div>
+                    </div>
+                    <button class="w-full py-3 border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-2xl text-slate-400 text-sm font-bold">+ Add Service</button>
+                </div>
+            </section>
+
+            <!-- Work Photos -->
+            <section>
+                <h3 class="text-lg font-bold mb-4">Work Photos (Before/After)</h3>
+                <div class="grid grid-cols-3 gap-2">
+                    <div class="aspect-square rounded-xl bg-slate-200 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBsN6dpqtas1FmaahfNrDG7NXh4qnqDms1NreypfO-AngHBwf5-Tr_GL2u_HgFlF38M4yzIXViC6SWssetKc25_MAOO1RAyrB5G0BHJ7tlUWfsFY2rdYlry6LW48B_Vtswdf5ghdFh9TW0sxLeF96jg-XNMB-79lX1mItdpMkF3eclqDQ6KJnseXdyEW0227FBli-1_Bvx-jy9Bpii8sa9D2FT7OuxCgo8ftUE9Zq2Ramv7PMVRy4JUQYARSJRjhrCkyqFhDGyzTUgv');"></div>
+                    <div class="aspect-square rounded-xl bg-slate-200 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDZLTCPFgckay9M5xwuJzjL6sOQtz5-UkrYQ3gd5XpLzZhediPKVtzQffeAKfu2cWLe3PWswrFWSj_AhXycSrTNs6sBsf9W8N_m523kOLGfA7yLYL9uGIohqJzvF57TTvV6jaFXEklZV8clcRva9NQhFPViMyJh0U6_0_2x0FXUPl31Xuv6Ldq735Uh81_is0nXP-y7wW7RhzD4z9unIso1rkl9JopunhAJ8Opc4Ulok37K0CmUBAe_JnvLnkRzYpkVpWhlvmgiISPG');"></div>
+                    <button class="aspect-square rounded-xl border-2 border-dashed border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-300">
+                        <span class="material-symbols-outlined text-3xl">add</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Certifications -->
+            <section>
+                <h3 class="text-lg font-bold mb-4">Certifications</h3>
+                <div class="p-4 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 flex items-center gap-4">
+                    <div class="size-12 rounded-lg bg-blue-50 text-primary flex items-center justify-center">
+                        <span class="material-symbols-outlined">verified</span>
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="text-sm font-bold">SafeWork Cleaning Cert</h4>
+                        <p class="text-[10px] text-slate-400">Verified Sep 2023</p>
+                    </div>
+                    <span class="material-symbols-outlined text-green-500">check_circle</span>
+                </div>
+            </section>
+
+            <!-- Team Members -->
+            <section>
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-bold">Team Members</h3>
+                    <button class="text-primary text-sm font-bold">+ Invite</button>
+                </div>
+                <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm text-center">
+                    <p class="text-sm text-slate-500 italic">You haven't added any team members yet.</p>
+                </div>
+            </section>
+
+            <!-- Bank Details -->
+            <section class="pb-12">
+                <h3 class="text-lg font-bold mb-4">Bank Details</h3>
+                <div class="p-4 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 flex items-center gap-4">
+                    <div class="size-12 rounded-lg bg-slate-100 text-slate-500 flex items-center justify-center">
+                        <span class="material-symbols-outlined">account_balance</span>
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="text-sm font-bold">Chase Bank •••• 1234</h4>
+                        <p class="text-[10px] text-slate-400">Primary Payout Method</p>
+                    </div>
+                    <button class="text-primary text-xs font-bold">Edit</button>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

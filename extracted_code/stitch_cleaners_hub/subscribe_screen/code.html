@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Subscribe - Cleaner Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#87CEEB",
+                        "background-light": "#ffffff",
+                        "background-dark": "#101b22",
+                        "surface-light": "#f6f7f8",
+                        "surface-dark": "#1c2a33",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white antialiased">
+    <div class="relative flex h-full min-h-screen w-full flex-col max-w-md mx-auto bg-background-light dark:bg-background-dark shadow-xl">
+        <!-- Header -->
+        <header class="flex items-center px-6 pt-12 pb-4 bg-background-light dark:bg-background-dark sticky top-0 z-10">
+            <button class="flex items-center justify-center size-10 rounded-full bg-surface-light dark:bg-surface-dark text-slate-900 dark:text-white" onclick="window.dispatchEvent(new CustomEvent('navigate', {detail: 'CLIENT_HOME'}))">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </button>
+            <h1 class="ml-4 text-xl font-bold">Monthly Plans</h1>
+        </header>
+
+        <main class="flex-1 overflow-y-auto px-6 py-4">
+            <div class="mb-8 text-center">
+                <h2 class="text-2xl font-bold mb-2">Subscribe & Save</h2>
+                <p class="text-slate-500 dark:text-slate-400">Regular care for your home at discounted rates.</p>
+            </div>
+
+            <!-- Subscription Cards -->
+            <div class="space-y-6">
+                <!-- Plan 1 -->
+                <div class="p-6 bg-surface-light dark:bg-surface-dark rounded-3xl border-2 border-transparent hover:border-primary transition-all relative overflow-hidden">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-lg font-bold">Essential</h3>
+                            <p class="text-xs text-slate-500 italic">2 Visits per month</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-2xl font-bold">$89</p>
+                            <p class="text-[10px] text-green-600 font-bold">SAVE 10%</p>
+                        </div>
+                    </div>
+                    <ul class="text-sm space-y-2 mb-6">
+                        <li class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-green-500 text-sm">check_circle</span>
+                            Standard Cleaning
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-green-500 text-sm">check_circle</span>
+                            Kitchen & Bath Focus
+                        </li>
+                    </ul>
+                    <button class="w-full py-3 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/20">Select Plan</button>
+                </div>
+
+                <!-- Plan 2 (Popular) -->
+                <div class="p-6 bg-surface-light dark:bg-surface-dark rounded-3xl border-2 border-primary transition-all relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-primary text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl">POPULAR</div>
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-lg font-bold">Premium</h3>
+                            <p class="text-xs text-slate-500 italic">Weekly Visits (4/mo)</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-2xl font-bold">$159</p>
+                            <p class="text-[10px] text-green-600 font-bold">SAVE 20%</p>
+                        </div>
+                    </div>
+                    <ul class="text-sm space-y-2 mb-6">
+                        <li class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-green-500 text-sm">check_circle</span>
+                            Deep Cleaning Included
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-green-500 text-sm">check_circle</span>
+                            Laundry & Ironing
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-green-500 text-sm">check_circle</span>
+                            Priority Scheduling
+                        </li>
+                    </ul>
+                    <button class="w-full py-3 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/20">Select Plan</button>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
