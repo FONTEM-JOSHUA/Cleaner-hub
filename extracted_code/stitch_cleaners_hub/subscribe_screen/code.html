@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Subscribe - Cleaners Hub</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#87CEEB",
+                        "background-light": "#ffffff",
+                        "surface-light": "#f6f7f8",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light font-display text-slate-900 antialiased">
+    <div class="relative flex min-h-screen w-full flex-col max-w-md mx-auto bg-background-light shadow-xl">
+        <header class="flex items-center px-6 pt-12 pb-4 sticky top-0 bg-white z-10 border-b border-slate-100">
+            <button class="flex items-center justify-center size-10 rounded-full hover:bg-slate-100">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </button>
+            <h1 class="text-xl font-bold ml-2">Monthly Plans</h1>
+        </header>
+
+        <main class="flex-1 px-6 py-6 overflow-y-auto">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold mb-2">Subscribe & Save</h2>
+                <p class="text-slate-600">Choose a plan that fits your lifestyle and save up to 20% on every visit.</p>
+            </div>
+
+            <div class="space-y-6">
+                <!-- Basic Plan -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm relative overflow-hidden">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-xl font-bold">Bi-Weekly</h3>
+                            <p class="text-slate-500 text-sm">2 visits per month</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-2xl font-bold text-primary">$180</span>
+                            <p class="text-xs text-green-600 font-bold">Save 10%</p>
+                        </div>
+                    </div>
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-center gap-2 text-sm">
+                            <span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                            Standard cleaning (up to 4 hours)
+                        </li>
+                        <li class="flex items-center gap-2 text-sm">
+                            <span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                            Dedicated pro
+                        </li>
+                    </ul>
+                    <button class="w-full py-3 border-2 border-primary text-primary font-bold rounded-full hover:bg-primary/5 transition-colors">
+                        Choose Basic
+                    </button>
+                </div>
+
+                <!-- Premium Plan -->
+                <div class="bg-primary/5 rounded-2xl p-6 border-2 border-primary shadow-md relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-primary text-white px-4 py-1 rounded-bl-xl text-xs font-bold uppercase">Best Value</div>
+                    <div class="flex justify-between items-start mb-4 mt-2">
+                        <div>
+                            <h3 class="text-xl font-bold">Weekly</h3>
+                            <p class="text-slate-500 text-sm">4 visits per month</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-2xl font-bold text-primary">$320</span>
+                            <p class="text-xs text-green-600 font-bold">Save 20%</p>
+                        </div>
+                    </div>
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-center gap-2 text-sm">
+                            <span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                            Standard cleaning + laundry
+                        </li>
+                        <li class="flex items-center gap-2 text-sm">
+                            <span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                            Priority scheduling
+                        </li>
+                        <li class="flex items-center gap-2 text-sm">
+                            <span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                            Eco-friendly supplies included
+                        </li>
+                    </ul>
+                    <button class="w-full py-3 bg-primary text-white font-bold rounded-full shadow-lg shadow-primary/20 hover:bg-sky-400 transition-colors">
+                        Choose Premium
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

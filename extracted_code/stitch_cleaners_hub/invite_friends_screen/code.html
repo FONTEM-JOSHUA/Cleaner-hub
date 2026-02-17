@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Invite Friends - Cleaners Hub</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#87CEEB",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-white font-display text-slate-900 antialiased h-screen flex flex-col">
+    <header class="flex items-center px-4 pt-12 pb-4 sticky top-0 bg-white z-10">
+        <button class="flex size-10 items-center justify-center rounded-full hover:bg-slate-100">
+            <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <h1 class="text-lg font-bold ml-2">Invite Friends</h1>
+    </header>
+
+    <main class="flex-1 p-6 flex flex-col items-center text-center">
+        <div class="size-48 bg-primary/10 rounded-full flex items-center justify-center mb-8">
+            <span class="material-symbols-outlined text-primary text-8xl">card_giftcard</span>
+        </div>
+
+        <h2 class="text-3xl font-black mb-4">Get $10 for every friend you invite!</h2>
+        <p class="text-slate-500 mb-10 max-w-xs">Share your code with friends. When they book their first service, you both get <span class="text-primary font-bold">$10 credit</span>.</p>
+
+        <div class="w-full bg-slate-50 rounded-2xl p-6 border-2 border-dashed border-slate-200 mb-8">
+            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Your Referral Code</p>
+            <div class="flex items-center justify-between">
+                <span class="text-2xl font-black tracking-widest text-slate-800">CLEANER10</span>
+                <button class="text-primary font-bold text-sm flex items-center gap-1">
+                    <span class="material-symbols-outlined text-lg">content_copy</span>
+                    Copy
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="p-6 bg-white border-t border-slate-100">
+        <button class="w-full py-4 bg-primary text-white font-bold rounded-full shadow-lg shadow-primary/30 active:scale-95 transition-transform">
+            Share Link
+        </button>
+    </footer>
+</body>
+</html>

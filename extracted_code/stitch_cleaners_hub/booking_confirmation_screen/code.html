@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Booking Confirmed - Cleaners Hub</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#87CEEB",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-white font-display text-slate-900 antialiased h-screen flex flex-col justify-center items-center px-6">
+    <div class="w-full max-w-sm text-center">
+        <!-- Success Icon -->
+        <div class="relative mb-8 flex justify-center">
+            <div class="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center animate-bounce">
+                <div class="w-16 h-16 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/30">
+                    <span class="material-symbols-outlined text-white text-4xl font-bold">check</span>
+                </div>
+            </div>
+            <!-- Sparkles -->
+            <div class="absolute -top-2 -right-2 text-primary animate-pulse">
+                <span class="material-symbols-outlined">auto_awesome</span>
+            </div>
+            <div class="absolute bottom-0 -left-4 text-primary/60 animate-pulse delay-100">
+                <span class="material-symbols-outlined">star</span>
+            </div>
+        </div>
+
+        <h1 class="text-3xl font-black mb-4">Booking Confirmed!</h1>
+        <p class="text-slate-500 mb-8">Your service has been successfully scheduled. Sarah Jenkins will be at your location on <span class="font-bold text-slate-800">Tuesday, Oct 24 at 10:00 AM</span>.</p>
+
+        <!-- Booking Summary Card -->
+        <div class="bg-slate-50 rounded-2xl p-5 mb-10 text-left border border-slate-100">
+            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Service Summary</h3>
+            <div class="flex items-center gap-4">
+                <div class="size-12 rounded-xl bg-primary text-white flex items-center justify-center">
+                    <span class="material-symbols-outlined">cleaning_services</span>
+                </div>
+                <div>
+                    <h4 class="font-bold">Home Cleaning</h4>
+                    <p class="text-xs text-slate-500">Professional Standard Plan</p>
+                </div>
+            </div>
+        </div>
+
+        <button class="w-full py-4 bg-primary text-white font-bold rounded-full shadow-lg shadow-primary/30 active:scale-95 transition-transform mb-4">
+            View My Bookings
+        </button>
+        <button class="w-full py-4 bg-white text-slate-400 font-bold rounded-full hover:text-slate-600 transition-colors">
+            Back to Home
+        </button>
+    </div>
+</body>
+</html>

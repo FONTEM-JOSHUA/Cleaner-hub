@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Edit Profile - Provider</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#87CEEB",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-slate-50 font-display text-slate-900 antialiased">
+    <div class="relative flex min-h-screen w-full flex-col max-w-md mx-auto bg-slate-50 shadow-xl pb-24">
+        <header class="flex items-center px-4 pt-12 pb-4 sticky top-0 bg-white z-10 border-b border-slate-100">
+            <button class="flex size-10 items-center justify-center rounded-full hover:bg-slate-100">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </button>
+            <h1 class="text-lg font-bold ml-2">Edit My Business</h1>
+        </header>
+
+        <main class="p-4 space-y-6">
+            <!-- Profile & Bio -->
+            <section class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100">
+                <h3 class="font-bold mb-4">Profile & Bio</h3>
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="relative">
+                        <div class="size-20 rounded-full bg-slate-100 bg-cover" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA2fePn5fB9HaKRpTGeXFtP32ryFKi9jnWnlQZUxrq4IhDBTJAocT65UHDZ7b2-kEljPBlaNLYtlhThVl3G53SlNsD4FjBHZipWrKUGleLjBu6NJdmRVvxi75N1a02qft25LdUj3-4VxvbxOx7IJ0J6rzGJYcG9JVQhY878m1xfiq4V8dvPzYYmi565__pK15gjjYAb_fJ1IE3vB11FsTJ0oGTj6OYMrDWwluYnQB2eGOe1_sLa1-eQkH7ljm0ID33Hh5RdJX8uqMy9");'></div>
+                        <button class="absolute bottom-0 right-0 size-7 bg-primary text-white rounded-full border-2 border-white flex items-center justify-center">
+                            <span class="material-symbols-outlined text-xs">edit</span>
+                        </button>
+                    </div>
+                    <div class="flex-1">
+                        <input type="text" value="Sarah Jenkins" class="w-full border-slate-200 rounded-lg text-sm mb-2"/>
+                        <textarea class="w-full border-slate-200 rounded-lg text-sm h-20" placeholder="Professional bio...">Hi! I'm Sarah, a dedicated cleaning specialist with over 5 years of experience...</textarea>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Services & Prices -->
+            <section class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-bold">Services & Prices</h3>
+                    <button class="text-primary text-xs font-bold">+ Add New</button>
+                </div>
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl">
+                        <span class="text-sm font-medium">Standard Cleaning</span>
+                        <span class="font-bold">$25/hr</span>
+                    </div>
+                    <div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl">
+                        <span class="text-sm font-medium">Deep Cleaning</span>
+                        <span class="font-bold">$40/hr</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Work Photos -->
+            <section class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100">
+                <h3 class="font-bold mb-4">Work Photos</h3>
+                <div class="grid grid-cols-3 gap-2">
+                    <div class="aspect-square bg-slate-100 rounded-lg bg-cover" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA6eGKAbDlz5zHLHYIcTy2vmtDCUVaVnWTHOk5duN1sFyKGFaQ1c8Fl4QdLBoxNYQ9BiBitqydp2Y7zOs_a5YdI-gNExIu5p5xzVqwExCPzTpvk40LHOqFUZf1GDg8eY2kYmWArh-qlh3UEtMrg-wJnVc7gcSH7JheDthGpig_8fCEHR6Mu1IYW5QRWVrUvuIFkyjZ1dpFLcLjVy_cq0sggrHPZ68nHCy94B6X77cSDgkh-M9w38Xvc2Enhl4dmPk5D_5c2HfU7ffru")'></div>
+                    <div class="aspect-square bg-slate-100 rounded-lg bg-cover" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCqawCzW9z5oxTn21Mqyb95OeRi78TiBaYWZzslFGcPT6AuOa3yuGuQm7gdWnbdcDE1EmjVXVRgLHT2LnoLapJd3NjDtxw9Mr0LnaX5tIh4DGe6cktKzEGrEZA3iLG-znU-sjv-f0ngLz5BYGXRXOSTyOc-q5I3ERYrU9qvptFdt3MnDJPor_72Eaf_WqgnmggL5M-Qj_qCNGZ-8UBvM4-zxCXJsA5Z32faTX1VakC_OihcES57Ao1GTkVQB2TgC7DYcjbcx4-a7B3f")'></div>
+                    <button class="aspect-square bg-slate-50 border-2 border-dashed border-slate-200 rounded-lg flex flex-col items-center justify-center text-slate-400">
+                        <span class="material-symbols-outlined">add</span>
+                        <span class="text-[10px]">Upload</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Team Members -->
+            <section class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="font-bold">Team Members</h3>
+                    <button class="text-primary text-xs font-bold">+ Add</button>
+                </div>
+                <div class="flex -space-x-3">
+                    <div class="size-10 rounded-full border-2 border-white bg-slate-200"></div>
+                    <div class="size-10 rounded-full border-2 border-white bg-slate-300"></div>
+                    <div class="size-10 rounded-full border-2 border-white bg-slate-400"></div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="fixed bottom-0 left-0 w-full p-4 bg-white border-t border-slate-100 max-w-md mx-auto">
+            <button class="w-full py-4 bg-primary text-white font-bold rounded-full shadow-lg shadow-primary/30">
+                Save All Changes
+            </button>
+        </footer>
+    </div>
+</body>
+</html>
