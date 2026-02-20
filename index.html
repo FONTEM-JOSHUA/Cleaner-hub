@@ -120,13 +120,23 @@
             'PROVIDER_PROFILE': 'service_provider_profile_screen_for_client_app/code.html',
             'BOOKING': 'booking_screen_for_client_app/code.html',
             'MY_BOOKINGS': 'my_bookings_screen_for_client_app_1/code.html',
+            'MESSAGES': 'messages_screen_for_client_app/code.html',
+            'PROFILE': 'profile_screen_for_client_app/code.html',
+            'CHANNELS': 'channels_screen_(client_app_flow)_/code.html',
+            'SMART_SEARCH': 'smart_search_screen/code.html',
+            'REAL_TIME_TRACKING': 'real-time_tracking_screen/code.html',
+            'EMERGENCY_MODE': 'emergency_mode_feature_screen/code.html',
             'PROVIDER_WELCOME': 'provider_welcome_screen/code.html',
             'PROVIDER_SETUP': 'provider_setup_screen/code.html',
             'PROVIDER_DASHBOARD': 'provider_dashboard_screen_1/code.html',
+            'PROVIDER_SCHEDULE': 'my_schedule_screen_for_provider_app/code.html',
+            'PROVIDER_REQUESTS': 'booking_requests_screen_for_provider_app/code.html',
+            'PROVIDER_CLIENTS': 'my_clients_screen_for_provider_app_(with_report_feature)/code.html',
             'ADMIN_LOGIN': 'admin_login_screen/code.html',
             'ADMIN_DASHBOARD': 'admin_dashboard_screen_1/code.html',
-            'MESSAGES': 'messages_screen_for_client_app/code.html',
-            'PROFILE': 'profile_screen_for_client_app/code.html'
+            'ADMIN_USERS': 'manage_users_screen_for_admin_app/code.html',
+            'ADMIN_BOOKINGS': 'manage_bookings_screen_for_admin_app/code.html',
+            'ADMIN_SETTINGS': 'app_settings_screen_for_admin_app/code.html'
         };
 
         const Screen = ({ screenKey, onNavigate }) => {
@@ -146,17 +156,39 @@
                         const parser = new DOMParser();
                         const doc = parser.parseFromString(text, 'text/html');
 
+                        // Cleanup old assets
+                        document.querySelectorAll('[data-screen-assets]').forEach(el => el.remove());
+
+                        // Extract and Inject Head Scripts (like Tailwind configs)
+                        const headScripts = doc.querySelectorAll('head script');
+                        headScripts.forEach(script => {
+                            const newScript = document.createElement('script');
+                            Array.from(script.attributes).forEach(attr => {
+                                if (attr.name !== 'src') newScript.setAttribute(attr.name, attr.value);
+                            });
+                            newScript.innerHTML = script.innerHTML;
+                            newScript.setAttribute('data-screen-assets', 'true');
+                            document.head.appendChild(newScript);
+                        });
+
+                        // Extract and Inject Head Styles
+                        const headStyles = doc.querySelectorAll('head style');
+                        headStyles.forEach(style => {
+                            const newStyle = document.createElement('style');
+                            newStyle.innerHTML = style.innerHTML;
+                            newStyle.setAttribute('data-screen-assets', 'true');
+                            document.head.appendChild(newStyle);
+                        });
+
                         // Extract Styles
                         const styleContent = Array.from(doc.querySelectorAll('style'))
                             .map(s => s.innerHTML)
                             .join('\n');
                         setStyles(styleContent);
 
-                        // Extract Body Content (excluding scripts which we'll handle separately)
+                        // Extract Body Content
                         const bodyContent = doc.body.innerHTML;
                         setHtml(bodyContent);
-
-                        // We'll handle scripts in a separate useEffect
                     } catch (error) {
                         console.error('Failed to load screen:', error);
                         setHtml('<div class="p-10 text-center">Failed to load screen.</div>');
@@ -164,12 +196,75 @@
                     setLoading(false);
                 };
                 fetchContent();
+
+                return () => {
+                    document.querySelectorAll('[data-screen-assets]').forEach(el => el.remove());
+                };
             }, [screenKey]);
 
             // Execute scripts and attach listeners
             useEffect(() => {
                 if (!loading && containerRef.current) {
                     const container = containerRef.current;
+
+                    // 0. Auth Mode Patching
+                    if (screenKey === 'LOGIN' || screenKey === 'SIGNUP') {
+                        const isLogin = screenKey === 'LOGIN';
+                        const headerP = container.querySelector('.text-center.mb-6 p');
+                        if (headerP) headerP.innerText = isLogin ? 'Log in to your account' : 'Join our community of trusted professionals';
+                        const headerH1 = container.querySelector('.text-center.mb-6 h1');
+                        if (headerH1) headerH1.innerText = isLogin ? 'Welcome Back' : 'Find your perfect helper';
+
+                        const labels = container.querySelectorAll('label.group');
+                        labels.forEach(label => {
+                            const text = label.innerText.trim().toLowerCase();
+                            const radio = label.querySelector('input[type="radio"]');
+                            const span = label.querySelector('span');
+                            if (text === 'login') {
+                                if (isLogin) {
+                                    label.classList.add('bg-primary', 'shadow-sm');
+                                    if (span) { span.classList.remove('text-text-subtle'); span.classList.add('text-white', 'font-semibold'); }
+                                    if (radio) radio.checked = true;
+                                } else {
+                                    label.classList.remove('bg-primary', 'shadow-sm');
+                                    if (span) { span.classList.add('text-text-subtle'); span.classList.remove('text-white', 'font-semibold'); }
+                                    if (radio) radio.checked = false;
+                                }
+                            } else if (text === 'sign up') {
+                                if (!isLogin) {
+                                    label.classList.add('bg-primary', 'shadow-sm');
+                                    if (span) { span.classList.remove('text-text-subtle'); span.classList.add('text-white', 'font-semibold'); }
+                                    if (radio) radio.checked = true;
+                                } else {
+                                    label.classList.remove('bg-primary', 'shadow-sm');
+                                    if (span) { span.classList.add('text-text-subtle'); span.classList.remove('text-white', 'font-semibold'); }
+                                    if (radio) radio.checked = false;
+                                }
+                            }
+                        });
+
+                        const nameField = container.querySelector('input[placeholder="Full Name"]')?.closest('.relative');
+                        const phoneField = container.querySelector('input[placeholder="Phone Number"]')?.closest('.relative');
+                        const termsField = container.querySelector('input[type="checkbox"]')?.closest('label');
+                        if (isLogin) {
+                            if (nameField) nameField.style.display = 'none';
+                            if (phoneField) phoneField.style.display = 'none';
+                            if (termsField) termsField.style.display = 'none';
+                        } else {
+                            if (nameField) nameField.style.display = 'block';
+                            if (phoneField) phoneField.style.display = 'block';
+                            if (termsField) termsField.style.display = 'flex';
+                        }
+
+                        const submitBtn = container.querySelector('button.bg-primary span');
+                        if (submitBtn) submitBtn.innerText = isLogin ? 'Log In' : 'Create Account';
+                        const footerP = container.querySelector('.mt-auto.pt-6 p');
+                        if (footerP) {
+                            footerP.innerHTML = isLogin ?
+                                'Don\'t have an account? <a class="font-semibold text-primary hover:text-primary-dark transition-colors" href="#">Sign Up</a>' :
+                                'Already have an account? <a class="font-semibold text-primary hover:text-primary-dark transition-colors" href="#">Login</a>';
+                        }
+                    }
 
                     // 1. Manually execute any script tags found in the HTML
                     // Note: This is simplified for the demo/prototype
@@ -181,12 +276,20 @@
                         oldScript.parentNode.replaceChild(newScript, oldScript);
                     });
 
-                    // 2. Attach Click Listeners for Navigation
+                    // 2. Ensure interactive elements have cursor-pointer
+                    const interactiveSelectors = 'button, a, [role="button"], [onclick], .cursor-pointer';
+                    container.querySelectorAll(interactiveSelectors).forEach(el => {
+                        el.classList.add('cursor-pointer');
+                    });
+
+                    // 3. Attach Click Listeners for Navigation
                     const handleGlobalClick = (e) => {
-                        const target = e.target.closest('button, a, [role="button"]');
+                        const target = e.target.closest('button, a, [role="button"], .cursor-pointer, [onclick]');
                         if (!target) return;
 
-                        const text = target.innerText.trim().toLowerCase();
+                        // Normalize interaction text: collapse whitespace and newlines, and include icon text
+                        const iconText = target.querySelector('.material-symbols-outlined, .material-icons-round')?.innerText || '';
+                        const text = (target.innerText + ' ' + iconText).replace(/\s+/g, ' ').trim().toLowerCase();
 
                         // Navigation Logic Heuristics
                         if (text.includes('sign up') || text.includes('create account')) {
@@ -201,7 +304,7 @@
                             onNavigate('CLIENT_HOME');
                         } else if (text.includes('book now')) {
                             onNavigate('BOOKING');
-                        } else if (text.includes('find services') || text.includes('explore')) {
+                        } else if (text.includes('find services') || text.includes('explore') || text.includes('search')) {
                             onNavigate('FIND_SERVICES');
                         } else if (text.includes('view profile')) {
                             onNavigate('PROVIDER_PROFILE');
@@ -210,14 +313,22 @@
                             else onNavigate('SIGNUP');
                         } else if (text.includes('complete setup') || text.includes('finish')) {
                             onNavigate('PROVIDER_DASHBOARD');
-                        } else if (text.includes('home') || target.querySelector('.material-symbols-outlined')?.innerText === 'home') {
-                            onNavigate('CLIENT_HOME');
-                        } else if (text.includes('bookings') || target.querySelector('.material-symbols-outlined')?.innerText === 'calendar_today') {
-                            onNavigate('MY_BOOKINGS');
-                        } else if (text.includes('messages') || target.querySelector('.material-symbols-outlined')?.innerText === 'mail') {
+                        } else if (text.includes('home') || text.includes('dashboard')) {
+                            if (screenKey.startsWith('PROVIDER_')) onNavigate('PROVIDER_DASHBOARD');
+                            else if (screenKey.startsWith('ADMIN_')) onNavigate('ADMIN_DASHBOARD');
+                            else onNavigate('CLIENT_HOME');
+                        } else if (text.includes('bookings') || text.includes('calendar_today') || text.includes('schedule')) {
+                            if (screenKey.startsWith('PROVIDER_')) onNavigate('PROVIDER_SCHEDULE');
+                            else onNavigate('MY_BOOKINGS');
+                        } else if (text.includes('messages') || text.includes('mail') || text.includes('chat')) {
                             onNavigate('MESSAGES');
-                        } else if (text.includes('profile') || target.querySelector('.material-symbols-outlined')?.innerText === 'person') {
+                        } else if (text.includes('profile') || text.includes('person') || text.includes('account')) {
                             onNavigate('PROFILE');
+                        } else if (text.includes('back') || text.includes('arrow_back')) {
+                             if (screenKey === 'LOGIN' || screenKey === 'SIGNUP') onNavigate('WELCOME');
+                             else if (screenKey === 'FIND_SERVICES') onNavigate('CLIENT_HOME');
+                             else if (screenKey === 'PROVIDER_PROFILE') onNavigate('FIND_SERVICES');
+                             else if (screenKey === 'BOOKING') onNavigate('PROVIDER_PROFILE');
                         }
                     };
 
