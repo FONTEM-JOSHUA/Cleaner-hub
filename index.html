@@ -21,6 +21,7 @@
             margin: 0;
             font-family: 'Inter', 'Montserrat', sans-serif;
             background-color: #f5f5f5;
+            overflow: hidden;
         }
         #root {
             min-height: 100vh;
@@ -103,6 +104,36 @@
             background: #f0f9ff;
             color: #87CEEB;
         }
+
+        /* Animations */
+        .ripple {
+            position: absolute;
+            background: rgba(135, 206, 235, 0.4);
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            animation: sparkle-animation 0.8s ease-out forwards;
+        }
+        @keyframes sparkle-animation {
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
+        }
     </style>
 </head>
 <body>
@@ -120,13 +151,45 @@
             'PROVIDER_PROFILE': 'service_provider_profile_screen_for_client_app/code.html',
             'BOOKING': 'booking_screen_for_client_app/code.html',
             'MY_BOOKINGS': 'my_bookings_screen_for_client_app_1/code.html',
+            'MY_BOOKINGS_2': 'my_bookings_screen_for_client_app_2/code.html',
+            'MY_BOOKINGS_3': 'my_bookings_screen_for_client_app_3/code.html',
             'PROVIDER_WELCOME': 'provider_welcome_screen/code.html',
             'PROVIDER_SETUP': 'provider_setup_screen/code.html',
             'PROVIDER_DASHBOARD': 'provider_dashboard_screen_1/code.html',
+            'PROVIDER_DASHBOARD_2': 'provider_dashboard_screen_2/code.html',
             'ADMIN_LOGIN': 'admin_login_screen/code.html',
             'ADMIN_DASHBOARD': 'admin_dashboard_screen_1/code.html',
+            'ADMIN_DASHBOARD_2': 'admin_dashboard_screen_2/code.html',
+            'ADMIN_DASHBOARD_3': 'admin_dashboard_screen_3/code.html',
+            'ADMIN_DASHBOARD_4': 'admin_dashboard_screen_4/code.html',
             'MESSAGES': 'messages_screen_for_client_app/code.html',
-            'PROFILE': 'profile_screen_for_client_app/code.html'
+            'PROFILE': 'profile_screen_for_client_app/code.html',
+            'ADMIN_PROFILE_EDIT': 'admin_profile_edit_screen/code.html',
+            'APP_SETTINGS': 'app_settings_screen_for_admin_app/code.html',
+            'BOOKING_REQUESTS': 'booking_requests_screen_for_provider_app/code.html',
+            'CHANNEL_MANAGEMENT': 'channel_management_screen_(provider/admin_app)_/code.html',
+            'CHANNEL_MEMBER_MANAGEMENT': 'channel_member_management_screen_(provider/admin_app)_/code.html',
+            'CHANNELS': 'channels_screen_(client_app_flow)_/code.html',
+            'CLIENT_REPORT_CONFIRMATION': 'client_report_confirmation_screen_(provider_app)_/code.html',
+            'CREATE_CHANNEL': 'create_new_channel_flow_(provider/admin_app)_/code.html',
+            'EASY_PAYMENTS': 'easy_payments_feature_screen/code.html',
+            'EMERGENCY_MODE': 'emergency_mode_feature_screen/code.html',
+            'FAMILY_SHARING': 'family_sharing_feature_screen/code.html',
+            'MANAGE_BOOKINGS': 'manage_bookings_screen_for_admin_app/code.html',
+            'MANAGE_USERS': 'manage_users_screen_for_admin_app/code.html',
+            'MULTI_LANGUAGE': 'multi-language_support_screen/code.html',
+            'MY_CLIENTS': 'my_clients_screen_for_provider_app_(with_report_feature)/code.html',
+            'MY_SCHEDULE': 'my_schedule_screen_for_provider_app/code.html',
+            'OFFLINE_MODE': 'offline_mode_feature_screen/code.html',
+            'PHOTO_VERIFICATION': 'photo_verification_feature_screen/code.html',
+            'PROVIDER_PROFILE_PUBLIC': 'provider_profile_(public_view)_screen/code.html',
+            'QUICK_REBOOKING': 'quick_rebooking_feature_screen/code.html',
+            'REAL_TIME_TRACKING': 'real-time_tracking_screen/code.html',
+            'REPORT_CLIENT': 'report_client_screen_for_provider_app/code.html',
+            'REPORT_CONFIRMATION': 'report_confirmation_screen/code.html',
+            'REPORT_PROVIDER': 'report_provider_screen_for_client_app/code.html',
+            'SMART_NOTIFICATIONS': 'smart_notifications_feature_screen/code.html',
+            'SMART_SEARCH': 'smart_search_screen/code.html'
         };
 
         const Screen = ({ screenKey, onNavigate }) => {
@@ -153,7 +216,72 @@
                         setStyles(styleContent);
 
                         // Extract Body Content (excluding scripts which we'll handle separately)
-                        const bodyContent = doc.body.innerHTML;
+                        let bodyContent = doc.body.innerHTML;
+
+                        // Auth Mode Patching logic for LOGIN vs SIGNUP
+                        if (screenKey === 'LOGIN' || screenKey === 'SIGNUP') {
+                            const isLogin = screenKey === 'LOGIN';
+                            const tempDiv = document.createElement('div');
+                            tempDiv.innerHTML = bodyContent;
+
+                            // Update Header
+                            const h1 = tempDiv.querySelector('h1');
+                            if (h1) h1.innerText = isLogin ? 'Welcome back' : 'Find your perfect helper';
+                            const p = tempDiv.querySelector('p');
+                            if (p && p.innerText.includes('trusted')) {
+                                p.innerText = isLogin ? 'Sign in to continue your journey' : 'Join our community of trusted professionals';
+                            }
+
+                            // Update Tabs
+                            const tabs = tempDiv.querySelectorAll('label.group');
+                            if (tabs.length >= 2) {
+                                const loginTab = tabs[0];
+                                const signupTab = tabs[1];
+
+                                if (isLogin) {
+                                    loginTab.classList.add('bg-primary');
+                                    loginTab.querySelector('span').classList.replace('text-text-subtle', 'text-white');
+                                    loginTab.querySelector('span').classList.add('font-semibold');
+                                    signupTab.classList.remove('bg-primary');
+                                    signupTab.querySelector('span').classList.replace('text-white', 'text-text-subtle');
+                                    signupTab.querySelector('span').classList.remove('font-semibold');
+                                } else {
+                                    signupTab.classList.add('bg-primary');
+                                    signupTab.querySelector('span').classList.replace('text-text-subtle', 'text-white');
+                                    signupTab.querySelector('span').classList.add('font-semibold');
+                                    loginTab.classList.remove('bg-primary');
+                                    loginTab.querySelector('span').classList.replace('text-white', 'text-text-subtle');
+                                    loginTab.querySelector('span').classList.remove('font-semibold');
+                                }
+                            }
+
+                            // Update Fields (Login only needs Email and Password)
+                            if (isLogin) {
+                                const fields = tempDiv.querySelectorAll('.flex.flex-col.gap-4 > div.relative');
+                                if (fields.length > 2) {
+                                    // Remove Name and Phone
+                                    fields[0].remove(); // Name
+                                    fields[2].remove(); // Phone
+                                }
+                                const checkbox = tempDiv.querySelector('label.flex.items-start');
+                                if (checkbox) checkbox.remove();
+                            }
+
+                            // Update Action Button
+                            const actionBtn = tempDiv.querySelector('.mt-8 button span');
+                            if (actionBtn) actionBtn.innerText = isLogin ? 'Log In' : 'Create Account';
+
+                            // Update Footer
+                            const footer = tempDiv.querySelector('.mt-auto.pt-6');
+                            if (footer) {
+                                footer.innerHTML = isLogin
+                                    ? `<p class="text-sm text-text-subtle dark:text-gray-400">Don't have an account? <a class="font-semibold text-primary hover:text-primary-dark transition-colors" href="#">Sign Up</a></p>`
+                                    : `<p class="text-sm text-text-subtle dark:text-gray-400">Already have an account? <a class="font-semibold text-primary hover:text-primary-dark transition-colors" href="#">Login</a></p>`;
+                            }
+
+                            bodyContent = tempDiv.innerHTML;
+                        }
+
                         setHtml(bodyContent);
 
                         // We'll handle scripts in a separate useEffect
@@ -183,42 +311,102 @@
 
                     // 2. Attach Click Listeners for Navigation
                     const handleGlobalClick = (e) => {
-                        const target = e.target.closest('button, a, [role="button"]');
-                        if (!target) return;
+                        // 1. Water Ripple Effect
+                        const rippleTarget = e.target.closest('button, .grid > div, [role="button"]');
+                        if (rippleTarget) {
+                            const ripple = document.createElement('div');
+                            ripple.className = 'ripple';
+                            const rect = rippleTarget.getBoundingClientRect();
+                            const size = Math.max(rect.width, rect.height);
+                            ripple.style.width = ripple.style.height = `${size}px`;
+                            ripple.style.left = `${e.clientX - rect.left - size/2}px`;
+                            ripple.style.top = `${e.clientY - rect.top - size/2}px`;
+                            rippleTarget.style.position = 'relative';
+                            rippleTarget.style.overflow = 'hidden';
+                            rippleTarget.appendChild(ripple);
+                            setTimeout(() => ripple.remove(), 600);
+                        }
 
-                        const text = target.innerText.trim().toLowerCase();
+                        // 2. Sparkle Animation on Success-like actions
+                        const rawText = e.target.innerText || '';
+                        const cleanText = rawText.trim().toLowerCase();
+                        if (/(confirm|complete|book|save|finish|success)/i.test(cleanText)) {
+                            for (let i = 0; i < 8; i++) {
+                                const sparkle = document.createElement('div');
+                                sparkle.className = 'sparkle';
+                                sparkle.style.backgroundColor = ['#87CEEB', '#FFD700', '#FF69B4'][Math.floor(Math.random() * 3)];
+                                sparkle.style.left = `${e.clientX}px`;
+                                sparkle.style.top = `${e.clientY}px`;
+                                sparkle.style.setProperty('--tx', `${(Math.random() - 0.5) * 100}px`);
+                                sparkle.style.setProperty('--ty', `${(Math.random() - 0.5) * 100}px`);
+                                document.body.appendChild(sparkle);
+                                setTimeout(() => sparkle.remove(), 800);
+                            }
+                        }
 
-                        // Navigation Logic Heuristics
-                        if (text.includes('sign up') || text.includes('create account')) {
-                            if (text.includes('provider')) onNavigate('PROVIDER_WELCOME');
+                        // 3. Navigation Heuristics
+                        const navTarget = e.target.closest('button, a, [role="button"]');
+                        if (!navTarget) return;
+
+                        const text = navTarget.innerText.trim().toLowerCase().replace(/\s+/g, ' ');
+                        const icons = Array.from(navTarget.querySelectorAll('.material-symbols-outlined, .material-icons-round')).map(i => i.innerText.trim().toLowerCase());
+
+                        const hasIcon = (name) => icons.includes(name);
+                        const hasText = (pattern) => pattern.test(text);
+
+                        // Back Navigation
+                        if (hasIcon('arrow_back') || hasText(/back/)) {
+                            if (screenKey.includes('ADMIN')) onNavigate('ADMIN_DASHBOARD');
+                            else if (screenKey.includes('PROVIDER')) onNavigate('PROVIDER_DASHBOARD');
+                            else onNavigate('CLIENT_HOME');
+                            return;
+                        }
+
+                        // Auth Flows
+                        if (hasText(/sign up/) || hasText(/create account/)) {
+                            if (hasText(/provider/)) onNavigate('PROVIDER_WELCOME');
+                            else if (screenKey === 'SIGNUP') onNavigate('CLIENT_HOME');
                             else onNavigate('SIGNUP');
-                        } else if (text.includes('log in') || text.includes('login') || text.includes('sign in')) {
-                            if (text.includes('admin')) onNavigate('ADMIN_LOGIN');
+                        } else if (hasText(/log in|login|sign in/)) {
+                            if (hasText(/admin/)) onNavigate('ADMIN_LOGIN');
                             else if (screenKey === 'ADMIN_LOGIN') onNavigate('ADMIN_DASHBOARD');
+                            else if (screenKey === 'LOGIN') onNavigate('CLIENT_HOME');
                             else if (screenKey === 'WELCOME') onNavigate('LOGIN');
                             else onNavigate('CLIENT_HOME');
-                        } else if (text.includes('continue as guest')) {
+                        } else if (hasText(/continue as guest/)) {
                             onNavigate('CLIENT_HOME');
-                        } else if (text.includes('book now')) {
-                            onNavigate('BOOKING');
-                        } else if (text.includes('find services') || text.includes('explore')) {
-                            onNavigate('FIND_SERVICES');
-                        } else if (text.includes('view profile')) {
-                            onNavigate('PROVIDER_PROFILE');
-                        } else if (text.includes('get started')) {
+                        }
+
+                        // Client App
+                        else if (hasText(/book now/)) onNavigate('BOOKING');
+                        else if (hasText(/find services|explore/)) onNavigate('FIND_SERVICES');
+                        else if (hasText(/view profile/)) onNavigate('PROVIDER_PROFILE');
+                        else if (hasText(/emergency/)) onNavigate('EMERGENCY_MODE');
+                        else if (hasIcon('home') || hasText(/^home$/)) onNavigate('CLIENT_HOME');
+                        else if (hasIcon('calendar_today') || hasText(/bookings/)) {
+                            if (screenKey.includes('ADMIN')) onNavigate('MANAGE_BOOKINGS');
+                            else onNavigate('MY_BOOKINGS');
+                        }
+                        else if (hasIcon('mail') || hasText(/messages/)) onNavigate('MESSAGES');
+                        else if (hasIcon('person') || hasText(/^profile$/)) {
+                            if (screenKey.includes('ADMIN')) onNavigate('ADMIN_PROFILE_EDIT');
+                            else onNavigate('PROFILE');
+                        }
+
+                        // Provider App
+                        else if (hasText(/get started/)) {
                             if (screenKey === 'PROVIDER_WELCOME') onNavigate('PROVIDER_SETUP');
                             else onNavigate('SIGNUP');
-                        } else if (text.includes('complete setup') || text.includes('finish')) {
+                        } else if (hasText(/complete setup|finish|save & continue/)) {
                             onNavigate('PROVIDER_DASHBOARD');
-                        } else if (text.includes('home') || target.querySelector('.material-symbols-outlined')?.innerText === 'home') {
-                            onNavigate('CLIENT_HOME');
-                        } else if (text.includes('bookings') || target.querySelector('.material-symbols-outlined')?.innerText === 'calendar_today') {
-                            onNavigate('MY_BOOKINGS');
-                        } else if (text.includes('messages') || target.querySelector('.material-symbols-outlined')?.innerText === 'mail') {
-                            onNavigate('MESSAGES');
-                        } else if (text.includes('profile') || target.querySelector('.material-symbols-outlined')?.innerText === 'person') {
-                            onNavigate('PROFILE');
-                        }
+                        } else if (hasText(/schedule/)) onNavigate('MY_SCHEDULE');
+                        else if (hasText(/requests/)) onNavigate('BOOKING_REQUESTS');
+                        else if (hasText(/clients/)) onNavigate('MY_CLIENTS');
+
+                        // Admin App
+                        else if (hasText(/users/)) onNavigate('MANAGE_USERS');
+                        else if (hasText(/settings/)) onNavigate('APP_SETTINGS');
+                        else if (hasText(/verify/)) onNavigate('PHOTO_VERIFICATION');
                     };
 
                     container.addEventListener('click', handleGlobalClick);
