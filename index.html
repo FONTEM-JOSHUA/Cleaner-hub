@@ -21,9 +21,46 @@
             margin: 0;
             font-family: 'Inter', 'Montserrat', sans-serif;
             background-color: #f5f5f5;
+            overflow: hidden;
         }
         #root {
             min-height: 100vh;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .animate-fadeIn {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        /* Ripple effect styles */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        /* Sparkle effect styles */
+        .sparkle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            animation: sparkle-animation 0.8s ease-out forwards;
+        }
+        @keyframes sparkle-animation {
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
         }
         .app-shell {
             max-width: 450px;
@@ -39,6 +76,7 @@
             flex: 1;
             overflow-y: auto;
             overflow-x: hidden;
+            position: relative;
         }
         /* Custom scrollbar for a better look */
         .screen-container::-webkit-scrollbar {
@@ -113,25 +151,57 @@
 
         const SCREEN_MAP = {
             'WELCOME': 'welcome_screen/code.html',
-            'SIGNUP': 'login/signup_screen/code.html',
-            'LOGIN': 'login/signup_screen/code.html',
+            'AUTH': 'login/signup_screen/code.html',
+            'AUTH_SIGNUP': 'login/signup_screen/code.html',
+            'AUTH_LOGIN': 'login/signup_screen/code.html',
             'CLIENT_HOME': 'home_screen_(main_dashboard)_for_client_app/code.html',
-            'FIND_SERVICES': 'find_services_screen_for_client_app/code.html',
-            'PROVIDER_PROFILE': 'service_provider_profile_screen_for_client_app/code.html',
-            'BOOKING': 'booking_screen_for_client_app/code.html',
-            'MY_BOOKINGS': 'my_bookings_screen_for_client_app_1/code.html',
+            'CLIENT_FIND_SERVICES': 'find_services_screen_for_client_app/code.html',
+            'CLIENT_PROVIDER_PROFILE': 'service_provider_profile_screen_for_client_app/code.html',
+            'CLIENT_BOOKING': 'booking_screen_for_client_app/code.html',
+            'CLIENT_BOOKINGS_1': 'my_bookings_screen_for_client_app_1/code.html',
+            'CLIENT_BOOKINGS_2': 'my_bookings_screen_for_client_app_2/code.html',
+            'CLIENT_BOOKINGS_3': 'my_bookings_screen_for_client_app_3/code.html',
+            'CLIENT_MESSAGES': 'messages_screen_for_client_app/code.html',
+            'CLIENT_CHANNELS': 'channels_screen_(client_app_flow)_/code.html',
+            'CLIENT_PROFILE': 'profile_screen_for_client_app/code.html',
+            'CLIENT_REPORT_PROVIDER': 'report_provider_screen_for_client_app/code.html',
             'PROVIDER_WELCOME': 'provider_welcome_screen/code.html',
             'PROVIDER_SETUP': 'provider_setup_screen/code.html',
             'PROVIDER_DASHBOARD': 'provider_dashboard_screen_1/code.html',
+            'PROVIDER_DASHBOARD_2': 'provider_dashboard_screen_2/code.html',
+            'PROVIDER_BOOKING_REQUESTS': 'booking_requests_screen_for_provider_app/code.html',
+            'PROVIDER_SCHEDULE': 'my_schedule_screen_for_provider_app/code.html',
+            'PROVIDER_MY_CLIENTS': 'my_clients_screen_for_provider_app_(with_report_feature)/code.html',
+            'PROVIDER_REPORT_CLIENT': 'report_client_screen_for_provider_app/code.html',
+            'PROVIDER_REPORT_CONFIRMATION': 'client_report_confirmation_screen_(provider_app)_/code.html',
+            'PROVIDER_PROFILE_PUBLIC': 'provider_profile_(public_view)_screen/code.html',
             'ADMIN_LOGIN': 'admin_login_screen/code.html',
             'ADMIN_DASHBOARD': 'admin_dashboard_screen_1/code.html',
-            'MESSAGES': 'messages_screen_for_client_app/code.html',
-            'PROFILE': 'profile_screen_for_client_app/code.html'
+            'ADMIN_DASHBOARD_2': 'admin_dashboard_screen_2/code.html',
+            'ADMIN_DASHBOARD_3': 'admin_dashboard_screen_3/code.html',
+            'ADMIN_DASHBOARD_4': 'admin_dashboard_screen_4/code.html',
+            'ADMIN_MANAGE_USERS': 'manage_users_screen_for_admin_app/code.html',
+            'ADMIN_MANAGE_BOOKINGS': 'manage_bookings_screen_for_admin_app/code.html',
+            'ADMIN_SETTINGS': 'app_settings_screen_for_admin_app/code.html',
+            'ADMIN_PROFILE_EDIT': 'admin_profile_edit_screen/code.html',
+            'CHANNEL_MGMT': 'channel_management_screen_(provider/admin_app)_/code.html',
+            'CHANNEL_MEMBER_MGMT': 'channel_member_management_screen_(provider/admin_app)_/code.html',
+            'CREATE_CHANNEL': 'create_new_channel_flow_(provider/admin_app)_/code.html',
+            'EMERGENCY_MODE': 'emergency_mode_feature_screen/code.html',
+            'EASY_PAYMENTS': 'easy_payments_feature_screen/code.html',
+            'OFFLINE_MODE': 'offline_mode_feature_screen/code.html',
+            'REAL_TIME_TRACKING': 'real-time_tracking_screen/code.html',
+            'SMART_SEARCH': 'smart_search_screen/code.html',
+            'SMART_NOTIFICATIONS': 'smart_notifications_feature_screen/code.html',
+            'FAMILY_SHARING': 'family_sharing_feature_screen/code.html',
+            'MULTI_LANGUAGE': 'multi-language_support_screen/code.html',
+            'QUICK_REBOOKING': 'quick_rebooking_feature_screen/code.html',
+            'PHOTO_VERIFICATION': 'photo_verification_feature_screen/code.html',
+            'REPORT_CONFIRMATION': 'report_confirmation_screen/code.html'
         };
 
         const Screen = ({ screenKey, onNavigate }) => {
             const [html, setHtml] = useState('');
-            const [styles, setStyles] = useState('');
             const [loading, setLoading] = useState(true);
             const containerRef = useRef(null);
 
@@ -146,89 +216,212 @@
                         const parser = new DOMParser();
                         const doc = parser.parseFromString(text, 'text/html');
 
-                        // Extract Styles
-                        const styleContent = Array.from(doc.querySelectorAll('style'))
-                            .map(s => s.innerHTML)
-                            .join('\n');
-                        setStyles(styleContent);
+                        // Cleanup previous screen assets
+                        document.querySelectorAll('[data-screen-assets]').forEach(el => el.remove());
 
-                        // Extract Body Content (excluding scripts which we'll handle separately)
-                        const bodyContent = doc.body.innerHTML;
-                        setHtml(bodyContent);
+                        // Extract Head Assets (Styles, Scripts, Tailwind Configs)
+                        const assets = Array.from(doc.head.children).filter(el =>
+                            el.tagName === 'STYLE' ||
+                            (el.tagName === 'SCRIPT' && !el.src.includes('react') && !el.src.includes('babel'))
+                        );
 
-                        // We'll handle scripts in a separate useEffect
+                        assets.forEach(asset => {
+                            const newAsset = asset.cloneNode(true);
+                            newAsset.setAttribute('data-screen-assets', 'true');
+                            document.head.appendChild(newAsset);
+                        });
+
+                        // Extract Body Content
+                        setHtml(doc.body.innerHTML);
                     } catch (error) {
                         console.error('Failed to load screen:', error);
-                        setHtml('<div class="p-10 text-center">Failed to load screen.</div>');
+                        setHtml('<div class="p-10 text-center text-red-500">Failed to load screen: ' + screenKey + '</div>');
                     }
                     setLoading(false);
                 };
                 fetchContent();
             }, [screenKey]);
 
-            // Execute scripts and attach listeners
             useEffect(() => {
                 if (!loading && containerRef.current) {
                     const container = containerRef.current;
 
-                    // 1. Manually execute any script tags found in the HTML
-                    // Note: This is simplified for the demo/prototype
+                    // Ensure all buttons/grid items have cursor-pointer
+                    container.querySelectorAll('button, .grid > div, [role="button"]').forEach(el => {
+                        el.classList.add('cursor-pointer');
+                    });
+
+                    // Execute scripts
                     const scripts = container.querySelectorAll('script');
                     scripts.forEach(oldScript => {
                         const newScript = document.createElement('script');
                         Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
                         newScript.appendChild(document.createTextNode(oldScript.innerHTML));
-                        oldScript.parentNode.replaceChild(newScript, oldScript);
+                        newScript.setAttribute('data-screen-assets', 'true');
+                        document.head.appendChild(newScript);
                     });
 
-                    // 2. Attach Click Listeners for Navigation
-                    const handleGlobalClick = (e) => {
-                        const target = e.target.closest('button, a, [role="button"]');
-                        if (!target) return;
+                    const createRipple = (e, target) => {
+                        const existingRipple = target.querySelector('.ripple');
+                        if (existingRipple) existingRipple.remove();
 
-                        const text = target.innerText.trim().toLowerCase();
+                        const ripple = document.createElement('span');
+                        ripple.classList.add('ripple');
 
-                        // Navigation Logic Heuristics
-                        if (text.includes('sign up') || text.includes('create account')) {
-                            if (text.includes('provider')) onNavigate('PROVIDER_WELCOME');
-                            else onNavigate('SIGNUP');
-                        } else if (text.includes('log in') || text.includes('login') || text.includes('sign in')) {
-                            if (text.includes('admin')) onNavigate('ADMIN_LOGIN');
-                            else if (screenKey === 'ADMIN_LOGIN') onNavigate('ADMIN_DASHBOARD');
-                            else if (screenKey === 'WELCOME') onNavigate('LOGIN');
-                            else onNavigate('CLIENT_HOME');
-                        } else if (text.includes('continue as guest')) {
-                            onNavigate('CLIENT_HOME');
-                        } else if (text.includes('book now')) {
-                            onNavigate('BOOKING');
-                        } else if (text.includes('find services') || text.includes('explore')) {
-                            onNavigate('FIND_SERVICES');
-                        } else if (text.includes('view profile')) {
-                            onNavigate('PROVIDER_PROFILE');
-                        } else if (text.includes('get started')) {
-                            if (screenKey === 'PROVIDER_WELCOME') onNavigate('PROVIDER_SETUP');
-                            else onNavigate('SIGNUP');
-                        } else if (text.includes('complete setup') || text.includes('finish')) {
-                            onNavigate('PROVIDER_DASHBOARD');
-                        } else if (text.includes('home') || target.querySelector('.material-symbols-outlined')?.innerText === 'home') {
-                            onNavigate('CLIENT_HOME');
-                        } else if (text.includes('bookings') || target.querySelector('.material-symbols-outlined')?.innerText === 'calendar_today') {
-                            onNavigate('MY_BOOKINGS');
-                        } else if (text.includes('messages') || target.querySelector('.material-symbols-outlined')?.innerText === 'mail') {
-                            onNavigate('MESSAGES');
-                        } else if (text.includes('profile') || target.querySelector('.material-symbols-outlined')?.innerText === 'person') {
-                            onNavigate('PROFILE');
+                        const rect = target.getBoundingClientRect();
+                        const size = Math.max(rect.width, rect.height);
+                        const x = e.clientX - rect.left - size / 2;
+                        const y = e.clientY - rect.top - size / 2;
+
+                        ripple.style.width = ripple.style.height = `${size}px`;
+                        ripple.style.left = `${x}px`;
+                        ripple.style.top = `${y}px`;
+
+                        if (getComputedStyle(target).position === 'static') {
+                            target.style.position = 'relative';
+                        }
+                        target.style.overflow = 'hidden';
+                        target.appendChild(ripple);
+                    };
+
+                    const createSparkles = (e) => {
+                        const colors = ['#87CEEB', '#FFD700', '#FF69B4', '#00FA9A', '#FFFFFF'];
+                        for (let i = 0; i < 12; i++) {
+                            const sparkle = document.createElement('div');
+                            sparkle.classList.add('sparkle');
+                            sparkle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                            sparkle.style.left = `${e.clientX}px`;
+                            sparkle.style.top = `${e.clientY}px`;
+
+                            const tx = (Math.random() - 0.5) * 100;
+                            const ty = (Math.random() - 0.5) * 100;
+                            sparkle.style.setProperty('--tx', `${tx}px`);
+                            sparkle.style.setProperty('--ty', `${ty}px`);
+
+                            document.body.appendChild(sparkle);
+                            setTimeout(() => sparkle.remove(), 800);
                         }
                     };
 
-                    container.addEventListener('click', handleGlobalClick);
-                    return () => container.removeEventListener('click', handleGlobalClick);
+                    const handleInteractions = (e) => {
+                        const target = e.target.closest('button, a, .grid > div, .cursor-pointer, [role="button"]');
+                        if (!target) return;
+
+                        createRipple(e, target);
+                        if (target.tagName === 'BUTTON') createSparkles(e);
+
+                        const text = target.innerText.toLowerCase().replace(/\s+/g, ' ').replace(/\s/g, '');
+
+                        // Auth Mode Patching logic
+                        if (screenKey.startsWith('AUTH')) {
+                            const isLoginTab = target.innerText.includes('Login') && target.tagName === 'LABEL';
+                            const isSignupTab = target.innerText.includes('Sign Up') && target.tagName === 'LABEL';
+                            const isFooterLink = target.tagName === 'A' && target.closest('.mt-auto.pt-6');
+
+                            if (isLoginTab || (isFooterLink && target.innerText.includes('Login'))) {
+                                // Switch to Login Mode
+                                container.querySelectorAll('input[type="text"], input[type="tel"], label.flex.items-start').forEach(el => el.closest('.relative, label')?.classList.add('hidden'));
+                                container.querySelector('h1').innerText = 'Welcome Back';
+                                container.querySelector('p').innerText = 'Log in to your account';
+                                const btn = container.querySelector('.mt-8 button');
+                                if (btn) btn.querySelector('span').innerText = 'Log In';
+
+                                // Update tabs
+                                const tabs = container.querySelectorAll('label.group');
+                                if (tabs.length >= 2) {
+                                    tabs[0].classList.add('bg-primary');
+                                    tabs[0].querySelector('span').classList.replace('text-text-subtle', 'text-white');
+                                    tabs[1].classList.remove('bg-primary');
+                                    tabs[1].querySelector('span').classList.replace('text-white', 'text-text-subtle');
+                                }
+                                return;
+                            }
+                            if (isSignupTab || (isFooterLink && target.innerText.includes('Sign Up'))) {
+                                // Switch to Signup Mode
+                                container.querySelectorAll('.hidden').forEach(el => el.classList.remove('hidden'));
+                                container.querySelector('h1').innerText = 'Find your perfect helper';
+                                container.querySelector('p').innerText = 'Join our community of trusted professionals';
+                                const btn = container.querySelector('.mt-8 button');
+                                if (btn) btn.querySelector('span').innerText = 'Create Account';
+
+                                // Update tabs
+                                const tabs = container.querySelectorAll('label.group');
+                                if (tabs.length >= 2) {
+                                    tabs[1].classList.add('bg-primary');
+                                    tabs[1].querySelector('span').classList.replace('text-text-subtle', 'text-white');
+                                    tabs[0].classList.remove('bg-primary');
+                                    tabs[0].querySelector('span').classList.replace('text-white', 'text-text-subtle');
+                                }
+                                return;
+                            }
+                        }
+
+                        const isProvider = screenKey.startsWith('PROVIDER_');
+                        const isAdmin = screenKey.startsWith('ADMIN_');
+
+                        // Back Navigation Heuristic
+                        if (text.includes('arrow_back') || text.includes('back') || target.querySelector('.material-icons-round')?.innerText === 'arrow_back') {
+                            window.dispatchEvent(new CustomEvent('goBack'));
+                            return;
+                        }
+
+                        // Navigation Heuristics (Normalized matching)
+                        if (text.includes('signup') || text.includes('createaccount')) {
+                            if (text.includes('provider')) onNavigate('PROVIDER_WELCOME');
+                            else if (screenKey === 'AUTH_SIGNUP') onNavigate('CLIENT_HOME');
+                            else onNavigate('AUTH_SIGNUP');
+                        } else if (text.includes('login') || text.includes('signin')) {
+                            if (text.includes('admin')) onNavigate('ADMIN_LOGIN');
+                            else if (screenKey === 'ADMIN_LOGIN') onNavigate('ADMIN_DASHBOARD');
+                            else if (screenKey === 'AUTH_LOGIN') onNavigate('CLIENT_HOME');
+                            else onNavigate('AUTH_LOGIN');
+                        } else if (text.includes('continueasguest')) {
+                            onNavigate('CLIENT_HOME');
+                        } else if (text.includes('booknow')) {
+                            onNavigate('CLIENT_BOOKING');
+                        } else if (text.includes('findservices') || text.includes('explore')) {
+                            onNavigate('CLIENT_FIND_SERVICES');
+                        } else if (text.includes('viewprofile')) {
+                            onNavigate('CLIENT_PROVIDER_PROFILE');
+                        } else if (text.includes('getstarted')) {
+                            if (screenKey === 'PROVIDER_WELCOME') onNavigate('PROVIDER_SETUP');
+                            else onNavigate('AUTH_SIGNUP');
+                        } else if (text.includes('completesetup') || text.includes('save&continue')) {
+                            onNavigate('PROVIDER_DASHBOARD');
+                        } else if (text.includes('home') || target.querySelector('.material-symbols-outlined')?.innerText === 'home') {
+                            onNavigate('CLIENT_HOME');
+                        } else if (text.includes('managebookings')) {
+                             onNavigate(isAdmin ? 'ADMIN_MANAGE_BOOKINGS' : 'CLIENT_BOOKINGS_1');
+                        } else if (text.includes('bookings') || target.querySelector('.material-symbols-outlined')?.innerText === 'calendar_today') {
+                            onNavigate(isProvider ? 'PROVIDER_SCHEDULE' : 'CLIENT_BOOKINGS_1');
+                        } else if (text.includes('messages') || target.querySelector('.material-symbols-outlined')?.innerText === 'mail' || target.querySelector('.material-symbols-outlined')?.innerText === 'chat_bubble') {
+                            onNavigate(isProvider ? 'PROVIDER_DASHBOARD' : 'CLIENT_CHANNELS');
+                        } else if (text.includes('profile') || target.querySelector('.material-symbols-outlined')?.innerText === 'person') {
+                            onNavigate(isAdmin ? 'ADMIN_PROFILE_EDIT' : 'CLIENT_PROFILE');
+                        } else if (text.includes('emergency')) {
+                            onNavigate('EMERGENCY_MODE');
+                        } else if (text.includes('manageusers')) {
+                            onNavigate('ADMIN_MANAGE_USERS');
+                        } else if (text.includes('appsettings')) {
+                            onNavigate('ADMIN_SETTINGS');
+                        } else if (text.includes('myschedule')) {
+                            onNavigate('PROVIDER_SCHEDULE');
+                        } else if (text.includes('newrequests')) {
+                            onNavigate('PROVIDER_BOOKING_REQUESTS');
+                        } else if (text.includes('myclients')) {
+                            onNavigate('PROVIDER_MY_CLIENTS');
+                        }
+                    };
+
+                    container.addEventListener('click', handleInteractions);
+                    return () => {
+                        container.removeEventListener('click', handleInteractions);
+                    };
                 }
             }, [html, loading, screenKey]);
 
             return (
-                <div className="h-full flex flex-col">
-                    <style dangerouslySetInnerHTML={{ __html: styles }} />
+                <div className={`h-full flex flex-col ${!loading ? 'animate-fadeIn' : ''}`}>
                     {loading ? (
                         <div className="flex-1 flex items-center justify-center">
                             <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#87CEEB]"></div>
@@ -245,21 +438,39 @@
         };
 
         const App = () => {
-            const [screen, setScreen] = useState('WELCOME');
+            const [history, setHistory] = useState(['WELCOME']);
+            const screen = history[history.length - 1];
             const [devMenuOpen, setDevMenuOpen] = useState(false);
+
+            const navigate = (newScreen) => {
+                if (newScreen === screen) return;
+                setHistory(prev => [...prev, newScreen]);
+            };
+
+            const goBack = () => {
+                if (history.length > 1) {
+                    setHistory(prev => prev.slice(0, -1));
+                }
+            };
 
             useEffect(() => {
                 const handleExternalNavigate = (e) => {
-                    if (SCREEN_MAP[e.detail]) setScreen(e.detail);
+                    if (SCREEN_MAP[e.detail]) navigate(e.detail);
                 };
+                const handleGoBack = () => goBack();
+
                 window.addEventListener('navigate', handleExternalNavigate);
-                return () => window.removeEventListener('navigate', handleExternalNavigate);
-            }, []);
+                window.addEventListener('goBack', handleGoBack);
+                return () => {
+                    window.removeEventListener('navigate', handleExternalNavigate);
+                    window.removeEventListener('goBack', handleGoBack);
+                };
+            }, [screen, history]);
 
             return (
                 <div className="app-shell">
                     <div className="screen-container">
-                        <Screen screenKey={screen} onNavigate={setScreen} />
+                        <Screen screenKey={screen} onNavigate={navigate} />
                     </div>
 
                     {/* Quick Access Dev Menu */}
