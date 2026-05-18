@@ -10,6 +10,18 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#87CEEB',
+                        'primary-dark': '#6FB3D9',
+                    }
+                }
+            }
+        }
+    </script>
     <!-- Load Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Load Material Icons and Symbols -->
@@ -39,7 +51,49 @@
             flex: 1;
             overflow-y: auto;
             overflow-x: hidden;
+            position: relative;
         }
+
+        /* Slide Transition */
+        @keyframes slideIn {
+            from { transform: translateX(30px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .slide-in {
+            animation: slideIn 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        /* Ripple Effect */
+        .ripple {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Sparkle Animation */
+        .sparkle {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 2000;
+            animation: sparkle-fly 0.8s ease-out forwards;
+        }
+        @keyframes sparkle-fly {
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
+        }
+
         /* Custom scrollbar for a better look */
         .screen-container::-webkit-scrollbar {
             width: 4px;
@@ -120,13 +174,64 @@
             'PROVIDER_PROFILE': 'service_provider_profile_screen_for_client_app/code.html',
             'BOOKING': 'booking_screen_for_client_app/code.html',
             'MY_BOOKINGS': 'my_bookings_screen_for_client_app_1/code.html',
+            'MY_BOOKINGS_2': 'my_bookings_screen_for_client_app_2/code.html',
+            'MY_BOOKINGS_3': 'my_bookings_screen_for_client_app_3/code.html',
             'PROVIDER_WELCOME': 'provider_welcome_screen/code.html',
             'PROVIDER_SETUP': 'provider_setup_screen/code.html',
             'PROVIDER_DASHBOARD': 'provider_dashboard_screen_1/code.html',
+            'PROVIDER_DASHBOARD_2': 'provider_dashboard_screen_2/code.html',
+            'PROVIDER_BOOKING_REQUESTS': 'booking_requests_screen_for_provider_app/code.html',
+            'PROVIDER_SCHEDULE': 'my_schedule_screen_for_provider_app/code.html',
+            'PROVIDER_PUBLIC_PROFILE': 'provider_profile_(public_view)_screen/code.html',
+            'PROVIDER_REPORT_CLIENT': 'report_client_screen_for_provider_app/code.html',
+            'PROVIDER_REPORT_CONFIRMATION': 'client_report_confirmation_screen_(provider_app)_/code.html',
+            'PROVIDER_MY_CLIENTS': 'my_clients_screen_for_provider_app_(with_report_feature)/code.html',
             'ADMIN_LOGIN': 'admin_login_screen/code.html',
             'ADMIN_DASHBOARD': 'admin_dashboard_screen_1/code.html',
+            'ADMIN_DASHBOARD_2': 'admin_dashboard_screen_2/code.html',
+            'ADMIN_DASHBOARD_3': 'admin_dashboard_screen_3/code.html',
+            'ADMIN_DASHBOARD_4': 'admin_dashboard_screen_4/code.html',
+            'ADMIN_SETTINGS': 'app_settings_screen_for_admin_app/code.html',
+            'ADMIN_MANAGE_BOOKINGS': 'manage_bookings_screen_for_admin_app/code.html',
+            'ADMIN_MANAGE_USERS': 'manage_users_screen_for_admin_app/code.html',
+            'ADMIN_PROFILE_EDIT': 'admin_profile_edit_screen/code.html',
             'MESSAGES': 'messages_screen_for_client_app/code.html',
-            'PROFILE': 'profile_screen_for_client_app/code.html'
+            'PROFILE': 'profile_screen_for_client_app/code.html',
+            'CLIENT_CHANNELS': 'channels_screen_(client_app_flow)_/code.html',
+            'CLIENT_REPORT_PROVIDER': 'report_provider_screen_for_client_app/code.html',
+            'EASY_PAYMENTS': 'easy_payments_feature_screen/code.html',
+            'REAL_TIME_TRACKING': 'real-time_tracking_screen/code.html',
+            'OFFLINE_MODE': 'offline_mode_feature_screen/code.html',
+            'EMERGENCY_MODE': 'emergency_mode_feature_screen/code.html',
+            'SMART_SEARCH': 'smart_search_screen/code.html',
+            'SMART_NOTIFICATIONS': 'smart_notifications_feature_screen/code.html',
+            'FAMILY_SHARING': 'family_sharing_feature_screen/code.html',
+            'MULTI_LANGUAGE': 'multi-language_support_screen/code.html',
+            'QUICK_REBOOKING': 'quick_rebooking_feature_screen/code.html',
+            'PHOTO_VERIFICATION': 'photo_verification_feature_screen/code.html',
+            'REPORT_CONFIRMATION': 'report_confirmation_screen/code.html',
+            'CHANNEL_MGMT': 'channel_management_screen_(provider/admin_app)_/code.html',
+            'CHANNEL_MEMBER_MGMT': 'channel_member_management_screen_(provider/admin_app)_/code.html',
+            'CREATE_CHANNEL': 'create_new_channel_flow_(provider/admin_app)_/code.html'
+        };
+
+        const triggerSparkles = (x, y) => {
+            const colors = ['#87CEEB', '#FFD700', '#FF69B4', '#00FF7F', '#FFFFFF'];
+            for (let i = 0; i < 20; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = `${x}px`;
+                sparkle.style.top = `${y}px`;
+                sparkle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+                const tx = (Math.random() - 0.5) * 200;
+                const ty = (Math.random() - 0.5) * 200;
+                sparkle.style.setProperty('--tx', `${tx}px`);
+                sparkle.style.setProperty('--ty', `${ty}px`);
+
+                document.body.appendChild(sparkle);
+                setTimeout(() => sparkle.remove(), 800);
+            }
         };
 
         const Screen = ({ screenKey, onNavigate }) => {
@@ -152,9 +257,50 @@
                             .join('\n');
                         setStyles(styleContent);
 
-                        // Extract Body Content (excluding scripts which we'll handle separately)
-                        const bodyContent = doc.body.innerHTML;
-                        setHtml(bodyContent);
+                        // Patch Login/Signup mode if applicable
+                        if (screenKey === 'LOGIN') {
+                            const inputs = Array.from(doc.querySelectorAll('input'));
+                            const signupFields = inputs.filter(input => {
+                                const placeholder = input.getAttribute('placeholder')?.toLowerCase() || '';
+                                return placeholder.includes('name') || placeholder.includes('phone') || input.type === 'checkbox';
+                            });
+                            signupFields.forEach(f => {
+                                const container = f.closest('.relative, label');
+                                if (container) container.style.display = 'none';
+                            });
+                            const submitBtn = Array.from(doc.querySelectorAll('button')).find(b => b.innerText.toLowerCase().includes('account'));
+                            if (submitBtn && submitBtn.querySelector('span')) {
+                                submitBtn.querySelector('span').innerText = 'Log In';
+                            }
+
+                            // Update footer
+                            const footer = doc.querySelector('.mt-auto.pt-6');
+                            if (footer) {
+                                footer.innerHTML = `
+                                    <p class="text-sm text-text-subtle dark:text-gray-400">
+                                        Don't have an account?
+                                        <a class="font-semibold text-primary hover:text-primary-dark transition-colors" href="#">Sign Up</a>
+                                    </p>
+                                `;
+                            }
+
+                            // Update segmented control visual
+                            const labels = Array.from(doc.querySelectorAll('label'));
+                            const loginTab = labels.find(l => l.querySelector('input[value="login"]'));
+                            const signupTab = labels.find(l => l.querySelector('input[value="signup"]'));
+                            if (loginTab && signupTab) {
+                                loginTab.classList.add('bg-primary', 'shadow-sm');
+                                loginTab.querySelector('span').classList.replace('text-text-subtle', 'text-white');
+                                loginTab.querySelector('span').classList.add('font-semibold');
+
+                                signupTab.classList.remove('bg-primary', 'shadow-sm');
+                                signupTab.querySelector('span').classList.replace('text-white', 'text-text-subtle');
+                                signupTab.querySelector('span').classList.remove('font-semibold');
+                            }
+                        }
+
+                        // Extract Body Content
+                        setHtml(doc.body.innerHTML);
 
                         // We'll handle scripts in a separate useEffect
                     } catch (error) {
@@ -186,11 +332,49 @@
                         const target = e.target.closest('button, a, [role="button"]');
                         if (!target) return;
 
+                        // Create Ripple
+                        const ripple = document.createElement('span');
+                        const rect = target.getBoundingClientRect();
+                        const size = Math.max(rect.width, rect.height);
+                        const x = e.clientX - rect.left - size / 2;
+                        const y = e.clientY - rect.top - size / 2;
+
+                        ripple.style.width = ripple.style.height = `${size}px`;
+                        ripple.style.left = `${x}px`;
+                        ripple.style.top = `${y}px`;
+                        ripple.classList.add('ripple');
+
+                        if (getComputedStyle(target).position === 'static') {
+                            target.style.position = 'relative';
+                        }
+                        target.style.overflow = 'hidden';
+                        target.appendChild(ripple);
+                        setTimeout(() => ripple.remove(), 600);
+
                         const text = target.innerText.trim().toLowerCase();
 
+                        // Handle Auth Mode Toggling within the same screen
+                        if (screenKey === 'SIGNUP' && text === 'login') {
+                            onNavigate('LOGIN');
+                            return;
+                        }
+                        if (screenKey === 'LOGIN' && text === 'sign up') {
+                            onNavigate('SIGNUP');
+                            return;
+                        }
+
+                        // Sparkle Heuristics
+                        const successKeywords = ['confirm', 'book', 'create', 'save', 'finish', 'complete', 'pay', 'accept'];
+                        if (successKeywords.some(kw => text.includes(kw))) {
+                            triggerSparkles(e.clientX, e.clientY);
+                        }
+
                         // Navigation Logic Heuristics
+                        const iconText = target.querySelector('.material-symbols-outlined, .material-icons-round')?.innerText;
+
                         if (text.includes('sign up') || text.includes('create account')) {
                             if (text.includes('provider')) onNavigate('PROVIDER_WELCOME');
+                            else if (screenKey === 'SIGNUP') onNavigate('CLIENT_HOME');
                             else onNavigate('SIGNUP');
                         } else if (text.includes('log in') || text.includes('login') || text.includes('sign in')) {
                             if (text.includes('admin')) onNavigate('ADMIN_LOGIN');
@@ -208,16 +392,36 @@
                         } else if (text.includes('get started')) {
                             if (screenKey === 'PROVIDER_WELCOME') onNavigate('PROVIDER_SETUP');
                             else onNavigate('SIGNUP');
-                        } else if (text.includes('complete setup') || text.includes('finish')) {
+                        } else if (text.includes('complete setup') || text.includes('finish') || (screenKey === 'PROVIDER_SETUP' && text.includes('save'))) {
                             onNavigate('PROVIDER_DASHBOARD');
-                        } else if (text.includes('home') || target.querySelector('.material-symbols-outlined')?.innerText === 'home') {
-                            onNavigate('CLIENT_HOME');
-                        } else if (text.includes('bookings') || target.querySelector('.material-symbols-outlined')?.innerText === 'calendar_today') {
-                            onNavigate('MY_BOOKINGS');
-                        } else if (text.includes('messages') || target.querySelector('.material-symbols-outlined')?.innerText === 'mail') {
+                        } else if (text.includes('home') || iconText === 'home') {
+                            if (screenKey.startsWith('ADMIN')) onNavigate('ADMIN_DASHBOARD');
+                            else if (screenKey.startsWith('PROVIDER')) onNavigate('PROVIDER_DASHBOARD');
+                            else onNavigate('CLIENT_HOME');
+                        } else if (text.includes('bookings') || iconText === 'calendar_today' || iconText === 'event_note') {
+                            if (screenKey.startsWith('ADMIN')) onNavigate('ADMIN_MANAGE_BOOKINGS');
+                            else if (screenKey.startsWith('PROVIDER')) onNavigate('PROVIDER_BOOKING_REQUESTS');
+                            else onNavigate('MY_BOOKINGS');
+                        } else if (text.includes('messages') || text.includes('chat') || iconText === 'mail' || iconText === 'chat' || iconText === 'forum') {
                             onNavigate('MESSAGES');
-                        } else if (text.includes('profile') || target.querySelector('.material-symbols-outlined')?.innerText === 'person') {
-                            onNavigate('PROFILE');
+                        } else if (text.includes('profile') || iconText === 'person' || iconText === 'account_circle') {
+                            if (screenKey.startsWith('ADMIN')) onNavigate('ADMIN_PROFILE_EDIT');
+                            else onNavigate('PROFILE');
+                        } else if (text.includes('emergency') || iconText === 'emergency' || iconText === 'warning') {
+                            onNavigate('EMERGENCY_MODE');
+                        } else if (text.includes('settings') || iconText === 'settings') {
+                            if (screenKey.startsWith('ADMIN')) onNavigate('ADMIN_SETTINGS');
+                            else onNavigate('PROFILE');
+                        } else if (text.includes('manage users')) {
+                            onNavigate('ADMIN_MANAGE_USERS');
+                        } else if (text.includes('schedule') || iconText === 'schedule') {
+                            onNavigate('PROVIDER_SCHEDULE');
+                        } else if (text.includes('earnings') || iconText === 'payments') {
+                            onNavigate('EASY_PAYMENTS');
+                        } else if (text.includes('notifications') || iconText === 'notifications') {
+                            onNavigate('SMART_NOTIFICATIONS');
+                        } else if (iconText === 'arrow_back' || iconText === 'chevron_left') {
+                            window.dispatchEvent(new CustomEvent('goBack'));
                         }
                     };
 
@@ -227,7 +431,7 @@
             }, [html, loading, screenKey]);
 
             return (
-                <div className="h-full flex flex-col">
+                <div key={screenKey} className="h-full flex flex-col slide-in">
                     <style dangerouslySetInnerHTML={{ __html: styles }} />
                     {loading ? (
                         <div className="flex-1 flex items-center justify-center">
@@ -245,16 +449,31 @@
         };
 
         const App = () => {
-            const [screen, setScreen] = useState('WELCOME');
+            const [history, setHistory] = useState(['WELCOME']);
             const [devMenuOpen, setDevMenuOpen] = useState(false);
+
+            const screen = history[history.length - 1];
+            const setScreen = (newScreen) => {
+                setHistory(prev => [...prev, newScreen]);
+            };
+            const goBack = () => {
+                if (history.length > 1) {
+                    setHistory(prev => prev.slice(0, -1));
+                }
+            };
 
             useEffect(() => {
                 const handleExternalNavigate = (e) => {
                     if (SCREEN_MAP[e.detail]) setScreen(e.detail);
                 };
+                const handleGoBack = () => goBack();
                 window.addEventListener('navigate', handleExternalNavigate);
-                return () => window.removeEventListener('navigate', handleExternalNavigate);
-            }, []);
+                window.addEventListener('goBack', handleGoBack);
+                return () => {
+                    window.removeEventListener('navigate', handleExternalNavigate);
+                    window.removeEventListener('goBack', handleGoBack);
+                };
+            }, [history]);
 
             return (
                 <div className="app-shell">
@@ -263,7 +482,7 @@
                     </div>
 
                     {/* Quick Access Dev Menu */}
-                    <div className="dev-menu-btn" onClick={() => setDevMenuOpen(!devMenuOpen)}>
+                    <div className="dev-menu-btn" role="button" aria-label="menu" onClick={() => setDevMenuOpen(!devMenuOpen)}>
                         <span className="material-symbols-outlined">menu</span>
                     </div>
 
