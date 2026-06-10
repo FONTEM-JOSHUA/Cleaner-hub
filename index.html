@@ -21,26 +21,40 @@
             margin: 0;
             font-family: 'Inter', 'Montserrat', sans-serif;
             background-color: #f5f5f5;
+            height: 100vh;
+            overflow: hidden;
         }
         #root {
-            min-height: 100vh;
+            height: 100vh;
         }
         .app-shell {
             max-width: 450px;
             margin: 0 auto;
-            min-height: 100vh;
+            height: 100vh;
             background-color: white;
             box-shadow: 0 0 40px rgba(0,0,0,0.1);
             position: relative;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }
         .screen-container {
             flex: 1;
             overflow-y: auto;
             overflow-x: hidden;
+            position: relative;
         }
-        /* Custom scrollbar for a better look */
+
+        /* Slide animation */
+        @keyframes slideIn {
+            from { transform: translateX(30px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .animate-slide-in {
+            animation: slideIn 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* Custom scrollbar */
         .screen-container::-webkit-scrollbar {
             width: 4px;
         }
@@ -48,11 +62,8 @@
             background: transparent;
         }
         .screen-container::-webkit-scrollbar-thumb {
-            background: #888;
+            background: #87CEEB;
             border-radius: 2px;
-        }
-        .screen-container::-webkit-scrollbar-thumb:hover {
-            background: #555;
         }
 
         /* Floating Action Menu for Demo */
@@ -60,48 +71,66 @@
             position: absolute;
             bottom: 20px;
             right: 20px;
-            width: 40px;
-            height: 40px;
-            border-radius: 20px;
+            width: 48px;
+            height: 48px;
+            border-radius: 24px;
             background: #87CEEB;
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             cursor: pointer;
             z-index: 1000;
-            opacity: 0.6;
-            transition: opacity 0.3s;
+            opacity: 0.8;
+            transition: all 0.3s;
         }
         .dev-menu-btn:hover {
             opacity: 1;
+            transform: scale(1.05);
         }
         .dev-menu {
             position: absolute;
-            bottom: 70px;
+            bottom: 80px;
             right: 20px;
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            padding: 10px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            padding: 16px;
             z-index: 1001;
-            width: 200px;
-            border: 1px solid #eee;
+            width: 280px;
+            max-height: 70vh;
+            overflow-y: auto;
+            border: 1px solid #f0f0f0;
         }
+        .dev-menu h3 {
+            font-size: 11px;
+            font-weight: 700;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin: 12px 0 6px 4px;
+        }
+        .dev-menu h3:first-child { margin-top: 0; }
         .dev-menu button {
             display: block;
             width: 100%;
             text-align: left;
             padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 14px;
-            color: #333;
-            transition: background 0.2s;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #444;
+            transition: all 0.2s;
+            margin-bottom: 2px;
         }
         .dev-menu button:hover {
             background: #f0f9ff;
             color: #87CEEB;
+            padding-left: 16px;
+        }
+        .dev-menu button.active {
+            background: #87CEEB;
+            color: white;
         }
     </style>
 </head>
@@ -109,29 +138,74 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect, useRef } = React;
+        const { useState, useEffect, useRef, useMemo } = React;
 
         const SCREEN_MAP = {
+            // Main Flow
             'WELCOME': 'welcome_screen/code.html',
-            'SIGNUP': 'login/signup_screen/code.html',
-            'LOGIN': 'login/signup_screen/code.html',
+            'AUTH': 'login/signup_screen/code.html',
+            'LOGIN': 'login/signup_screen/code.html', // Aliased for heuristic convenience
+            'SIGNUP': 'login/signup_screen/code.html', // Aliased
+
+            // Client Flow
             'CLIENT_HOME': 'home_screen_(main_dashboard)_for_client_app/code.html',
+            'HOME': 'home_screen_(main_dashboard)_for_client_app/code.html',
             'FIND_SERVICES': 'find_services_screen_for_client_app/code.html',
-            'PROVIDER_PROFILE': 'service_provider_profile_screen_for_client_app/code.html',
+            'PROVIDER_PROFILE_PUBLIC': 'service_provider_profile_screen_for_client_app/code.html',
             'BOOKING': 'booking_screen_for_client_app/code.html',
             'MY_BOOKINGS': 'my_bookings_screen_for_client_app_1/code.html',
+            'MY_BOOKINGS_2': 'my_bookings_screen_for_client_app_2/code.html',
+            'MY_BOOKINGS_3': 'my_bookings_screen_for_client_app_3/code.html',
+            'MESSAGES': 'messages_screen_for_client_app/code.html',
+            'PROFILE': 'profile_screen_for_client_app/code.html',
+            'CHANNELS_CLIENT': 'channels_screen_(client_app_flow)_/code.html',
+            'REPORT_PROVIDER': 'report_provider_screen_for_client_app/code.html',
+            'REPORT_CONFIRMATION': 'report_confirmation_screen/code.html',
+
+            // Provider Flow
             'PROVIDER_WELCOME': 'provider_welcome_screen/code.html',
             'PROVIDER_SETUP': 'provider_setup_screen/code.html',
             'PROVIDER_DASHBOARD': 'provider_dashboard_screen_1/code.html',
+            'PROVIDER_DASHBOARD_2': 'provider_dashboard_screen_2/code.html',
+            'BOOKING_REQUESTS': 'booking_requests_screen_for_provider_app/code.html',
+            'MY_SCHEDULE': 'my_schedule_screen_for_provider_app/code.html',
+            'MY_CLIENTS': 'my_clients_screen_for_provider_app_(with_report_feature)/code.html',
+            'PROVIDER_PROFILE_VIEW': 'provider_profile_(public_view)_screen/code.html',
+            'REPORT_CLIENT': 'report_client_screen_for_provider_app/code.html',
+            'REPORT_CLIENT_CONFIRMATION': 'client_report_confirmation_screen_(provider_app)_/code.html',
+            'CHANNEL_MGMT': 'channel_management_screen_(provider/admin_app)_/code.html',
+            'CHANNEL_MEMBER_MGMT': 'channel_member_management_screen_(provider/admin_app)_/code.html',
+            'CREATE_CHANNEL': 'create_new_channel_flow_(provider/admin_app)_/code.html',
+
+            // Admin Flow
             'ADMIN_LOGIN': 'admin_login_screen/code.html',
             'ADMIN_DASHBOARD': 'admin_dashboard_screen_1/code.html',
-            'MESSAGES': 'messages_screen_for_client_app/code.html',
-            'PROFILE': 'profile_screen_for_client_app/code.html'
+            'ADMIN_DASHBOARD_2': 'admin_dashboard_screen_2/code.html',
+            'ADMIN_DASHBOARD_3': 'admin_dashboard_screen_3/code.html',
+            'ADMIN_DASHBOARD_4': 'admin_dashboard_screen_4/code.html',
+            'ADMIN_PROFILE_EDIT': 'admin_profile_edit_screen/code.html',
+            'MANAGE_USERS': 'manage_users_screen_for_admin_app/code.html',
+            'MANAGE_BOOKINGS': 'manage_bookings_screen_for_admin_app/code.html',
+            'APP_SETTINGS': 'app_settings_screen_for_admin_app/code.html',
+
+            // Features
+            'SMART_SEARCH': 'smart_search_screen/code.html',
+            'SMART_NOTIFICATIONS': 'smart_notifications_feature_screen/code.html',
+            'REAL_TIME_TRACKING': 'real-time_tracking_screen/code.html',
+            'EASY_PAYMENTS': 'easy_payments_feature_screen/code.html',
+            'EMERGENCY_MODE': 'emergency_mode_feature_screen/code.html',
+            'OFFLINE_MODE': 'offline_mode_feature_screen/code.html',
+            'PHOTO_VERIFICATION': 'photo_verification_feature_screen/code.html',
+            'FAMILY_SHARING': 'family_sharing_feature_screen/code.html',
+            'MULTI_LANGUAGE': 'multi-language_support_screen/code.html',
+            'QUICK_REBOOKING': 'quick_rebooking_feature_screen/code.html'
         };
 
-        const Screen = ({ screenKey, onNavigate }) => {
+        const Screen = ({ screenKey, authMode, onNavigate, onSetAuthMode }) => {
             const [html, setHtml] = useState('');
             const [styles, setStyles] = useState('');
+            const [links, setLinks] = useState([]);
+            const [bodyClass, setBodyClass] = useState('');
             const [loading, setLoading] = useState(true);
             const containerRef = useRef(null);
 
@@ -147,16 +221,22 @@
                         const doc = parser.parseFromString(text, 'text/html');
 
                         // Extract Styles
-                        const styleContent = Array.from(doc.querySelectorAll('style'))
+                        const extractedStyles = Array.from(doc.querySelectorAll('style'))
                             .map(s => s.innerHTML)
                             .join('\n');
-                        setStyles(styleContent);
+                        setStyles(extractedStyles);
 
-                        // Extract Body Content (excluding scripts which we'll handle separately)
-                        const bodyContent = doc.body.innerHTML;
-                        setHtml(bodyContent);
+                        // Extract Links (External Stylesheets)
+                        const extractedLinks = Array.from(doc.querySelectorAll('link[rel="stylesheet"]'))
+                            .map(l => l.getAttribute('href'))
+                            .filter(href => href && !href.includes('googleusercontent')); // Filter out some potential junk
+                        setLinks(extractedLinks);
 
-                        // We'll handle scripts in a separate useEffect
+                        // Extract Body Class
+                        setBodyClass(doc.body.className || '');
+
+                        // Extract Body Content
+                        setHtml(doc.body.innerHTML);
                     } catch (error) {
                         console.error('Failed to load screen:', error);
                         setHtml('<div class="p-10 text-center">Failed to load screen.</div>');
@@ -166,37 +246,103 @@
                 fetchContent();
             }, [screenKey]);
 
-            // Execute scripts and attach listeners
+            // Execute scripts and patch DOM
             useEffect(() => {
                 if (!loading && containerRef.current) {
                     const container = containerRef.current;
 
-                    // 1. Manually execute any script tags found in the HTML
-                    // Note: This is simplified for the demo/prototype
+                    // Execute scripts
                     const scripts = container.querySelectorAll('script');
                     scripts.forEach(oldScript => {
                         const newScript = document.createElement('script');
                         Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+                        if (oldScript.id === 'tailwind-config') return; // Don't re-run tailwind config
                         newScript.appendChild(document.createTextNode(oldScript.innerHTML));
                         oldScript.parentNode.replaceChild(newScript, oldScript);
                     });
 
-                    // 2. Attach Click Listeners for Navigation
-                    const handleGlobalClick = (e) => {
-                        const target = e.target.closest('button, a, [role="button"]');
+                    // Auth Mode Patching
+                    if (screenKey === 'AUTH' || screenKey === 'LOGIN' || screenKey === 'SIGNUP') {
+                        const labels = Array.from(container.querySelectorAll('label'));
+                        // More robust tab detection
+                        const loginTab = labels.find(l => {
+                            const inputs = Array.from(l.querySelectorAll('input'));
+                            return inputs.find(i => i.value === 'login') || l.innerText.toLowerCase().includes('login');
+                        });
+                        const signupTab = labels.find(l => {
+                            const inputs = Array.from(l.querySelectorAll('input'));
+                            return inputs.find(i => i.value === 'signup') || l.innerText.toLowerCase().includes('sign up');
+                        });
+
+                        if (loginTab && signupTab) {
+                            if (authMode === 'login') {
+                                loginTab.classList.add('bg-primary', 'text-white', 'shadow-sm');
+                                loginTab.classList.remove('bg-background-light', 'dark:bg-background-dark');
+                                signupTab.classList.remove('bg-primary', 'text-white', 'shadow-sm');
+
+                                // Hide Signup-only fields
+                                const nameInput = container.querySelector('input[placeholder*="Name"]')?.closest('.relative');
+                                const phoneInput = container.querySelector('input[placeholder*="Phone"]')?.closest('.relative');
+                                const terms = container.querySelector('input[type="checkbox"]')?.closest('label');
+                                if (nameInput) nameInput.style.display = 'none';
+                                if (phoneInput) phoneInput.style.display = 'none';
+                                if (terms) terms.style.display = 'none';
+
+                                const submitBtn = container.querySelector('button span');
+                                if (submitBtn && submitBtn.innerText.includes('Create')) submitBtn.innerText = 'Log In';
+
+                                const footerText = container.querySelector('.mt-auto p');
+                                if (footerText) footerText.innerHTML = `Don't have an account? <a class="font-semibold text-primary hover:text-primary-dark transition-colors" href="#">Sign Up</a>`;
+                            } else {
+                                signupTab.classList.add('bg-primary', 'text-white', 'shadow-sm');
+                                loginTab.classList.remove('bg-primary', 'text-white', 'shadow-sm');
+                            }
+
+                            loginTab.onclick = (e) => { e.preventDefault(); onSetAuthMode('login'); };
+                            signupTab.onclick = (e) => { e.preventDefault(); onSetAuthMode('signup'); };
+                        }
+                    }
+
+                    // Navigation Heuristics
+                    const handleInteractions = (e) => {
+                        const target = e.target.closest('button, a, [role="button"], label, .cursor-pointer');
                         if (!target) return;
 
-                        const text = target.innerText.trim().toLowerCase();
+                        // Check for Back Navigation
+                        const icon = target.querySelector('.material-symbols-outlined');
+                        if (icon && (icon.innerText === 'arrow_back' || icon.innerText === 'chevron_left')) {
+                            window.dispatchEvent(new CustomEvent('goBack'));
+                            return;
+                        }
 
-                        // Navigation Logic Heuristics
+                        const text = target.innerText.trim().toLowerCase().replace(/\s+/g, ' ');
+
+                        // Interaction detection for tabs (they might not have 'onclick' yet if React re-rendered)
+                        if (target.innerText.toLowerCase().includes('login') && target.closest('.bg-background-light')) {
+                             onSetAuthMode('login');
+                             return;
+                        }
+                        if (target.innerText.toLowerCase().includes('sign up') && target.closest('.bg-background-light')) {
+                             onSetAuthMode('signup');
+                             return;
+                        }
+
                         if (text.includes('sign up') || text.includes('create account')) {
                             if (text.includes('provider')) onNavigate('PROVIDER_WELCOME');
-                            else onNavigate('SIGNUP');
+                            else {
+                                onSetAuthMode('signup');
+                                onNavigate('AUTH');
+                            }
                         } else if (text.includes('log in') || text.includes('login') || text.includes('sign in')) {
                             if (text.includes('admin')) onNavigate('ADMIN_LOGIN');
                             else if (screenKey === 'ADMIN_LOGIN') onNavigate('ADMIN_DASHBOARD');
-                            else if (screenKey === 'WELCOME') onNavigate('LOGIN');
-                            else onNavigate('CLIENT_HOME');
+                            else if (screenKey === 'WELCOME' || target.closest('.mt-auto')) {
+                                onSetAuthMode('login');
+                                onNavigate('AUTH');
+                            } else {
+                                if (screenKey.startsWith('PROVIDER')) onNavigate('PROVIDER_DASHBOARD');
+                                else onNavigate('CLIENT_HOME');
+                            }
                         } else if (text.includes('continue as guest')) {
                             onNavigate('CLIENT_HOME');
                         } else if (text.includes('book now')) {
@@ -204,34 +350,38 @@
                         } else if (text.includes('find services') || text.includes('explore')) {
                             onNavigate('FIND_SERVICES');
                         } else if (text.includes('view profile')) {
-                            onNavigate('PROVIDER_PROFILE');
-                        } else if (text.includes('get started')) {
-                            if (screenKey === 'PROVIDER_WELCOME') onNavigate('PROVIDER_SETUP');
-                            else onNavigate('SIGNUP');
-                        } else if (text.includes('complete setup') || text.includes('finish')) {
+                            onNavigate('PROVIDER_PROFILE_PUBLIC');
+                        } else if (text.includes('save & continue') || text.includes('complete setup') || text.includes('finish')) {
                             onNavigate('PROVIDER_DASHBOARD');
-                        } else if (text.includes('home') || target.querySelector('.material-symbols-outlined')?.innerText === 'home') {
-                            onNavigate('CLIENT_HOME');
-                        } else if (text.includes('bookings') || target.querySelector('.material-symbols-outlined')?.innerText === 'calendar_today') {
+                        } else if (text.includes('home') || icon?.innerText === 'home') {
+                            if (screenKey.startsWith('ADMIN')) onNavigate('ADMIN_DASHBOARD');
+                            else if (screenKey.startsWith('PROVIDER')) onNavigate('PROVIDER_DASHBOARD');
+                            else onNavigate('CLIENT_HOME');
+                        } else if (text.includes('bookings') || icon?.innerText === 'calendar_today') {
                             onNavigate('MY_BOOKINGS');
-                        } else if (text.includes('messages') || target.querySelector('.material-symbols-outlined')?.innerText === 'mail') {
+                        } else if (text.includes('messages') || icon?.innerText === 'mail' || icon?.innerText === 'chat') {
                             onNavigate('MESSAGES');
-                        } else if (text.includes('profile') || target.querySelector('.material-symbols-outlined')?.innerText === 'person') {
-                            onNavigate('PROFILE');
+                        } else if (text.includes('profile') || icon?.innerText === 'person') {
+                            if (screenKey.startsWith('ADMIN')) onNavigate('ADMIN_PROFILE_EDIT');
+                            else onNavigate('PROFILE');
                         }
                     };
 
-                    container.addEventListener('click', handleGlobalClick);
-                    return () => container.removeEventListener('click', handleGlobalClick);
+                    container.addEventListener('click', handleInteractions);
+                    return () => container.removeEventListener('click', handleInteractions);
                 }
-            }, [html, loading, screenKey]);
+            }, [html, loading, screenKey, authMode]);
 
             return (
-                <div className="h-full flex flex-col">
+                <div className={`h-full flex flex-col ${bodyClass} animate-slide-in`} key={screenKey}>
+                    {links.map(url => <link key={url} rel="stylesheet" href={url} />)}
                     <style dangerouslySetInnerHTML={{ __html: styles }} />
                     {loading ? (
-                        <div className="flex-1 flex items-center justify-center">
-                            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#87CEEB]"></div>
+                        <div className="flex-1 flex items-center justify-center bg-white">
+                            <div className="flex flex-col items-center gap-4">
+                                <div className="animate-spin rounded-full h-12 w-12 border-4 border-[#87CEEB] border-t-transparent"></div>
+                                <span className="text-sm font-medium text-gray-400">Loading Cleaner Hub...</span>
+                            </div>
                         </div>
                     ) : (
                         <div
@@ -245,37 +395,86 @@
         };
 
         const App = () => {
-            const [screen, setScreen] = useState('WELCOME');
+            const [history, setHistory] = useState(['WELCOME']);
+            const [authMode, setAuthMode] = useState('signup');
             const [devMenuOpen, setDevMenuOpen] = useState(false);
+
+            const screen = history[history.length - 1];
+
+            const navigate = (nextScreen) => {
+                if (nextScreen === screen) return;
+                setHistory(prev => [...prev, nextScreen]);
+            };
+
+            const goBack = () => {
+                if (history.length > 1) {
+                    setHistory(prev => prev.slice(0, -1));
+                }
+            };
 
             useEffect(() => {
                 const handleExternalNavigate = (e) => {
-                    if (SCREEN_MAP[e.detail]) setScreen(e.detail);
+                    if (SCREEN_MAP[e.detail]) navigate(e.detail);
                 };
+                const handleGoBack = () => goBack();
+
                 window.addEventListener('navigate', handleExternalNavigate);
-                return () => window.removeEventListener('navigate', handleExternalNavigate);
-            }, []);
+                window.addEventListener('goBack', handleGoBack);
+                return () => {
+                    window.removeEventListener('navigate', handleExternalNavigate);
+                    window.removeEventListener('goBack', handleGoBack);
+                };
+            }, [screen, history]);
 
             return (
                 <div className="app-shell">
                     <div className="screen-container">
-                        <Screen screenKey={screen} onNavigate={setScreen} />
+                        <Screen
+                            screenKey={screen}
+                            authMode={authMode}
+                            onNavigate={navigate}
+                            onSetAuthMode={setAuthMode}
+                        />
                     </div>
 
                     {/* Quick Access Dev Menu */}
-                    <div className="dev-menu-btn" onClick={() => setDevMenuOpen(!devMenuOpen)}>
-                        <span className="material-symbols-outlined">menu</span>
+                    <div className="dev-menu-btn" role="button" aria-label="menu" onClick={() => setDevMenuOpen(!devMenuOpen)}>
+                        <span className="material-symbols-outlined">{devMenuOpen ? 'close' : 'menu'}</span>
                     </div>
 
                     {devMenuOpen && (
                         <div className="dev-menu">
-                            <div className="text-[10px] font-bold text-gray-400 mb-2 px-3 uppercase tracking-wider">Switch Flow</div>
-                            <button onClick={() => { setScreen('WELCOME'); setDevMenuOpen(false); }}>Welcome Screen</button>
-                            <button onClick={() => { setScreen('CLIENT_HOME'); setDevMenuOpen(false); }}>Client App</button>
-                            <button onClick={() => { setScreen('PROVIDER_WELCOME'); setDevMenuOpen(false); }}>Provider App</button>
-                            <button onClick={() => { setScreen('ADMIN_LOGIN'); setDevMenuOpen(false); }}>Admin Panel</button>
-                            <div className="mt-2 pt-2 border-t border-gray-100 text-[9px] text-center text-gray-400">
-                                Prototype Navigation Control
+                            <div className="flex justify-between items-center mb-4">
+                                <h2 className="font-bold text-gray-800">Demo Navigator</h2>
+                                <button onClick={() => setHistory(['WELCOME'])} className="text-[10px] bg-gray-100 px-2 py-1 rounded">Reset</button>
+                            </div>
+
+                            <h3>Main Screens</h3>
+                            <button className={screen === 'WELCOME' ? 'active' : ''} onClick={() => { navigate('WELCOME'); setDevMenuOpen(false); }}>Welcome</button>
+                            <button className={screen === 'AUTH' ? 'active' : ''} onClick={() => { navigate('AUTH'); setDevMenuOpen(false); }}>Login / Signup</button>
+
+                            <h3>Client Flow</h3>
+                            <button className={screen === 'CLIENT_HOME' ? 'active' : ''} onClick={() => { navigate('CLIENT_HOME'); setDevMenuOpen(false); }}>Dashboard</button>
+                            <button className={screen === 'FIND_SERVICES' ? 'active' : ''} onClick={() => { navigate('FIND_SERVICES'); setDevMenuOpen(false); }}>Find Services</button>
+                            <button className={screen === 'BOOKING' ? 'active' : ''} onClick={() => { navigate('BOOKING'); setDevMenuOpen(false); }}>Booking Process</button>
+                            <button className={screen === 'MY_BOOKINGS' ? 'active' : ''} onClick={() => { navigate('MY_BOOKINGS'); setDevMenuOpen(false); }}>My Bookings</button>
+
+                            <h3>Provider Flow</h3>
+                            <button className={screen === 'PROVIDER_WELCOME' ? 'active' : ''} onClick={() => { navigate('PROVIDER_WELCOME'); setDevMenuOpen(false); }}>Provider Onboarding</button>
+                            <button className={screen === 'PROVIDER_DASHBOARD' ? 'active' : ''} onClick={() => { navigate('PROVIDER_DASHBOARD'); setDevMenuOpen(false); }}>Provider Dashboard</button>
+                            <button className={screen === 'BOOKING_REQUESTS' ? 'active' : ''} onClick={() => { navigate('BOOKING_REQUESTS'); setDevMenuOpen(false); }}>New Requests</button>
+
+                            <h3>Admin Panel</h3>
+                            <button className={screen === 'ADMIN_LOGIN' ? 'active' : ''} onClick={() => { navigate('ADMIN_LOGIN'); setDevMenuOpen(false); }}>Admin Login</button>
+                            <button className={screen === 'ADMIN_DASHBOARD' ? 'active' : ''} onClick={() => { navigate('ADMIN_DASHBOARD'); setDevMenuOpen(false); }}>Admin Stats</button>
+
+                            <h3>Features</h3>
+                            <button onClick={() => { navigate('SMART_SEARCH'); setDevMenuOpen(false); }}>Smart Search</button>
+                            <button onClick={() => { navigate('REAL_TIME_TRACKING'); setDevMenuOpen(false); }}>Live Tracking</button>
+                            <button onClick={() => { navigate('EMERGENCY_MODE'); setDevMenuOpen(false); }}>Emergency Mode</button>
+
+                            <div className="mt-4 pt-4 border-t border-gray-100 text-[10px] text-center text-gray-400">
+                                History Stack: {history.length} screens
                             </div>
                         </div>
                     )}
