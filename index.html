@@ -186,9 +186,11 @@
         const Screen = ({ screenKey, onNavigate }) => {
             const [html, setHtml] = useState('');
             const [styles, setStyles] = useState('');
+            const [links, setLinks] = useState([]);
             const [bodyClass, setBodyClass] = useState('');
             const [loading, setLoading] = useState(true);
             const containerRef = useRef(null);
+            const injectedScriptsRef = useRef([]);
 
             useEffect(() => {
                 const fetchContent = async () => {
@@ -206,6 +208,11 @@
                             .map(s => s.innerHTML)
                             .join('\n');
                         setStyles(styleContent);
+
+                        // Extract Links (External Stylesheets)
+                        const linkTags = Array.from(doc.querySelectorAll('link[rel="stylesheet"]'))
+                            .map(l => l.getAttribute('href'));
+                        setLinks(linkTags);
 
                         // Extract Body Classes
                         setBodyClass(doc.body.className);
@@ -250,7 +257,9 @@
 
                             // Hide ToS for login
                             const tos = doc.querySelector('label.flex.items-start');
-                            if (tos && isLogin) tos.style.display = 'none';
+                            if (tos) {
+                                tos.style.display = isLogin ? 'none' : 'flex';
+                            }
 
                             // Update button text
                             const btn = doc.querySelector('button.bg-primary span');
@@ -283,18 +292,18 @@
                     const container = containerRef.current;
 
                     // 1. Manually execute any script tags found in the HTML
-                    // Note: This is simplified for the demo/prototype
                     const scripts = container.querySelectorAll('script');
                     scripts.forEach(oldScript => {
                         const newScript = document.createElement('script');
                         Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
                         newScript.appendChild(document.createTextNode(oldScript.innerHTML));
-                        oldScript.parentNode.replaceChild(newScript, oldScript);
+                        document.body.appendChild(newScript);
+                        injectedScriptsRef.current.push(newScript);
                     });
 
                     // 2. Attach Click Listeners for Navigation
                     const handleGlobalClick = (e) => {
-                        // Special handling for auth mode tabs to avoid browser issues with radio labels
+                        // Special handling for auth mode tabs
                         const tabLabel = e.target.closest('label');
                         if (tabLabel && tabLabel.querySelector('input[name="auth-mode"]')) {
                             const input = tabLabel.querySelector('input');
@@ -304,21 +313,68 @@
                             return;
                         }
 
-                        // Handle Back Navigation First
+                        // Handle Back Navigation
                         const backIcon = e.target.closest('.material-symbols-outlined, .material-icons-round');
                         if (backIcon && (backIcon.innerText === 'arrow_back' || backIcon.innerText === 'chevron_left' || backIcon.innerText === 'arrow_back_ios')) {
                             window.dispatchEvent(new CustomEvent('goBack'));
                             return;
                         }
 
-                        const target = e.target.closest('button, a, [role="button"]');
+                        const target = e.target.closest('button, a, [role="button"], div.cursor-pointer');
                         if (!target) return;
 
                         const text = target.innerText.trim().toLowerCase().replace(/\s+/g, ' ');
 
                         // Navigation Logic Heuristics
-                        if (text.includes('find services')) {
+                        if (text.includes('find services') || text.includes('explore')) {
                             onNavigate('FIND_SERVICES');
+                            return;
+                        }
+
+                        if (text.includes('emergency clean')) {
+                            onNavigate('FEATURE_EMERGENCY_MODE');
+                            return;
+                        }
+
+                        if (text.includes('event help')) {
+                            onNavigate('FIND_SERVICES'); // Use Find Services as fallback for Event Help
+                            return;
+                        }
+
+                        if (text.includes('subscribe')) {
+                            onNavigate('FEATURE_SMART_NOTIFICATIONS'); // Or map to a specific sub screen
+                            return;
+                        }
+
+                        if (text.includes('new requests')) {
+                            onNavigate('PROVIDER_REQUESTS');
+                            return;
+                        }
+
+                        if (text.includes('my clients')) {
+                            onNavigate('PROVIDER_CLIENTS');
+                            return;
+                        }
+
+                        if (text.includes('my earnings')) {
+                            onNavigate('PROVIDER_DASHBOARD_2'); // Assume dashboard 2 shows earnings or similar
+                            return;
+                        }
+
+                        if (text.includes('manage users')) {
+                            onNavigate('ADMIN_MANAGE_USERS');
+                            return;
+                        }
+                        if (text.includes('manage bookings')) {
+                            onNavigate('ADMIN_MANAGE_BOOKINGS');
+                            return;
+                        }
+                        if (text.includes('app settings')) {
+                            onNavigate('ADMIN_SETTINGS');
+                            return;
+                        }
+                        if (text.includes('channels')) {
+                            onNavigate('CHANNELS');
                             return;
                         }
 
@@ -327,18 +383,18 @@
                                 if (screenKey === 'PROVIDER_WELCOME') onNavigate('PROVIDER_SETUP');
                                 else onNavigate('PROVIDER_WELCOME');
                             }
+                            else if (screenKey === 'SIGNUP' || screenKey === 'LOGIN') onNavigate('CLIENT_HOME');
                             else onNavigate('SIGNUP');
                         } else if (text.includes('log in') || text.includes('login') || text.includes('sign in')) {
                             if (text.includes('admin')) onNavigate('ADMIN_LOGIN');
                             else if (screenKey === 'ADMIN_LOGIN') onNavigate('ADMIN_DASHBOARD');
                             else if (screenKey === 'WELCOME') onNavigate('LOGIN');
-                            else onNavigate('CLIENT_HOME');
+                            else if (screenKey === 'LOGIN' || screenKey === 'SIGNUP') onNavigate('CLIENT_HOME');
+                            else onNavigate('LOGIN');
                         } else if (text.includes('continue as guest')) {
                             onNavigate('CLIENT_HOME');
                         } else if (text.includes('book now')) {
                             onNavigate('BOOKING');
-                        } else if (text.includes('find services') || text.includes('explore')) {
-                            onNavigate('FIND_SERVICES');
                         } else if (text.includes('view profile')) {
                             onNavigate('PROVIDER_PROFILE');
                         } else if (text.includes('get started')) {
@@ -350,9 +406,10 @@
                             if (screenKey.startsWith('ADMIN')) onNavigate('ADMIN_DASHBOARD');
                             else if (screenKey.startsWith('PROVIDER')) onNavigate('PROVIDER_DASHBOARD');
                             else onNavigate('CLIENT_HOME');
-                        } else if (text.includes('bookings') || target.querySelector('.material-symbols-outlined')?.innerText === 'calendar_today') {
-                            onNavigate('MY_BOOKINGS');
-                        } else if (text.includes('messages') || target.querySelector('.material-symbols-outlined')?.innerText === 'mail') {
+                        } else if (text.includes('bookings') || target.querySelector('.material-symbols-outlined')?.innerText === 'calendar_today' || target.querySelector('.material-symbols-outlined')?.innerText === 'calendar_month') {
+                            if (screenKey.startsWith('PROVIDER')) onNavigate('PROVIDER_SCHEDULE');
+                            else onNavigate('MY_BOOKINGS');
+                        } else if (text.includes('messages') || target.querySelector('.material-symbols-outlined')?.innerText === 'mail' || target.querySelector('.material-symbols-outlined')?.innerText === 'chat_bubble') {
                             onNavigate('MESSAGES');
                         } else if (text.includes('profile') || target.querySelector('.material-symbols-outlined')?.innerText === 'person') {
                             if (screenKey.startsWith('ADMIN')) onNavigate('ADMIN_PROFILE_EDIT');
@@ -361,12 +418,20 @@
                     };
 
                     container.addEventListener('click', handleGlobalClick);
-                    return () => container.removeEventListener('click', handleGlobalClick);
+                    return () => {
+                        container.removeEventListener('click', handleGlobalClick);
+                        // Cleanup injected scripts
+                        injectedScriptsRef.current.forEach(script => {
+                            if (script.parentNode) script.parentNode.removeChild(script);
+                        });
+                        injectedScriptsRef.current = [];
+                    };
                 }
-            }, [html, loading, screenKey]);
+            }, [html, loading, screenKey, onNavigate]);
 
             return (
                 <div className={`h-full flex flex-col ${bodyClass}`}>
+                    {links.map((href, i) => <link key={i} rel="stylesheet" href={href} />)}
                     <style dangerouslySetInnerHTML={{ __html: styles }} />
                     {loading ? (
                         <div className="flex-1 flex items-center justify-center">
@@ -414,7 +479,7 @@
 
             return (
                 <div className="app-shell">
-                    <div className="screen-container" key={screen}>
+                    <div className="screen-container" key={history.length}>
                         <Screen screenKey={screen} onNavigate={navigate} />
                     </div>
 
