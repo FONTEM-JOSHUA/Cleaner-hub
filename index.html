@@ -51,6 +51,11 @@
             flex: 1;
             overflow-y: auto;
             overflow-x: hidden;
+            animation: slideIn 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(30px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
         /* Custom scrollbar for a better look */
         .screen-container::-webkit-scrollbar {
@@ -287,8 +292,10 @@
                     const scripts = container.querySelectorAll('script');
                     scripts.forEach(oldScript => {
                         const newScript = document.createElement('script');
-                        Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
-                        newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+                        Array.from(oldScript.attributes).forEach(attr => {
+                            newScript.setAttribute(attr.name, attr.value);
+                        });
+                        newScript.text = oldScript.innerHTML;
                         oldScript.parentNode.replaceChild(newScript, oldScript);
                     });
 
@@ -317,8 +324,23 @@
                         const text = target.innerText.trim().toLowerCase().replace(/\s+/g, ' ');
 
                         // Navigation Logic Heuristics
-                        if (text.includes('find services')) {
+                        if (text.includes('emergency clean')) {
+                            onNavigate('FEATURE_EMERGENCY_MODE');
+                            return;
+                        }
+
+                        if (text.includes('event help')) {
                             onNavigate('FIND_SERVICES');
+                            return;
+                        }
+
+                        if (text.includes('subscribe')) {
+                            onNavigate('FEATURE_SMART_NOTIFICATIONS');
+                            return;
+                        }
+
+                        if (text.includes('channels') || text.includes('channel')) {
+                            onNavigate('CHANNELS');
                             return;
                         }
 
@@ -328,42 +350,97 @@
                                 else onNavigate('PROVIDER_WELCOME');
                             }
                             else onNavigate('SIGNUP');
-                        } else if (text.includes('log in') || text.includes('login') || text.includes('sign in')) {
+                            return;
+                        }
+
+                        if (text.includes('log in') || text.includes('login') || text.includes('sign in')) {
                             if (text.includes('admin')) onNavigate('ADMIN_LOGIN');
                             else if (screenKey === 'ADMIN_LOGIN') onNavigate('ADMIN_DASHBOARD');
                             else if (screenKey === 'WELCOME') onNavigate('LOGIN');
-                            else onNavigate('CLIENT_HOME');
-                        } else if (text.includes('continue as guest')) {
+                            else if (screenKey === 'LOGIN' || screenKey === 'SIGNUP') onNavigate('CLIENT_HOME');
+                            else onNavigate('LOGIN');
+                            return;
+                        }
+
+                        if (text.includes('continue as guest')) {
                             onNavigate('CLIENT_HOME');
-                        } else if (text.includes('book now')) {
+                            return;
+                        }
+
+                        if (text.includes('book now')) {
                             onNavigate('BOOKING');
-                        } else if (text.includes('find services') || text.includes('explore')) {
+                            return;
+                        }
+
+                        if (text.includes('find services') || text.includes('explore') || text.includes('browse')) {
                             onNavigate('FIND_SERVICES');
-                        } else if (text.includes('view profile')) {
+                            return;
+                        }
+
+                        if (text.includes('view profile')) {
                             onNavigate('PROVIDER_PROFILE');
-                        } else if (text.includes('get started')) {
+                            return;
+                        }
+
+                        if (text.includes('get started')) {
                             if (screenKey === 'PROVIDER_WELCOME') onNavigate('PROVIDER_SETUP');
                             else onNavigate('SIGNUP');
-                        } else if (text.includes('complete setup') || text.includes('finish') || text.includes('save & continue')) {
+                            return;
+                        }
+
+                        if (text.includes('complete setup') || text.includes('finish') || text.includes('save & continue')) {
                             onNavigate('PROVIDER_DASHBOARD');
-                        } else if (text.includes('home') || target.querySelector('.material-symbols-outlined')?.innerText === 'home') {
+                            return;
+                        }
+
+                        // Provider Specifics
+                        if (screenKey.startsWith('PROVIDER')) {
+                            if (text.includes('schedule') || text.includes('calendar')) { onNavigate('PROVIDER_SCHEDULE'); return; }
+                            if (text.includes('requests') || text.includes('inbox')) { onNavigate('PROVIDER_REQUESTS'); return; }
+                            if (text.includes('clients')) { onNavigate('PROVIDER_CLIENTS'); return; }
+                            if (text.includes('earnings') || text.includes('wallet')) { onNavigate('PROVIDER_DASHBOARD_2'); return; }
+                        }
+
+                        // Admin Specifics
+                        if (screenKey.startsWith('ADMIN')) {
+                            if (text.includes('manage users')) { onNavigate('ADMIN_MANAGE_USERS'); return; }
+                            if (text.includes('manage bookings') || text.includes('bookings')) { onNavigate('ADMIN_MANAGE_BOOKINGS'); return; }
+                            if (text.includes('settings')) { onNavigate('ADMIN_SETTINGS'); return; }
+                        }
+
+                        // Icons / Bottom Nav
+                        const iconText = target.querySelector('.material-symbols-outlined, .material-icons-round')?.innerText;
+                        if (text.includes('home') || iconText === 'home' || iconText === 'dashboard') {
                             if (screenKey.startsWith('ADMIN')) onNavigate('ADMIN_DASHBOARD');
                             else if (screenKey.startsWith('PROVIDER')) onNavigate('PROVIDER_DASHBOARD');
                             else onNavigate('CLIENT_HOME');
-                        } else if (text.includes('bookings') || target.querySelector('.material-symbols-outlined')?.innerText === 'calendar_today') {
-                            onNavigate('MY_BOOKINGS');
-                        } else if (text.includes('messages') || target.querySelector('.material-symbols-outlined')?.innerText === 'mail') {
-                            onNavigate('MESSAGES');
-                        } else if (text.includes('profile') || target.querySelector('.material-symbols-outlined')?.innerText === 'person') {
+                            return;
+                        }
+
+                        if (text.includes('bookings') || iconText === 'calendar_today' || iconText === 'calendar_month' || iconText === 'confirmation_number') {
+                            if (screenKey.startsWith('PROVIDER')) onNavigate('PROVIDER_SCHEDULE');
+                            else if (screenKey.startsWith('ADMIN')) onNavigate('ADMIN_MANAGE_BOOKINGS');
+                            else onNavigate('MY_BOOKINGS');
+                            return;
+                        }
+
+                        if (text.includes('messages') || iconText === 'mail' || iconText === 'chat_bubble' || iconText === 'inbox') {
+                            if (screenKey.startsWith('PROVIDER')) onNavigate('PROVIDER_REQUESTS');
+                            else onNavigate('MESSAGES');
+                            return;
+                        }
+
+                        if (text.includes('profile') || iconText === 'person') {
                             if (screenKey.startsWith('ADMIN')) onNavigate('ADMIN_PROFILE_EDIT');
                             else onNavigate('PROFILE');
+                            return;
                         }
                     };
 
                     container.addEventListener('click', handleGlobalClick);
                     return () => container.removeEventListener('click', handleGlobalClick);
                 }
-            }, [html, loading, screenKey]);
+            }, [html, loading, screenKey, onNavigate]);
 
             return (
                 <div className={`h-full flex flex-col ${bodyClass}`}>
