@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cleaner Hub - Home Service Professional Platform</title>
-    <!-- Load React, ReactDOM, and Babel from CDN -->
+    <!-- Load React, ReactDOM from CDN -->
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
     <script>
@@ -122,8 +121,9 @@
 <body>
     <div id="root"></div>
 
-    <script type="text/babel">
+    <script>
         const { useState, useEffect, useRef } = React;
+        const e = React.createElement;
 
         const SCREEN_MAP = {
             'WELCOME': 'welcome_screen/code.html',
@@ -288,7 +288,7 @@
                     scripts.forEach(oldScript => {
                         const newScript = document.createElement('script');
                         Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
-                        newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+                        newScript.text = oldScript.text || oldScript.innerHTML;
                         oldScript.parentNode.replaceChild(newScript, oldScript);
                     });
 
@@ -317,6 +317,23 @@
                         const text = target.innerText.trim().toLowerCase().replace(/\s+/g, ' ');
 
                         // Navigation Logic Heuristics
+                        if (text.includes('emergency clean')) {
+                            onNavigate('FEATURE_EMERGENCY_MODE');
+                            return;
+                        }
+                        if (text.includes('event help')) {
+                            onNavigate('FIND_SERVICES');
+                            return;
+                        }
+                        if (text.includes('subscribe')) {
+                            onNavigate('FEATURE_SMART_NOTIFICATIONS');
+                            return;
+                        }
+                        if (text.includes('channels')) {
+                            onNavigate('CHANNELS');
+                            return;
+                        }
+
                         if (text.includes('find services')) {
                             onNavigate('FIND_SERVICES');
                             return;
@@ -327,12 +344,16 @@
                                 if (screenKey === 'PROVIDER_WELCOME') onNavigate('PROVIDER_SETUP');
                                 else onNavigate('PROVIDER_WELCOME');
                             }
+                            else if (screenKey === 'LOGIN' && target.tagName === 'A') onNavigate('SIGNUP');
+                            else if (screenKey === 'SIGNUP' && target.tagName === 'BUTTON') onNavigate('CLIENT_HOME');
                             else onNavigate('SIGNUP');
                         } else if (text.includes('log in') || text.includes('login') || text.includes('sign in')) {
                             if (text.includes('admin')) onNavigate('ADMIN_LOGIN');
                             else if (screenKey === 'ADMIN_LOGIN') onNavigate('ADMIN_DASHBOARD');
                             else if (screenKey === 'WELCOME') onNavigate('LOGIN');
-                            else onNavigate('CLIENT_HOME');
+                            else if (screenKey === 'SIGNUP' && target.tagName === 'A') onNavigate('LOGIN');
+                            else if (screenKey === 'LOGIN' && target.tagName === 'BUTTON') onNavigate('CLIENT_HOME');
+                            else onNavigate('LOGIN');
                         } else if (text.includes('continue as guest')) {
                             onNavigate('CLIENT_HOME');
                         } else if (text.includes('book now')) {
@@ -351,7 +372,8 @@
                             else if (screenKey.startsWith('PROVIDER')) onNavigate('PROVIDER_DASHBOARD');
                             else onNavigate('CLIENT_HOME');
                         } else if (text.includes('bookings') || target.querySelector('.material-symbols-outlined')?.innerText === 'calendar_today') {
-                            onNavigate('MY_BOOKINGS');
+                            if (screenKey.startsWith('ADMIN')) onNavigate('ADMIN_MANAGE_BOOKINGS');
+                            else onNavigate('MY_BOOKINGS');
                         } else if (text.includes('messages') || target.querySelector('.material-symbols-outlined')?.innerText === 'mail') {
                             onNavigate('MESSAGES');
                         } else if (text.includes('profile') || target.querySelector('.material-symbols-outlined')?.innerText === 'person') {
@@ -365,21 +387,15 @@
                 }
             }, [html, loading, screenKey]);
 
-            return (
-                <div className={`h-full flex flex-col ${bodyClass}`}>
-                    <style dangerouslySetInnerHTML={{ __html: styles }} />
-                    {loading ? (
-                        <div className="flex-1 flex items-center justify-center">
-                            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#87CEEB]"></div>
-                        </div>
-                    ) : (
-                        <div
-                            ref={containerRef}
-                            className="flex-1"
-                            dangerouslySetInnerHTML={{ __html: html }}
-                        />
-                    )}
-                </div>
+            return e('div', { className: `h-full flex flex-col ${bodyClass}` },
+                e('style', { dangerouslySetInnerHTML: { __html: styles } }),
+                loading ? e('div', { className: 'flex-1 flex items-center justify-center' },
+                    e('div', { className: 'animate-spin rounded-full h-10 w-10 border-b-2 border-[#87CEEB]' })
+                ) : e('div', {
+                    ref: containerRef,
+                    className: 'flex-1',
+                    dangerouslySetInnerHTML: { __html: html }
+                })
             );
         };
 
@@ -412,61 +428,59 @@
                 };
             }, [history]);
 
-            return (
-                <div className="app-shell">
-                    <div className="screen-container" key={screen}>
-                        <Screen screenKey={screen} onNavigate={navigate} />
-                    </div>
+            return e('div', { className: 'app-shell' },
+                e('div', { className: 'screen-container', key: screen },
+                    e(Screen, { screenKey: screen, onNavigate: navigate })
+                ),
+                e('div', {
+                    className: 'dev-menu-btn',
+                    role: 'button',
+                    'aria-label': 'menu',
+                    onClick: () => setDevMenuOpen(!devMenuOpen)
+                },
+                    e('span', { className: 'material-symbols-outlined' }, 'menu')
+                ),
+                devMenuOpen && e('div', { className: 'dev-menu' },
+                    e('div', { className: 'text-[10px] font-bold text-gray-400 mb-2 px-3 uppercase tracking-wider' }, 'Main Screens'),
+                    e('button', { onClick: () => { navigate('WELCOME'); setDevMenuOpen(false); } }, 'Welcome'),
+                    e('button', { onClick: () => { navigate('LOGIN'); setDevMenuOpen(false); } }, 'Login'),
+                    e('button', { onClick: () => { navigate('SIGNUP'); setDevMenuOpen(false); } }, 'Signup'),
 
-                    {/* Quick Access Dev Menu */}
-                    <div className="dev-menu-btn" role="button" aria-label="menu" onClick={() => setDevMenuOpen(!devMenuOpen)}>
-                        <span className="material-symbols-outlined">menu</span>
-                    </div>
+                    e('div', { className: 'text-[10px] font-bold text-gray-400 mt-4 mb-2 px-3 uppercase tracking-wider' }, 'Client Flow'),
+                    e('button', { onClick: () => { navigate('CLIENT_HOME'); setDevMenuOpen(false); } }, 'Home Dashboard'),
+                    e('button', { onClick: () => { navigate('FIND_SERVICES'); setDevMenuOpen(false); } }, 'Find Services'),
+                    e('button', { onClick: () => { navigate('BOOKING'); setDevMenuOpen(false); } }, 'Booking Screen'),
+                    e('button', { onClick: () => { navigate('MY_BOOKINGS'); setDevMenuOpen(false); } }, 'My Bookings'),
+                    e('button', { onClick: () => { navigate('MESSAGES'); setDevMenuOpen(false); } }, 'Messages'),
+                    e('button', { onClick: () => { navigate('PROFILE'); setDevMenuOpen(false); } }, 'Profile'),
 
-                    {devMenuOpen && (
-                        <div className="dev-menu">
-                            <div className="text-[10px] font-bold text-gray-400 mb-2 px-3 uppercase tracking-wider">Main Screens</div>
-                            <button onClick={() => { navigate('WELCOME'); setDevMenuOpen(false); }}>Welcome</button>
-                            <button onClick={() => { navigate('LOGIN'); setDevMenuOpen(false); }}>Login</button>
-                            <button onClick={() => { navigate('SIGNUP'); setDevMenuOpen(false); }}>Signup</button>
+                    e('div', { className: 'text-[10px] font-bold text-gray-400 mt-4 mb-2 px-3 uppercase tracking-wider' }, 'Provider Flow'),
+                    e('button', { onClick: () => { navigate('PROVIDER_WELCOME'); setDevMenuOpen(false); } }, 'Provider Welcome'),
+                    e('button', { onClick: () => { navigate('PROVIDER_SETUP'); setDevMenuOpen(false); } }, 'Provider Setup'),
+                    e('button', { onClick: () => { navigate('PROVIDER_DASHBOARD'); setDevMenuOpen(false); } }, 'Provider Dashboard'),
+                    e('button', { onClick: () => { navigate('PROVIDER_SCHEDULE'); setDevMenuOpen(false); } }, 'My Schedule'),
+                    e('button', { onClick: () => { navigate('PROVIDER_REQUESTS'); setDevMenuOpen(false); } }, 'Booking Requests'),
 
-                            <div className="text-[10px] font-bold text-gray-400 mt-4 mb-2 px-3 uppercase tracking-wider">Client Flow</div>
-                            <button onClick={() => { navigate('CLIENT_HOME'); setDevMenuOpen(false); }}>Home Dashboard</button>
-                            <button onClick={() => { navigate('FIND_SERVICES'); setDevMenuOpen(false); }}>Find Services</button>
-                            <button onClick={() => { navigate('BOOKING'); setDevMenuOpen(false); }}>Booking Screen</button>
-                            <button onClick={() => { navigate('MY_BOOKINGS'); setDevMenuOpen(false); }}>My Bookings</button>
-                            <button onClick={() => { navigate('MESSAGES'); setDevMenuOpen(false); }}>Messages</button>
-                            <button onClick={() => { navigate('PROFILE'); setDevMenuOpen(false); }}>Profile</button>
+                    e('div', { className: 'text-[10px] font-bold text-gray-400 mt-4 mb-2 px-3 uppercase tracking-wider' }, 'Admin Panel'),
+                    e('button', { onClick: () => { navigate('ADMIN_LOGIN'); setDevMenuOpen(false); } }, 'Admin Login'),
+                    e('button', { onClick: () => { navigate('ADMIN_DASHBOARD'); setDevMenuOpen(false); } }, 'Admin Dashboard'),
+                    e('button', { onClick: () => { navigate('ADMIN_MANAGE_USERS'); setDevMenuOpen(false); } }, 'Manage Users'),
+                    e('button', { onClick: () => { navigate('ADMIN_MANAGE_BOOKINGS'); setDevMenuOpen(false); } }, 'Manage Bookings'),
 
-                            <div className="text-[10px] font-bold text-gray-400 mt-4 mb-2 px-3 uppercase tracking-wider">Provider Flow</div>
-                            <button onClick={() => { navigate('PROVIDER_WELCOME'); setDevMenuOpen(false); }}>Provider Welcome</button>
-                            <button onClick={() => { navigate('PROVIDER_SETUP'); setDevMenuOpen(false); }}>Provider Setup</button>
-                            <button onClick={() => { navigate('PROVIDER_DASHBOARD'); setDevMenuOpen(false); }}>Provider Dashboard</button>
-                            <button onClick={() => { navigate('PROVIDER_SCHEDULE'); setDevMenuOpen(false); }}>My Schedule</button>
-                            <button onClick={() => { navigate('PROVIDER_REQUESTS'); setDevMenuOpen(false); }}>Booking Requests</button>
+                    e('div', { className: 'text-[10px] font-bold text-gray-400 mt-4 mb-2 px-3 uppercase tracking-wider' }, 'Features'),
+                    e('button', { onClick: () => { navigate('FEATURE_EMERGENCY_MODE'); setDevMenuOpen(false); } }, 'Emergency Mode'),
+                    e('button', { onClick: () => { navigate('FEATURE_EASY_PAYMENTS'); setDevMenuOpen(false); } }, 'Easy Payments'),
+                    e('button', { onClick: () => { navigate('FEATURE_REAL_TIME_TRACKING'); setDevMenuOpen(false); } }, 'Real-time Tracking'),
 
-                            <div className="text-[10px] font-bold text-gray-400 mt-4 mb-2 px-3 uppercase tracking-wider">Admin Panel</div>
-                            <button onClick={() => { navigate('ADMIN_LOGIN'); setDevMenuOpen(false); }}>Admin Login</button>
-                            <button onClick={() => { navigate('ADMIN_DASHBOARD'); setDevMenuOpen(false); }}>Admin Dashboard</button>
-                            <button onClick={() => { navigate('ADMIN_MANAGE_USERS'); setDevMenuOpen(false); }}>Manage Users</button>
-                            <button onClick={() => { navigate('ADMIN_MANAGE_BOOKINGS'); setDevMenuOpen(false); }}>Manage Bookings</button>
-
-                            <div className="text-[10px] font-bold text-gray-400 mt-4 mb-2 px-3 uppercase tracking-wider">Features</div>
-                            <button onClick={() => { navigate('FEATURE_EMERGENCY_MODE'); setDevMenuOpen(false); }}>Emergency Mode</button>
-                            <button onClick={() => { navigate('FEATURE_EASY_PAYMENTS'); setDevMenuOpen(false); }}>Easy Payments</button>
-                            <button onClick={() => { navigate('FEATURE_REAL_TIME_TRACKING'); setDevMenuOpen(false); }}>Real-time Tracking</button>
-
-                            <div className="mt-2 pt-2 border-t border-gray-100 text-[9px] text-center text-gray-400">
-                                Prototype Navigation Control
-                            </div>
-                        </div>
-                    )}
-                </div>
+                    e('div', { className: 'mt-2 pt-2 border-t border-gray-100 text-[9px] text-center text-gray-400' },
+                        'Prototype Navigation Control'
+                    )
+                )
             );
         };
 
         const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
+        root.render(e(App));
     </script>
 </body>
 </html>
