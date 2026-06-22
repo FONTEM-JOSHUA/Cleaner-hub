@@ -122,7 +122,7 @@
 <body>
     <div id="root"></div>
 
-    <script type="text/babel">
+    <script>
         const { useState, useEffect, useRef } = React;
 
         const SCREEN_MAP = {
@@ -186,6 +186,7 @@
         const Screen = ({ screenKey, onNavigate }) => {
             const [html, setHtml] = useState('');
             const [styles, setStyles] = useState('');
+            const [links, setLinks] = useState([]);
             const [bodyClass, setBodyClass] = useState('');
             const [loading, setLoading] = useState(true);
             const containerRef = useRef(null);
@@ -207,6 +208,15 @@
                             .join('\n');
                         setStyles(styleContent);
 
+                        // Extract Link tags (external stylesheets)
+                        const linkTags = Array.from(doc.querySelectorAll('link[rel="stylesheet"]'))
+                            .map(l => ({
+                                rel: l.rel,
+                                href: l.href,
+                                id: l.id
+                            }));
+                        setLinks(linkTags);
+
                         // Extract Body Classes
                         setBodyClass(doc.body.className);
 
@@ -214,52 +224,58 @@
                         if (screenKey === 'LOGIN' || screenKey === 'SIGNUP') {
                             const isLogin = screenKey === 'LOGIN';
 
-                            // Toggle tabs
-                            const tabs = doc.querySelectorAll('label');
-                            tabs.forEach(tab => {
-                                const input = tab.querySelector('input[name="auth-mode"]');
-                                if (input) {
-                                    const mode = input.value;
-                                    if ((isLogin && mode === 'login') || (!isLogin && mode === 'signup')) {
-                                        tab.classList.add('bg-primary');
-                                        tab.querySelector('span').classList.remove('text-text-subtle');
-                                        tab.querySelector('span').classList.add('text-white', 'font-semibold');
-                                        input.checked = true;
+                            // 1. Find the segmented control container
+                            const labels = Array.from(doc.querySelectorAll('label'));
+                            labels.forEach(label => {
+                                const radio = label.querySelector('input[type="radio"]');
+                                if (radio && (radio.value === 'login' || radio.value === 'signup')) {
+                                    const span = label.querySelector('span');
+                                    if (isLogin && radio.value === 'login') {
+                                        label.classList.add('bg-primary');
+                                        if (span) span.className = 'z-10 text-sm font-semibold text-white';
+                                        radio.checked = true;
+                                    } else if (!isLogin && radio.value === 'signup') {
+                                        label.classList.add('bg-primary');
+                                        if (span) span.className = 'z-10 text-sm font-semibold text-white';
+                                        radio.checked = true;
                                     } else {
-                                        tab.classList.remove('bg-primary');
-                                        tab.querySelector('span').classList.remove('text-white', 'font-semibold');
-                                        tab.querySelector('span').classList.add('text-text-subtle');
-                                        input.checked = false;
+                                        label.classList.remove('bg-primary');
+                                        if (span) span.className = 'z-10 text-sm font-medium text-text-subtle group-hover:text-text-main dark:text-gray-400 dark:group-hover:text-white transition-colors';
+                                        radio.checked = false;
                                     }
                                 }
                             });
 
-                            // Hide/Show fields
-                            const fields = doc.querySelectorAll('.relative');
-                            fields.forEach(field => {
+                            // 2. Hide/Show fields
+                            doc.querySelectorAll('.relative').forEach(field => {
                                 const input = field.querySelector('input');
                                 if (input) {
-                                    const placeholder = input.placeholder.toLowerCase();
-                                    if (isLogin && (placeholder.includes('name') || placeholder.includes('phone'))) {
+                                    const ph = (input.placeholder || '').toLowerCase();
+                                    if (isLogin && (ph.includes('name') || ph.includes('phone'))) {
+                                        field.classList.add('hidden');
                                         field.style.display = 'none';
                                     } else {
+                                        field.classList.remove('hidden');
                                         field.style.display = 'block';
                                     }
                                 }
                             });
 
-                            // Hide ToS for login
+                            // 3. Hide ToS
                             const tos = doc.querySelector('label.flex.items-start');
-                            if (tos && isLogin) tos.style.display = 'none';
+                            if (tos) {
+                                if (isLogin) tos.style.setProperty('display', 'none', 'important');
+                                else tos.style.setProperty('display', 'flex', 'important');
+                            }
 
-                            // Update button text
-                            const btn = doc.querySelector('button.bg-primary span');
-                            if (btn) btn.innerText = isLogin ? 'Log In' : 'Create Account';
+                            // 4. Button Text
+                            const btnSpan = doc.querySelector('button.bg-primary span');
+                            if (btnSpan) btnSpan.innerText = isLogin ? 'Log In' : 'Create Account';
 
-                            // Update footer link
-                            const footer = doc.querySelector('.mt-auto.pt-6 p');
-                            if (footer) {
-                                footer.innerHTML = isLogin ?
+                            // 5. Footer
+                            const footerP = doc.querySelector('.mt-auto.pt-6 p');
+                            if (footerP) {
+                                footerP.innerHTML = isLogin ?
                                     'Don\'t have an account? <a class="font-semibold text-primary hover:text-primary-dark transition-colors" href="#">Sign Up</a>' :
                                     'Already have an account? <a class="font-semibold text-primary hover:text-primary-dark transition-colors" href="#">Login</a>';
                             }
@@ -283,13 +299,22 @@
                     const container = containerRef.current;
 
                     // 1. Manually execute any script tags found in the HTML
-                    // Note: This is simplified for the demo/prototype
                     const scripts = container.querySelectorAll('script');
                     scripts.forEach(oldScript => {
-                        const newScript = document.createElement('script');
-                        Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
-                        newScript.appendChild(document.createTextNode(oldScript.innerHTML));
-                        oldScript.parentNode.replaceChild(newScript, oldScript);
+                        try {
+                            const newScript = document.createElement('script');
+                            for (let i = 0; i < oldScript.attributes.length; i++) {
+                                const attr = oldScript.attributes[i];
+                                if (attr.name !== 'type' || attr.value !== 'module') {
+                                    newScript.setAttribute(attr.name, attr.value);
+                                }
+                            }
+                            // Using .text to avoid appendChild error with babel
+                            newScript.text = oldScript.innerHTML;
+                            oldScript.parentNode.replaceChild(newScript, oldScript);
+                        } catch (e) {
+                            console.error("Script execution failed", e);
+                        }
                     });
 
                     // 2. Attach Click Listeners for Navigation
@@ -317,6 +342,23 @@
                         const text = target.innerText.trim().toLowerCase().replace(/\s+/g, ' ');
 
                         // Navigation Logic Heuristics
+                        if (text.includes('emergency clean')) {
+                            onNavigate('FEATURE_EMERGENCY_MODE');
+                            return;
+                        }
+                        if (text.includes('event help')) {
+                            onNavigate('FIND_SERVICES');
+                            return;
+                        }
+                        if (text.includes('subscribe')) {
+                            onNavigate('FEATURE_SMART_NOTIFICATIONS');
+                            return;
+                        }
+                        if (text.includes('channels')) {
+                            onNavigate('CHANNELS');
+                            return;
+                        }
+
                         if (text.includes('find services')) {
                             onNavigate('FIND_SERVICES');
                             return;
@@ -351,12 +393,23 @@
                             else if (screenKey.startsWith('PROVIDER')) onNavigate('PROVIDER_DASHBOARD');
                             else onNavigate('CLIENT_HOME');
                         } else if (text.includes('bookings') || target.querySelector('.material-symbols-outlined')?.innerText === 'calendar_today') {
-                            onNavigate('MY_BOOKINGS');
-                        } else if (text.includes('messages') || target.querySelector('.material-symbols-outlined')?.innerText === 'mail') {
+                            if (screenKey.startsWith('ADMIN')) onNavigate('ADMIN_MANAGE_BOOKINGS');
+                            else onNavigate('MY_BOOKINGS');
+                        } else if (text.includes('messages') || target.querySelector('.material-symbols-outlined')?.innerText === 'chat_bubble' || target.querySelector('.material-symbols-outlined')?.innerText === 'mail') {
                             onNavigate('MESSAGES');
                         } else if (text.includes('profile') || target.querySelector('.material-symbols-outlined')?.innerText === 'person') {
                             if (screenKey.startsWith('ADMIN')) onNavigate('ADMIN_PROFILE_EDIT');
                             else onNavigate('PROFILE');
+                        } else if (text.includes('requests')) {
+                            onNavigate('PROVIDER_REQUESTS');
+                        } else if (text.includes('clients')) {
+                            onNavigate('PROVIDER_CLIENTS');
+                        } else if (text.includes('earnings')) {
+                            onNavigate('PROVIDER_DASHBOARD_2');
+                        } else if (text.includes('users')) {
+                            onNavigate('ADMIN_MANAGE_USERS');
+                        } else if (text.includes('settings')) {
+                            onNavigate('ADMIN_SETTINGS');
                         }
                     };
 
@@ -365,21 +418,12 @@
                 }
             }, [html, loading, screenKey]);
 
-            return (
-                <div className={`h-full flex flex-col ${bodyClass}`}>
-                    <style dangerouslySetInnerHTML={{ __html: styles }} />
-                    {loading ? (
-                        <div className="flex-1 flex items-center justify-center">
-                            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#87CEEB]"></div>
-                        </div>
-                    ) : (
-                        <div
-                            ref={containerRef}
-                            className="flex-1"
-                            dangerouslySetInnerHTML={{ __html: html }}
-                        />
-                    )}
-                </div>
+            return React.createElement('div', { className: "h-full flex flex-col " + bodyClass },
+                links.map((link, i) => React.createElement('link', { key: i, rel: link.rel, href: link.href, id: link.id })),
+                React.createElement('style', { dangerouslySetInnerHTML: { __html: styles } }),
+                loading ? React.createElement('div', { className: "flex-1 flex items-center justify-center" },
+                    React.createElement('div', { className: "animate-spin rounded-full h-10 w-10 border-b-2 border-[#87CEEB]" })
+                ) : React.createElement('div', { ref: containerRef, className: "flex-1", dangerouslySetInnerHTML: { __html: html } })
             );
         };
 
@@ -412,61 +456,52 @@
                 };
             }, [history]);
 
-            return (
-                <div className="app-shell">
-                    <div className="screen-container" key={screen}>
-                        <Screen screenKey={screen} onNavigate={navigate} />
-                    </div>
+            return React.createElement('div', { className: "app-shell" },
+                React.createElement('div', { className: "screen-container", key: history.length },
+                    React.createElement(Screen, { screenKey: screen, onNavigate: navigate })
+                ),
+                React.createElement('div', { className: "dev-menu-btn", role: "button", "aria-label": "menu", onClick: () => setDevMenuOpen(!devMenuOpen) },
+                    React.createElement('span', { className: "material-symbols-outlined" }, "menu")
+                ),
+                devMenuOpen && React.createElement('div', { className: "dev-menu" },
+                    React.createElement('div', { className: "text-[10px] font-bold text-gray-400 mb-2 px-3 uppercase tracking-wider" }, "Main Screens"),
+                    React.createElement('button', { onClick: () => { navigate('WELCOME'); setDevMenuOpen(false); } }, "Welcome"),
+                    React.createElement('button', { onClick: () => { navigate('LOGIN'); setDevMenuOpen(false); } }, "Login"),
+                    React.createElement('button', { onClick: () => { navigate('SIGNUP'); setDevMenuOpen(false); } }, "Signup"),
 
-                    {/* Quick Access Dev Menu */}
-                    <div className="dev-menu-btn" role="button" aria-label="menu" onClick={() => setDevMenuOpen(!devMenuOpen)}>
-                        <span className="material-symbols-outlined">menu</span>
-                    </div>
+                    React.createElement('div', { className: "text-[10px] font-bold text-gray-400 mt-4 mb-2 px-3 uppercase tracking-wider" }, "Client Flow"),
+                    React.createElement('button', { onClick: () => { navigate('CLIENT_HOME'); setDevMenuOpen(false); } }, "Home Dashboard"),
+                    React.createElement('button', { onClick: () => { navigate('FIND_SERVICES'); setDevMenuOpen(false); } }, "Find Services"),
+                    React.createElement('button', { onClick: () => { navigate('BOOKING'); setDevMenuOpen(false); } }, "Booking Screen"),
+                    React.createElement('button', { onClick: () => { navigate('MY_BOOKINGS'); setDevMenuOpen(false); } }, "My Bookings"),
+                    React.createElement('button', { onClick: () => { navigate('MESSAGES'); setDevMenuOpen(false); } }, "Messages"),
+                    React.createElement('button', { onClick: () => { navigate('PROFILE'); setDevMenuOpen(false); } }, "Profile"),
 
-                    {devMenuOpen && (
-                        <div className="dev-menu">
-                            <div className="text-[10px] font-bold text-gray-400 mb-2 px-3 uppercase tracking-wider">Main Screens</div>
-                            <button onClick={() => { navigate('WELCOME'); setDevMenuOpen(false); }}>Welcome</button>
-                            <button onClick={() => { navigate('LOGIN'); setDevMenuOpen(false); }}>Login</button>
-                            <button onClick={() => { navigate('SIGNUP'); setDevMenuOpen(false); }}>Signup</button>
+                    React.createElement('div', { className: "text-[10px] font-bold text-gray-400 mt-4 mb-2 px-3 uppercase tracking-wider" }, "Provider Flow"),
+                    React.createElement('button', { onClick: () => { navigate('PROVIDER_WELCOME'); setDevMenuOpen(false); } }, "Provider Welcome"),
+                    React.createElement('button', { onClick: () => { navigate('PROVIDER_SETUP'); setDevMenuOpen(false); } }, "Provider Setup"),
+                    React.createElement('button', { onClick: () => { navigate('PROVIDER_DASHBOARD'); setDevMenuOpen(false); } }, "Provider Dashboard"),
+                    React.createElement('button', { onClick: () => { navigate('PROVIDER_SCHEDULE'); setDevMenuOpen(false); } }, "My Schedule"),
+                    React.createElement('button', { onClick: () => { navigate('PROVIDER_REQUESTS'); setDevMenuOpen(false); } }, "Booking Requests"),
 
-                            <div className="text-[10px] font-bold text-gray-400 mt-4 mb-2 px-3 uppercase tracking-wider">Client Flow</div>
-                            <button onClick={() => { navigate('CLIENT_HOME'); setDevMenuOpen(false); }}>Home Dashboard</button>
-                            <button onClick={() => { navigate('FIND_SERVICES'); setDevMenuOpen(false); }}>Find Services</button>
-                            <button onClick={() => { navigate('BOOKING'); setDevMenuOpen(false); }}>Booking Screen</button>
-                            <button onClick={() => { navigate('MY_BOOKINGS'); setDevMenuOpen(false); }}>My Bookings</button>
-                            <button onClick={() => { navigate('MESSAGES'); setDevMenuOpen(false); }}>Messages</button>
-                            <button onClick={() => { navigate('PROFILE'); setDevMenuOpen(false); }}>Profile</button>
+                    React.createElement('div', { className: "text-[10px] font-bold text-gray-400 mt-4 mb-2 px-3 uppercase tracking-wider" }, "Admin Panel"),
+                    React.createElement('button', { onClick: () => { navigate('ADMIN_LOGIN'); setDevMenuOpen(false); } }, "Admin Login"),
+                    React.createElement('button', { onClick: () => { navigate('ADMIN_DASHBOARD'); setDevMenuOpen(false); } }, "Admin Dashboard"),
+                    React.createElement('button', { onClick: () => { navigate('ADMIN_MANAGE_USERS'); setDevMenuOpen(false); } }, "Manage Users"),
+                    React.createElement('button', { onClick: () => { navigate('ADMIN_MANAGE_BOOKINGS'); setDevMenuOpen(false); } }, "Manage Bookings"),
 
-                            <div className="text-[10px] font-bold text-gray-400 mt-4 mb-2 px-3 uppercase tracking-wider">Provider Flow</div>
-                            <button onClick={() => { navigate('PROVIDER_WELCOME'); setDevMenuOpen(false); }}>Provider Welcome</button>
-                            <button onClick={() => { navigate('PROVIDER_SETUP'); setDevMenuOpen(false); }}>Provider Setup</button>
-                            <button onClick={() => { navigate('PROVIDER_DASHBOARD'); setDevMenuOpen(false); }}>Provider Dashboard</button>
-                            <button onClick={() => { navigate('PROVIDER_SCHEDULE'); setDevMenuOpen(false); }}>My Schedule</button>
-                            <button onClick={() => { navigate('PROVIDER_REQUESTS'); setDevMenuOpen(false); }}>Booking Requests</button>
+                    React.createElement('div', { className: "text-[10px] font-bold text-gray-400 mt-4 mb-2 px-3 uppercase tracking-wider" }, "Features"),
+                    React.createElement('button', { onClick: () => { navigate('FEATURE_EMERGENCY_MODE'); setDevMenuOpen(false); } }, "Emergency Mode"),
+                    React.createElement('button', { onClick: () => { navigate('FEATURE_EASY_PAYMENTS'); setDevMenuOpen(false); } }, "Easy Payments"),
+                    React.createElement('button', { onClick: () => { navigate('FEATURE_REAL_TIME_TRACKING'); setDevMenuOpen(false); } }, "Real-time Tracking"),
 
-                            <div className="text-[10px] font-bold text-gray-400 mt-4 mb-2 px-3 uppercase tracking-wider">Admin Panel</div>
-                            <button onClick={() => { navigate('ADMIN_LOGIN'); setDevMenuOpen(false); }}>Admin Login</button>
-                            <button onClick={() => { navigate('ADMIN_DASHBOARD'); setDevMenuOpen(false); }}>Admin Dashboard</button>
-                            <button onClick={() => { navigate('ADMIN_MANAGE_USERS'); setDevMenuOpen(false); }}>Manage Users</button>
-                            <button onClick={() => { navigate('ADMIN_MANAGE_BOOKINGS'); setDevMenuOpen(false); }}>Manage Bookings</button>
-
-                            <div className="text-[10px] font-bold text-gray-400 mt-4 mb-2 px-3 uppercase tracking-wider">Features</div>
-                            <button onClick={() => { navigate('FEATURE_EMERGENCY_MODE'); setDevMenuOpen(false); }}>Emergency Mode</button>
-                            <button onClick={() => { navigate('FEATURE_EASY_PAYMENTS'); setDevMenuOpen(false); }}>Easy Payments</button>
-                            <button onClick={() => { navigate('FEATURE_REAL_TIME_TRACKING'); setDevMenuOpen(false); }}>Real-time Tracking</button>
-
-                            <div className="mt-2 pt-2 border-t border-gray-100 text-[9px] text-center text-gray-400">
-                                Prototype Navigation Control
-                            </div>
-                        </div>
-                    )}
-                </div>
+                    React.createElement('div', { className: "mt-2 pt-2 border-t border-gray-100 text-[9px] text-center text-gray-400" }, "Prototype Navigation Control")
+                )
             );
         };
 
         const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
+        root.render(React.createElement(App));
     </script>
 </body>
 </html>
