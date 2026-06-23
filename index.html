@@ -7,7 +7,7 @@
     <!-- Load React, ReactDOM, and Babel from CDN -->
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
     <script>
@@ -285,11 +285,11 @@
                     // 1. Manually execute any script tags found in the HTML
                     // Note: This is simplified for the demo/prototype
                     const scripts = container.querySelectorAll('script');
-                    scripts.forEach(oldScript => {
+                    scripts.forEach(oldScript => { try {
                         const newScript = document.createElement('script');
                         Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
-                        newScript.appendChild(document.createTextNode(oldScript.innerHTML));
-                        oldScript.parentNode.replaceChild(newScript, oldScript);
+                        newScript.text = oldScript.innerHTML;
+                        oldScript.parentNode.replaceChild(newScript, oldScript); } catch (e) { console.error("Script injection error:", e); }
                     });
 
                     // 2. Attach Click Listeners for Navigation
@@ -311,16 +311,44 @@
                             return;
                         }
 
-                        const target = e.target.closest('button, a, [role="button"]');
+                        const target = e.target.closest('button, a, [role="button"], label, div.cursor-pointer');
                         if (!target) return;
 
                         const text = target.innerText.trim().toLowerCase().replace(/\s+/g, ' ');
 
+
                         // Navigation Logic Heuristics
-                        if (text.includes('find services')) {
+                        if (text.includes('find services') || text.includes('explore')) {
                             onNavigate('FIND_SERVICES');
                             return;
                         }
+
+                        if (text.includes('emergency clean')) {
+                            onNavigate('FEATURE_EMERGENCY_MODE');
+                            return;
+                        }
+
+                        if (text.includes('event help')) {
+                            onNavigate('FIND_SERVICES'); // Or a specific event screen if exists
+                            return;
+                        }
+
+                        if (text.includes('subscribe')) {
+                            onNavigate('FEATURE_SMART_NOTIFICATIONS');
+                            return;
+                        }
+
+                        if (text.includes('manage users')) {
+                            onNavigate('ADMIN_MANAGE_USERS');
+                            return;
+                        }
+
+                        if (text.includes('manage bookings')) {
+                            onNavigate('ADMIN_MANAGE_BOOKINGS');
+                            return;
+                        }
+
+
 
                         if (text.includes('sign up') || text.includes('create account')) {
                             if (text.includes('as provider')) {
@@ -337,8 +365,7 @@
                             onNavigate('CLIENT_HOME');
                         } else if (text.includes('book now')) {
                             onNavigate('BOOKING');
-                        } else if (text.includes('find services') || text.includes('explore')) {
-                            onNavigate('FIND_SERVICES');
+
                         } else if (text.includes('view profile')) {
                             onNavigate('PROVIDER_PROFILE');
                         } else if (text.includes('get started')) {
@@ -350,8 +377,10 @@
                             if (screenKey.startsWith('ADMIN')) onNavigate('ADMIN_DASHBOARD');
                             else if (screenKey.startsWith('PROVIDER')) onNavigate('PROVIDER_DASHBOARD');
                             else onNavigate('CLIENT_HOME');
-                        } else if (text.includes('bookings') || target.querySelector('.material-symbols-outlined')?.innerText === 'calendar_today') {
-                            onNavigate('MY_BOOKINGS');
+                        } else if (text.includes('bookings') || target.querySelector('.material-symbols-outlined')?.innerText === 'calendar_today' || target.querySelector('.material-symbols-outlined')?.innerText === 'calendar_month') {
+                            if (screenKey.startsWith('ADMIN')) onNavigate('ADMIN_MANAGE_BOOKINGS');
+                            else if (screenKey.startsWith('PROVIDER')) onNavigate('PROVIDER_SCHEDULE');
+                            else onNavigate('MY_BOOKINGS');
                         } else if (text.includes('messages') || target.querySelector('.material-symbols-outlined')?.innerText === 'mail') {
                             onNavigate('MESSAGES');
                         } else if (text.includes('profile') || target.querySelector('.material-symbols-outlined')?.innerText === 'person') {
