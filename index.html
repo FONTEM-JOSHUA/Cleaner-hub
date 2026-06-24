@@ -7,7 +7,7 @@
     <!-- Load React, ReactDOM, and Babel from CDN -->
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
     <script>
@@ -65,6 +65,14 @@
         }
         .screen-container::-webkit-scrollbar-thumb:hover {
             background: #555;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .slide-in {
+            animation: slideIn 0.3s ease-out forwards;
         }
 
         /* Floating Action Menu for Demo */
@@ -186,6 +194,7 @@
         const Screen = ({ screenKey, onNavigate }) => {
             const [html, setHtml] = useState('');
             const [styles, setStyles] = useState('');
+            const [links, setLinks] = useState([]);
             const [bodyClass, setBodyClass] = useState('');
             const [loading, setLoading] = useState(true);
             const containerRef = useRef(null);
@@ -207,6 +216,11 @@
                             .join('\n');
                         setStyles(styleContent);
 
+                        // Extract Links
+                        const linkHrefs = Array.from(doc.querySelectorAll('link[rel="stylesheet"]'))
+                            .map(l => l.href);
+                        setLinks(linkHrefs);
+
                         // Extract Body Classes
                         setBodyClass(doc.body.className);
 
@@ -221,14 +235,18 @@
                                 if (input) {
                                     const mode = input.value;
                                     if ((isLogin && mode === 'login') || (!isLogin && mode === 'signup')) {
-                                        tab.classList.add('bg-primary');
-                                        tab.querySelector('span').classList.remove('text-text-subtle');
-                                        tab.querySelector('span').classList.add('text-white', 'font-semibold');
+                                        tab.className = tab.className.replace(/bg-\S+/g, '').trim() + ' bg-primary';
+                                        const span = tab.querySelector('span');
+                                        if (span) {
+                                            span.className = span.className.replace(/text-\S+/g, '').trim() + ' text-white font-semibold';
+                                        }
                                         input.checked = true;
                                     } else {
-                                        tab.classList.remove('bg-primary');
-                                        tab.querySelector('span').classList.remove('text-white', 'font-semibold');
-                                        tab.querySelector('span').classList.add('text-text-subtle');
+                                        tab.className = tab.className.replace(/bg-primary/g, '').trim();
+                                        const span = tab.querySelector('span');
+                                        if (span) {
+                                            span.className = span.className.replace(/text-white/g, '').replace(/font-semibold/g, '').trim() + ' text-slate-500';
+                                        }
                                         input.checked = false;
                                     }
                                 }
@@ -281,15 +299,20 @@
             useEffect(() => {
                 if (!loading && containerRef.current) {
                     const container = containerRef.current;
+                    const injectedScripts = [];
 
                     // 1. Manually execute any script tags found in the HTML
-                    // Note: This is simplified for the demo/prototype
                     const scripts = container.querySelectorAll('script');
                     scripts.forEach(oldScript => {
-                        const newScript = document.createElement('script');
-                        Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
-                        newScript.appendChild(document.createTextNode(oldScript.innerHTML));
-                        oldScript.parentNode.replaceChild(newScript, oldScript);
+                        try {
+                            const newScript = document.createElement('script');
+                            Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+                            newScript.text = oldScript.text;
+                            oldScript.parentNode.replaceChild(newScript, oldScript);
+                            injectedScripts.push(newScript);
+                        } catch (e) {
+                            console.error('Script injection failed', e);
+                        }
                     });
 
                     // 2. Attach Click Listeners for Navigation
@@ -317,18 +340,56 @@
                         const text = target.innerText.trim().toLowerCase().replace(/\s+/g, ' ');
 
                         // Navigation Logic Heuristics
-                        if (text.includes('find services')) {
+                        if (text.includes('emergency clean')) {
+                            onNavigate('FEATURE_EMERGENCY_MODE');
+                            return;
+                        }
+                        if (text.includes('event help')) {
                             onNavigate('FIND_SERVICES');
+                            return;
+                        }
+                        if (text.includes('subscribe')) {
+                            onNavigate('FEATURE_SMART_NOTIFICATIONS');
+                            return;
+                        }
+                        if (text.includes('channels')) {
+                            onNavigate('CHANNELS');
+                            return;
+                        }
+                        if (text.includes('requests')) {
+                            onNavigate('PROVIDER_REQUESTS');
+                            return;
+                        }
+                        if (text.includes('clients')) {
+                            onNavigate('PROVIDER_CLIENTS');
+                            return;
+                        }
+                        if (text.includes('earnings')) {
+                            onNavigate('PROVIDER_DASHBOARD_2');
+                            return;
+                        }
+                        if (text.includes('users')) {
+                            onNavigate('ADMIN_MANAGE_USERS');
+                            return;
+                        }
+                        if (text.includes('bookings') && screenKey.startsWith('ADMIN')) {
+                            onNavigate('ADMIN_MANAGE_BOOKINGS');
+                            return;
+                        }
+                        if (text.includes('settings')) {
+                            onNavigate('ADMIN_SETTINGS');
                             return;
                         }
 
                         if (text.includes('sign up') || text.includes('create account')) {
+                            if (target.tagName === 'A') { onNavigate('SIGNUP'); return; }
                             if (text.includes('as provider')) {
                                 if (screenKey === 'PROVIDER_WELCOME') onNavigate('PROVIDER_SETUP');
                                 else onNavigate('PROVIDER_WELCOME');
                             }
-                            else onNavigate('SIGNUP');
+                            else onNavigate('CLIENT_HOME');
                         } else if (text.includes('log in') || text.includes('login') || text.includes('sign in')) {
+                            if (target.tagName === 'A') { onNavigate('LOGIN'); return; }
                             if (text.includes('admin')) onNavigate('ADMIN_LOGIN');
                             else if (screenKey === 'ADMIN_LOGIN') onNavigate('ADMIN_DASHBOARD');
                             else if (screenKey === 'WELCOME') onNavigate('LOGIN');
@@ -346,27 +407,34 @@
                             else onNavigate('SIGNUP');
                         } else if (text.includes('complete setup') || text.includes('finish') || text.includes('save & continue')) {
                             onNavigate('PROVIDER_DASHBOARD');
-                        } else if (text.includes('home') || target.querySelector('.material-symbols-outlined')?.innerText === 'home') {
+                        } else if (text.includes('home') || target.querySelector('.material-symbols-outlined, .material-icons-round')?.innerText === 'home') {
                             if (screenKey.startsWith('ADMIN')) onNavigate('ADMIN_DASHBOARD');
                             else if (screenKey.startsWith('PROVIDER')) onNavigate('PROVIDER_DASHBOARD');
                             else onNavigate('CLIENT_HOME');
-                        } else if (text.includes('bookings') || target.querySelector('.material-symbols-outlined')?.innerText === 'calendar_today') {
-                            onNavigate('MY_BOOKINGS');
-                        } else if (text.includes('messages') || target.querySelector('.material-symbols-outlined')?.innerText === 'mail') {
+                        } else if (text.includes('bookings') || target.querySelector('.material-symbols-outlined, .material-icons-round')?.innerText === 'calendar_today') {
+                            if (screenKey.startsWith('ADMIN')) onNavigate('ADMIN_MANAGE_BOOKINGS');
+                            else onNavigate('MY_BOOKINGS');
+                        } else if (text.includes('messages') || target.querySelector('.material-symbols-outlined, .material-icons-round')?.innerText === 'mail' || target.querySelector('.material-symbols-outlined, .material-icons-round')?.innerText === 'chat_bubble') {
                             onNavigate('MESSAGES');
-                        } else if (text.includes('profile') || target.querySelector('.material-symbols-outlined')?.innerText === 'person') {
+                        } else if (text.includes('profile') || target.querySelector('.material-symbols-outlined, .material-icons-round')?.innerText === 'person') {
                             if (screenKey.startsWith('ADMIN')) onNavigate('ADMIN_PROFILE_EDIT');
                             else onNavigate('PROFILE');
                         }
                     };
 
                     container.addEventListener('click', handleGlobalClick);
-                    return () => container.removeEventListener('click', handleGlobalClick);
+                    return () => {
+                        container.removeEventListener('click', handleGlobalClick);
+                        injectedScripts.forEach(s => {
+                            try { s.remove(); } catch (e) {}
+                        });
+                    };
                 }
             }, [html, loading, screenKey]);
 
             return (
                 <div className={`h-full flex flex-col ${bodyClass}`}>
+                    {links.map(l => <link key={l} rel="stylesheet" href={l} />)}
                     <style dangerouslySetInnerHTML={{ __html: styles }} />
                     {loading ? (
                         <div className="flex-1 flex items-center justify-center">
@@ -414,7 +482,7 @@
 
             return (
                 <div className="app-shell">
-                    <div className="screen-container" key={screen}>
+                    <div className="screen-container slide-in" key={screen}>
                         <Screen screenKey={screen} onNavigate={navigate} />
                     </div>
 
