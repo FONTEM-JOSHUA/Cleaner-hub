@@ -7,7 +7,7 @@
     <!-- Load React, ReactDOM, and Babel from CDN -->
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
     <script>
@@ -346,17 +346,37 @@
                             else onNavigate('SIGNUP');
                         } else if (text.includes('complete setup') || text.includes('finish') || text.includes('save & continue')) {
                             onNavigate('PROVIDER_DASHBOARD');
-                        } else if (text.includes('home') || target.querySelector('.material-symbols-outlined')?.innerText === 'home') {
+                        } else if (text.includes('home') || target.querySelector('.material-symbols-outlined')?.innerText === 'home' || target.querySelector('.material-symbols-outlined')?.innerText === 'dashboard') {
                             if (screenKey.startsWith('ADMIN')) onNavigate('ADMIN_DASHBOARD');
                             else if (screenKey.startsWith('PROVIDER')) onNavigate('PROVIDER_DASHBOARD');
                             else onNavigate('CLIENT_HOME');
-                        } else if (text.includes('bookings') || target.querySelector('.material-symbols-outlined')?.innerText === 'calendar_today') {
-                            onNavigate('MY_BOOKINGS');
-                        } else if (text.includes('messages') || target.querySelector('.material-symbols-outlined')?.innerText === 'mail') {
+                        } else if (text.includes('bookings') || text.includes('calendar') || target.querySelector('.material-symbols-outlined')?.innerText === 'calendar_today' || target.querySelector('.material-symbols-outlined')?.innerText === 'calendar_month') {
+                            if (screenKey.startsWith('ADMIN')) onNavigate('ADMIN_MANAGE_BOOKINGS');
+                            else if (screenKey.startsWith('PROVIDER')) onNavigate('PROVIDER_SCHEDULE');
+                            else onNavigate('MY_BOOKINGS');
+                        } else if (text.includes('messages') || target.querySelector('.material-symbols-outlined')?.innerText === 'mail' || target.querySelector('.material-symbols-outlined')?.innerText === 'chat') {
                             onNavigate('MESSAGES');
                         } else if (text.includes('profile') || target.querySelector('.material-symbols-outlined')?.innerText === 'person') {
                             if (screenKey.startsWith('ADMIN')) onNavigate('ADMIN_PROFILE_EDIT');
                             else onNavigate('PROFILE');
+                        } else if (text.includes('emergency clean')) {
+                            onNavigate('FEATURE_EMERGENCY_MODE');
+                        } else if (text.includes('event help')) {
+                            onNavigate('FIND_SERVICES');
+                        } else if (text.includes('subscribe')) {
+                            onNavigate('FEATURE_SMART_NOTIFICATIONS');
+                        } else if (text.includes('requests')) {
+                            onNavigate('PROVIDER_REQUESTS');
+                        } else if (text.includes('clients')) {
+                            onNavigate('PROVIDER_CLIENTS');
+                        } else if (text.includes('earnings')) {
+                            onNavigate('PROVIDER_DASHBOARD');
+                        } else if (text.includes('users')) {
+                            onNavigate('ADMIN_MANAGE_USERS');
+                        } else if (text.includes('settings') || target.querySelector('.material-symbols-outlined')?.innerText === 'settings') {
+                            onNavigate('ADMIN_SETTINGS');
+                        } else if (text.includes('search') || target.querySelector('.material-symbols-outlined')?.innerText === 'search') {
+                            onNavigate('SMART_SEARCH');
                         }
                     };
 
