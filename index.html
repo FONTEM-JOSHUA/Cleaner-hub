@@ -7,7 +7,7 @@
     <!-- Load React, ReactDOM, and Babel from CDN -->
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
     <script>
@@ -357,6 +357,29 @@
                         } else if (text.includes('profile') || target.querySelector('.material-symbols-outlined')?.innerText === 'person') {
                             if (screenKey.startsWith('ADMIN')) onNavigate('ADMIN_PROFILE_EDIT');
                             else onNavigate('PROFILE');
+                        } else if (text.includes('emergency clean')) {
+                            onNavigate('FEATURE_EMERGENCY_MODE');
+                        } else if (text.includes('event help')) {
+                            onNavigate('FIND_SERVICES');
+                        } else if (text.includes('subscribe')) {
+                            onNavigate('FEATURE_SMART_NOTIFICATIONS');
+                        } else if (text.includes('manage users')) {
+                            onNavigate('ADMIN_MANAGE_USERS');
+                        } else if (text.includes('manage bookings')) {
+                            onNavigate('ADMIN_MANAGE_BOOKINGS');
+                        } else if (text.includes('app settings') || text.includes('settings')) {
+                            onNavigate('ADMIN_SETTINGS');
+                        } else if (text.includes('my schedule')) {
+                            onNavigate('PROVIDER_SCHEDULE');
+                        } else if (text.includes('new requests')) {
+                            onNavigate('PROVIDER_REQUESTS');
+                        } else if (text.includes('my clients')) {
+                            onNavigate('PROVIDER_CLIENTS');
+                        } else if (text.includes('my earnings')) {
+                            onNavigate('PROVIDER_DASHBOARD_2');
+                        } else if (text.includes('channels')) {
+                            if (screenKey.startsWith('PROVIDER') || screenKey.startsWith('ADMIN')) onNavigate('CHANNEL_MGMT');
+                            else onNavigate('CHANNELS');
                         }
                     };
 
@@ -455,6 +478,16 @@
                             <button onClick={() => { navigate('FEATURE_EMERGENCY_MODE'); setDevMenuOpen(false); }}>Emergency Mode</button>
                             <button onClick={() => { navigate('FEATURE_EASY_PAYMENTS'); setDevMenuOpen(false); }}>Easy Payments</button>
                             <button onClick={() => { navigate('FEATURE_REAL_TIME_TRACKING'); setDevMenuOpen(false); }}>Real-time Tracking</button>
+                            <button onClick={() => { navigate('FEATURE_PHOTO_VERIFICATION'); setDevMenuOpen(false); }}>Photo Verification</button>
+                            <button onClick={() => { navigate('FEATURE_SMART_NOTIFICATIONS'); setDevMenuOpen(false); }}>Smart Notifications</button>
+                            <button onClick={() => { navigate('FEATURE_FAMILY_SHARING'); setDevMenuOpen(false); }}>Family Sharing</button>
+                            <button onClick={() => { navigate('FEATURE_OFFLINE_MODE'); setDevMenuOpen(false); }}>Offline Mode</button>
+                            <button onClick={() => { navigate('FEATURE_MULTI_LANGUAGE'); setDevMenuOpen(false); }}>Multi-Language</button>
+
+                            <div className="text-[10px] font-bold text-gray-400 mt-4 mb-2 px-3 uppercase tracking-wider">Channels (Community)</div>
+                            <button onClick={() => { navigate('CHANNELS'); setDevMenuOpen(false); }}>Channels (Client)</button>
+                            <button onClick={() => { navigate('CHANNEL_MGMT'); setDevMenuOpen(false); }}>Channel Management</button>
+                            <button onClick={() => { navigate('CREATE_CHANNEL'); setDevMenuOpen(false); }}>Create Channel</button>
 
                             <div className="mt-2 pt-2 border-t border-gray-100 text-[9px] text-center text-gray-400">
                                 Prototype Navigation Control
