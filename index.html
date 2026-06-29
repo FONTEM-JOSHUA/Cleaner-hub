@@ -7,7 +7,7 @@
     <!-- Load React, ReactDOM, and Babel from CDN -->
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
     <script>
@@ -40,17 +40,28 @@
         .app-shell {
             max-width: 450px;
             margin: 0 auto;
-            min-height: 100vh;
+            height: 100vh;
             background-color: white;
             box-shadow: 0 0 40px rgba(0,0,0,0.1);
             position: relative;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }
         .screen-container {
             flex: 1;
             overflow-y: auto;
             overflow-x: hidden;
+            height: 100vh;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(30px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .slide-in {
+            animation: slideIn 0.3s ease-out forwards;
         }
         /* Custom scrollbar for a better look */
         .screen-container::-webkit-scrollbar {
@@ -186,9 +197,11 @@
         const Screen = ({ screenKey, onNavigate }) => {
             const [html, setHtml] = useState('');
             const [styles, setStyles] = useState('');
+            const [links, setLinks] = useState([]);
             const [bodyClass, setBodyClass] = useState('');
             const [loading, setLoading] = useState(true);
             const containerRef = useRef(null);
+            const activeScriptsRef = useRef([]);
 
             useEffect(() => {
                 const fetchContent = async () => {
@@ -200,6 +213,11 @@
 
                         const parser = new DOMParser();
                         const doc = parser.parseFromString(text, 'text/html');
+
+                        // Extract External Links (CSS)
+                        const linkElements = Array.from(doc.querySelectorAll('link[rel="stylesheet"]'))
+                            .map(l => l.getAttribute('href'));
+                        setLinks(linkElements);
 
                         // Extract Styles
                         const styleContent = Array.from(doc.querySelectorAll('style'))
@@ -282,19 +300,87 @@
                 if (!loading && containerRef.current) {
                     const container = containerRef.current;
 
+                    // Cleanup previous scripts
+                    activeScriptsRef.current.forEach(script => {
+                        if (script.parentNode) script.parentNode.removeChild(script);
+                    });
+                    activeScriptsRef.current = [];
+
                     // 1. Manually execute any script tags found in the HTML
-                    // Note: This is simplified for the demo/prototype
                     const scripts = container.querySelectorAll('script');
                     scripts.forEach(oldScript => {
-                        const newScript = document.createElement('script');
-                        Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
-                        newScript.appendChild(document.createTextNode(oldScript.innerHTML));
-                        oldScript.parentNode.replaceChild(newScript, oldScript);
+                        try {
+                            const newScript = document.createElement('script');
+                            Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+                            newScript.text = oldScript.innerHTML;
+                            document.body.appendChild(newScript);
+                            activeScriptsRef.current.push(newScript);
+                            oldScript.parentNode.removeChild(oldScript);
+                        } catch (e) {
+                            console.error('Error executing script:', e);
+                        }
                     });
 
                     // 2. Attach Click Listeners for Navigation
+                    const resolveNavigation = (text, target, currentScreen) => {
+                        const label = text.toLowerCase().replace(/\s+/g, ' ');
+                        const isProvider = currentScreen.startsWith('PROVIDER');
+                        const isAdmin = currentScreen.startsWith('ADMIN');
+
+                        if (label.includes('find services') || label.includes('explore')) return 'FIND_SERVICES';
+                        if (label.includes('emergency')) return 'FEATURE_EMERGENCY_MODE';
+                        if (label.includes('event help')) return 'FIND_SERVICES';
+                        if (label.includes('subscribe')) return 'FEATURE_SMART_NOTIFICATIONS';
+
+                        if (label.includes('sign up') || label.includes('create account')) {
+                            if (label.includes('as provider')) return currentScreen === 'PROVIDER_WELCOME' ? 'PROVIDER_SETUP' : 'PROVIDER_WELCOME';
+                            return 'SIGNUP';
+                        }
+
+                        if (label.includes('log in') || label.includes('login') || label.includes('sign in')) {
+                            if (label.includes('admin')) return 'ADMIN_LOGIN';
+                            if (currentScreen === 'ADMIN_LOGIN') return 'ADMIN_DASHBOARD';
+                            if (currentScreen === 'WELCOME') return 'LOGIN';
+                            return 'CLIENT_HOME';
+                        }
+
+                        if (label.includes('continue as guest')) return 'CLIENT_HOME';
+                        if (label.includes('book now') || label.includes('book this service')) return 'BOOKING';
+                        if (label.includes('view profile')) return 'PROVIDER_PROFILE';
+                        if (label.includes('get started')) return currentScreen === 'PROVIDER_WELCOME' ? 'PROVIDER_SETUP' : 'SIGNUP';
+                        if (label.includes('complete setup') || label.includes('finish') || label.includes('save & continue')) return 'PROVIDER_DASHBOARD';
+
+                        if (label.includes('channels')) return (isProvider || isAdmin) ? 'CHANNEL_MGMT' : 'CHANNELS';
+                        if (label.includes('requests')) return 'PROVIDER_REQUESTS';
+                        if (label.includes('clients')) return 'PROVIDER_CLIENTS';
+                        if (label.includes('earnings')) return 'PROVIDER_DASHBOARD_2';
+
+                        if (label.includes('users') && isAdmin) return 'ADMIN_MANAGE_USERS';
+                        if (label.includes('bookings')) {
+                            if (isAdmin) return 'ADMIN_MANAGE_BOOKINGS';
+                            return 'MY_BOOKINGS';
+                        }
+                        if (label.includes('settings') && isAdmin) return 'ADMIN_SETTINGS';
+
+                        const iconText = target.querySelector('.material-symbols-outlined, .material-icons-round')?.innerText;
+                        if (label === 'home' || iconText === 'home') {
+                            if (isAdmin) return 'ADMIN_DASHBOARD';
+                            if (isProvider) return 'PROVIDER_DASHBOARD';
+                            return 'CLIENT_HOME';
+                        }
+                        if (label.includes('bookings') || iconText === 'calendar_today' || iconText === 'event') {
+                            return isAdmin ? 'ADMIN_MANAGE_BOOKINGS' : 'MY_BOOKINGS';
+                        }
+                        if (label.includes('messages') || iconText === 'mail' || iconText === 'chat') return 'MESSAGES';
+                        if (label.includes('profile') || iconText === 'person') {
+                            return isAdmin ? 'ADMIN_PROFILE_EDIT' : 'PROFILE';
+                        }
+
+                        return null;
+                    };
+
                     const handleGlobalClick = (e) => {
-                        // Special handling for auth mode tabs to avoid browser issues with radio labels
+                        // Special handling for auth mode tabs
                         const tabLabel = e.target.closest('label');
                         if (tabLabel && tabLabel.querySelector('input[name="auth-mode"]')) {
                             const input = tabLabel.querySelector('input');
@@ -304,59 +390,20 @@
                             return;
                         }
 
-                        // Handle Back Navigation First
+                        // Handle Back Navigation
                         const backIcon = e.target.closest('.material-symbols-outlined, .material-icons-round');
-                        if (backIcon && (backIcon.innerText === 'arrow_back' || backIcon.innerText === 'chevron_left' || backIcon.innerText === 'arrow_back_ios')) {
+                        if (backIcon && ['arrow_back', 'chevron_left', 'arrow_back_ios'].includes(backIcon.innerText.trim())) {
                             window.dispatchEvent(new CustomEvent('goBack'));
                             return;
                         }
 
-                        const target = e.target.closest('button, a, [role="button"]');
+                        const target = e.target.closest('button, a, [role="button"], .cursor-pointer');
                         if (!target) return;
 
-                        const text = target.innerText.trim().toLowerCase().replace(/\s+/g, ' ');
-
-                        // Navigation Logic Heuristics
-                        if (text.includes('find services')) {
-                            onNavigate('FIND_SERVICES');
-                            return;
-                        }
-
-                        if (text.includes('sign up') || text.includes('create account')) {
-                            if (text.includes('as provider')) {
-                                if (screenKey === 'PROVIDER_WELCOME') onNavigate('PROVIDER_SETUP');
-                                else onNavigate('PROVIDER_WELCOME');
-                            }
-                            else onNavigate('SIGNUP');
-                        } else if (text.includes('log in') || text.includes('login') || text.includes('sign in')) {
-                            if (text.includes('admin')) onNavigate('ADMIN_LOGIN');
-                            else if (screenKey === 'ADMIN_LOGIN') onNavigate('ADMIN_DASHBOARD');
-                            else if (screenKey === 'WELCOME') onNavigate('LOGIN');
-                            else onNavigate('CLIENT_HOME');
-                        } else if (text.includes('continue as guest')) {
-                            onNavigate('CLIENT_HOME');
-                        } else if (text.includes('book now')) {
-                            onNavigate('BOOKING');
-                        } else if (text.includes('find services') || text.includes('explore')) {
-                            onNavigate('FIND_SERVICES');
-                        } else if (text.includes('view profile')) {
-                            onNavigate('PROVIDER_PROFILE');
-                        } else if (text.includes('get started')) {
-                            if (screenKey === 'PROVIDER_WELCOME') onNavigate('PROVIDER_SETUP');
-                            else onNavigate('SIGNUP');
-                        } else if (text.includes('complete setup') || text.includes('finish') || text.includes('save & continue')) {
-                            onNavigate('PROVIDER_DASHBOARD');
-                        } else if (text.includes('home') || target.querySelector('.material-symbols-outlined')?.innerText === 'home') {
-                            if (screenKey.startsWith('ADMIN')) onNavigate('ADMIN_DASHBOARD');
-                            else if (screenKey.startsWith('PROVIDER')) onNavigate('PROVIDER_DASHBOARD');
-                            else onNavigate('CLIENT_HOME');
-                        } else if (text.includes('bookings') || target.querySelector('.material-symbols-outlined')?.innerText === 'calendar_today') {
-                            onNavigate('MY_BOOKINGS');
-                        } else if (text.includes('messages') || target.querySelector('.material-symbols-outlined')?.innerText === 'mail') {
-                            onNavigate('MESSAGES');
-                        } else if (text.includes('profile') || target.querySelector('.material-symbols-outlined')?.innerText === 'person') {
-                            if (screenKey.startsWith('ADMIN')) onNavigate('ADMIN_PROFILE_EDIT');
-                            else onNavigate('PROFILE');
+                        const text = target.innerText.trim();
+                        const nextScreen = resolveNavigation(text, target, screenKey);
+                        if (nextScreen) {
+                            onNavigate(nextScreen);
                         }
                     };
 
@@ -366,7 +413,8 @@
             }, [html, loading, screenKey]);
 
             return (
-                <div className={`h-full flex flex-col ${bodyClass}`}>
+                <div className={`h-full flex flex-col slide-in ${bodyClass}`}>
+                    {links.map(href => <link key={href} rel="stylesheet" href={href} />)}
                     <style dangerouslySetInnerHTML={{ __html: styles }} />
                     {loading ? (
                         <div className="flex-1 flex items-center justify-center">
