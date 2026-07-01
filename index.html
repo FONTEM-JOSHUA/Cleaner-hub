@@ -293,8 +293,74 @@
                     });
 
                     // 2. Attach Click Listeners for Navigation
+                    const resolveNavigation = (text, target, currentScreen) => {
+                        const icon = target?.querySelector('.material-symbols-outlined, .material-icons-round')?.innerText || '';
+
+                        // High Priority Flow-Specific Overrides
+                        if (text.includes('sign up as provider')) {
+                            return currentScreen === 'PROVIDER_WELCOME' ? 'PROVIDER_SETUP' : 'PROVIDER_WELCOME';
+                        }
+                        if (text.includes('provider login')) return 'LOGIN'; // Or a specific provider login if we had one
+                        if (text.includes('admin login')) return 'ADMIN_LOGIN';
+
+                        // Authentication Flow
+                        if (text.includes('sign up') || text.includes('create account')) {
+                            if (currentScreen === 'SIGNUP' || currentScreen === 'LOGIN') return 'CLIENT_HOME';
+                            return 'SIGNUP';
+                        }
+                        if (text.includes('log in') || text.includes('login') || text.includes('sign in')) {
+                            if (currentScreen === 'ADMIN_LOGIN') return 'ADMIN_DASHBOARD';
+                            if (currentScreen === 'LOGIN' || currentScreen === 'SIGNUP') return 'CLIENT_HOME';
+                            return 'LOGIN';
+                        }
+                        if (text.includes('continue as guest')) return 'CLIENT_HOME';
+
+                        // Client Home & Main Actions
+                        if (text.includes('find services') || text.includes('explore') || icon === 'search') return 'FIND_SERVICES';
+                        if (text.includes('book now') || text.includes('instant schedule')) return 'BOOKING';
+                        if (text.includes('my bookings') || icon === 'calendar_today' || icon === 'confirmation_number') {
+                            return currentScreen.startsWith('ADMIN') ? 'ADMIN_MANAGE_BOOKINGS' : 'MY_BOOKINGS';
+                        }
+                        if (text.includes('messages') || icon === 'chat_bubble' || icon === 'mail') return 'MESSAGES';
+                        if (text.includes('emergency clean') || icon === 'bolt') return 'FEATURE_EMERGENCY_MODE';
+                        if (text.includes('event help') || icon === 'celebration') return 'FIND_SERVICES';
+                        if (text.includes('subscribe') || icon === 'savings') return 'FEATURE_SMART_NOTIFICATIONS';
+
+                        // Shared Navigation (Bottom Bar / Profile)
+                        if (text.includes('home') || icon === 'home') {
+                            if (currentScreen.startsWith('ADMIN')) return 'ADMIN_DASHBOARD';
+                            if (currentScreen.startsWith('PROVIDER')) return 'PROVIDER_DASHBOARD';
+                            return 'CLIENT_HOME';
+                        }
+                        if (text.includes('profile') || icon === 'person') {
+                            if (currentScreen.startsWith('ADMIN')) return 'ADMIN_PROFILE_EDIT';
+                            return 'PROFILE';
+                        }
+
+                        // Provider Flow
+                        if (text.includes('get started') && currentScreen === 'PROVIDER_WELCOME') return 'PROVIDER_SETUP';
+                        if (text.includes('save & continue') || text.includes('complete setup') || text.includes('finish')) return 'PROVIDER_DASHBOARD';
+                        if (text.includes('my schedule') || icon === 'calendar_month') return 'PROVIDER_SCHEDULE';
+                        if (text.includes('new requests') || text.includes('booking requests')) return 'PROVIDER_REQUESTS';
+                        if (text.includes('my clients')) return 'PROVIDER_CLIENTS';
+                        if (text.includes('my earnings') || icon === 'payments') return 'PROVIDER_DASHBOARD_2';
+
+                        // Admin Flow
+                        if (text.includes('manage users') || icon === 'group') return 'ADMIN_MANAGE_USERS';
+                        if (text.includes('manage bookings') || icon === 'event_note') return 'ADMIN_MANAGE_BOOKINGS';
+                        if (text.includes('app settings') || icon === 'settings') return 'ADMIN_SETTINGS';
+
+                        // Others
+                        if (text.includes('view profile')) return 'PROVIDER_PROFILE';
+                        if (text.includes('channels') || icon === 'groups') {
+                            return (currentScreen.startsWith('PROVIDER') || currentScreen.startsWith('ADMIN')) ? 'CHANNEL_MGMT' : 'CHANNELS';
+                        }
+
+                        return null;
+                    };
+
                     const handleGlobalClick = (e) => {
-                        // Special handling for auth mode tabs to avoid browser issues with radio labels
+                        // Special handling for auth mode tabs
                         const tabLabel = e.target.closest('label');
                         if (tabLabel && tabLabel.querySelector('input[name="auth-mode"]')) {
                             const input = tabLabel.querySelector('input');
@@ -304,59 +370,22 @@
                             return;
                         }
 
-                        // Handle Back Navigation First
+                        // Handle Back Navigation
                         const backIcon = e.target.closest('.material-symbols-outlined, .material-icons-round');
-                        if (backIcon && (backIcon.innerText === 'arrow_back' || backIcon.innerText === 'chevron_left' || backIcon.innerText === 'arrow_back_ios')) {
+                        const isBackIcon = backIcon && ['arrow_back', 'chevron_left', 'arrow_back_ios'].includes(backIcon.innerText.trim());
+                        if (isBackIcon) {
                             window.dispatchEvent(new CustomEvent('goBack'));
                             return;
                         }
 
-                        const target = e.target.closest('button, a, [role="button"]');
+                        const target = e.target.closest('button, a, [role="button"], div.cursor-pointer');
                         if (!target) return;
 
                         const text = target.innerText.trim().toLowerCase().replace(/\s+/g, ' ');
+                        const nextScreen = resolveNavigation(text, target, screenKey);
 
-                        // Navigation Logic Heuristics
-                        if (text.includes('find services')) {
-                            onNavigate('FIND_SERVICES');
-                            return;
-                        }
-
-                        if (text.includes('sign up') || text.includes('create account')) {
-                            if (text.includes('as provider')) {
-                                if (screenKey === 'PROVIDER_WELCOME') onNavigate('PROVIDER_SETUP');
-                                else onNavigate('PROVIDER_WELCOME');
-                            }
-                            else onNavigate('SIGNUP');
-                        } else if (text.includes('log in') || text.includes('login') || text.includes('sign in')) {
-                            if (text.includes('admin')) onNavigate('ADMIN_LOGIN');
-                            else if (screenKey === 'ADMIN_LOGIN') onNavigate('ADMIN_DASHBOARD');
-                            else if (screenKey === 'WELCOME') onNavigate('LOGIN');
-                            else onNavigate('CLIENT_HOME');
-                        } else if (text.includes('continue as guest')) {
-                            onNavigate('CLIENT_HOME');
-                        } else if (text.includes('book now')) {
-                            onNavigate('BOOKING');
-                        } else if (text.includes('find services') || text.includes('explore')) {
-                            onNavigate('FIND_SERVICES');
-                        } else if (text.includes('view profile')) {
-                            onNavigate('PROVIDER_PROFILE');
-                        } else if (text.includes('get started')) {
-                            if (screenKey === 'PROVIDER_WELCOME') onNavigate('PROVIDER_SETUP');
-                            else onNavigate('SIGNUP');
-                        } else if (text.includes('complete setup') || text.includes('finish') || text.includes('save & continue')) {
-                            onNavigate('PROVIDER_DASHBOARD');
-                        } else if (text.includes('home') || target.querySelector('.material-symbols-outlined')?.innerText === 'home') {
-                            if (screenKey.startsWith('ADMIN')) onNavigate('ADMIN_DASHBOARD');
-                            else if (screenKey.startsWith('PROVIDER')) onNavigate('PROVIDER_DASHBOARD');
-                            else onNavigate('CLIENT_HOME');
-                        } else if (text.includes('bookings') || target.querySelector('.material-symbols-outlined')?.innerText === 'calendar_today') {
-                            onNavigate('MY_BOOKINGS');
-                        } else if (text.includes('messages') || target.querySelector('.material-symbols-outlined')?.innerText === 'mail') {
-                            onNavigate('MESSAGES');
-                        } else if (text.includes('profile') || target.querySelector('.material-symbols-outlined')?.innerText === 'person') {
-                            if (screenKey.startsWith('ADMIN')) onNavigate('ADMIN_PROFILE_EDIT');
-                            else onNavigate('PROFILE');
+                        if (nextScreen) {
+                            onNavigate(nextScreen);
                         }
                     };
 
