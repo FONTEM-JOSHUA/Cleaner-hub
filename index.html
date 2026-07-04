@@ -7,7 +7,7 @@
     <!-- Load React, ReactDOM, and Babel from CDN -->
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
     <script>
@@ -51,6 +51,16 @@
             flex: 1;
             overflow-y: auto;
             overflow-x: hidden;
+            height: 100%;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .slide-in {
+            animation: slideIn 0.3s ease-out forwards;
         }
         /* Custom scrollbar for a better look */
         .screen-container::-webkit-scrollbar {
@@ -186,9 +196,15 @@
         const Screen = ({ screenKey, onNavigate }) => {
             const [html, setHtml] = useState('');
             const [styles, setStyles] = useState('');
+            const [links, setLinks] = useState([]);
             const [bodyClass, setBodyClass] = useState('');
             const [loading, setLoading] = useState(true);
             const containerRef = useRef(null);
+            const currentScreenKeyRef = useRef(screenKey);
+
+            useEffect(() => {
+                currentScreenKeyRef.current = screenKey;
+            }, [screenKey]);
 
             useEffect(() => {
                 const fetchContent = async () => {
@@ -201,11 +217,15 @@
                         const parser = new DOMParser();
                         const doc = parser.parseFromString(text, 'text/html');
 
-                        // Extract Styles
+                        // Extract Styles and Links
                         const styleContent = Array.from(doc.querySelectorAll('style'))
                             .map(s => s.innerHTML)
                             .join('\n');
                         setStyles(styleContent);
+
+                        const linkTags = Array.from(doc.querySelectorAll('link[rel="stylesheet"]'))
+                            .map(l => l.getAttribute('href'));
+                        setLinks(linkTags);
 
                         // Extract Body Classes
                         setBodyClass(doc.body.className);
@@ -213,28 +233,29 @@
                         // Auth Mode Patching
                         if (screenKey === 'LOGIN' || screenKey === 'SIGNUP') {
                             const isLogin = screenKey === 'LOGIN';
-
-                            // Toggle tabs
                             const tabs = doc.querySelectorAll('label');
                             tabs.forEach(tab => {
                                 const input = tab.querySelector('input[name="auth-mode"]');
                                 if (input) {
                                     const mode = input.value;
                                     if ((isLogin && mode === 'login') || (!isLogin && mode === 'signup')) {
-                                        tab.classList.add('bg-primary');
-                                        tab.querySelector('span').classList.remove('text-text-subtle');
-                                        tab.querySelector('span').classList.add('text-white', 'font-semibold');
+                                        tab.className = tab.className.replace(/bg-\S+/g, '') + ' bg-primary';
+                                        const span = tab.querySelector('span');
+                                        if (span) {
+                                            span.className = span.className.replace(/text-\S+/g, '') + ' text-white font-semibold';
+                                        }
                                         input.checked = true;
                                     } else {
-                                        tab.classList.remove('bg-primary');
-                                        tab.querySelector('span').classList.remove('text-white', 'font-semibold');
-                                        tab.querySelector('span').classList.add('text-text-subtle');
+                                        tab.className = tab.className.replace(/bg-\S+/g, '') + ' bg-transparent';
+                                        const span = tab.querySelector('span');
+                                        if (span) {
+                                            span.className = span.className.replace(/text-\S+/g, '') + ' text-text-subtle';
+                                        }
                                         input.checked = false;
                                     }
                                 }
                             });
 
-                            // Hide/Show fields
                             const fields = doc.querySelectorAll('.relative');
                             fields.forEach(field => {
                                 const input = field.querySelector('input');
@@ -248,17 +269,17 @@
                                 }
                             });
 
-                            // Hide ToS for login
                             const tos = doc.querySelector('label.flex.items-start');
-                            if (tos && isLogin) tos.style.display = 'none';
+                            if (tos) tos.style.display = isLogin ? 'none' : 'flex';
 
-                            // Update button text
-                            const btn = doc.querySelector('button.bg-primary span');
-                            if (btn) btn.innerText = isLogin ? 'Log In' : 'Create Account';
+                            const btn = doc.querySelector('button.bg-primary span') || doc.querySelector('button.bg-primary');
+                            if (btn) {
+                                const span = btn.querySelector('span') || btn;
+                                span.innerText = isLogin ? 'Log In' : 'Create Account';
+                            }
 
-                            // Update footer link
-                            const footer = doc.querySelector('.mt-auto.pt-6 p');
-                            if (footer) {
+                            const footer = doc.querySelector('.mt-auto p') || doc.querySelector('p.text-center');
+                            if (footer && (footer.innerText.toLowerCase().includes('account') || footer.innerHTML.includes('href'))) {
                                 footer.innerHTML = isLogin ?
                                     'Don\'t have an account? <a class="font-semibold text-primary hover:text-primary-dark transition-colors" href="#">Sign Up</a>' :
                                     'Already have an account? <a class="font-semibold text-primary hover:text-primary-dark transition-colors" href="#">Login</a>';
@@ -277,24 +298,89 @@
                 fetchContent();
             }, [screenKey]);
 
-            // Execute scripts and attach listeners
+            const resolveNavigation = (target, text, currentKey) => {
+                // Auth mode toggle links
+                if (target.tagName === 'A' && (currentKey === 'LOGIN' || currentKey === 'SIGNUP')) {
+                    if (text.includes('sign up')) return 'SIGNUP';
+                    if (text.includes('login')) return 'LOGIN';
+                }
+
+                if (text.includes('find services') || text.includes('explore')) return 'FIND_SERVICES';
+                if (text.includes('emergency clean')) return 'FEATURE_EMERGENCY_MODE';
+                if (text.includes('event help')) return 'FIND_SERVICES';
+                if (text.includes('subscribe')) return 'FEATURE_SMART_NOTIFICATIONS';
+
+                if (text.includes('sign up') || text.includes('create account')) {
+                    if (text.includes('as provider')) return currentKey === 'PROVIDER_WELCOME' ? 'PROVIDER_SETUP' : 'PROVIDER_WELCOME';
+                    return 'SIGNUP';
+                }
+
+                if (text.includes('log in') || text.includes('login') || text.includes('sign in')) {
+                    if (text.includes('admin')) return 'ADMIN_LOGIN';
+                    if (currentKey === 'ADMIN_LOGIN') return 'ADMIN_DASHBOARD';
+                    if (currentKey === 'WELCOME') return 'LOGIN';
+                    return 'CLIENT_HOME';
+                }
+
+                if (text.includes('continue as guest')) return 'CLIENT_HOME';
+                if (text.includes('book now') || text.includes('book this service')) return 'BOOKING';
+                if (text.includes('view profile')) return 'PROVIDER_PROFILE';
+                if (text.includes('get started')) return currentKey === 'PROVIDER_WELCOME' ? 'PROVIDER_SETUP' : 'SIGNUP';
+                if (text.includes('complete setup') || text.includes('finish') || text.includes('save & continue')) return 'PROVIDER_DASHBOARD';
+
+                const iconText = target.querySelector('.material-symbols-outlined, .material-icons-round')?.innerText || '';
+                if (text.includes('home') || iconText === 'home' || iconText === 'dashboard') {
+                    if (currentKey.startsWith('ADMIN')) return 'ADMIN_DASHBOARD';
+                    if (currentKey.startsWith('PROVIDER')) return 'PROVIDER_DASHBOARD';
+                    return 'CLIENT_HOME';
+                }
+                if (text.includes('bookings') || iconText === 'calendar_today' || iconText === 'calendar_month' || iconText === 'confirmation_number') {
+                    if (currentKey.startsWith('ADMIN')) return 'ADMIN_MANAGE_BOOKINGS';
+                    if (currentKey.startsWith('PROVIDER')) return 'PROVIDER_SCHEDULE';
+                    return 'MY_BOOKINGS';
+                }
+                if (text.includes('messages') || iconText === 'mail' || iconText === 'chat_bubble' || iconText === 'chat') return 'MESSAGES';
+                if (text.includes('profile') || iconText === 'person') {
+                    if (currentKey.startsWith('ADMIN')) return 'ADMIN_PROFILE_EDIT';
+                    return 'PROFILE';
+                }
+
+                if (text.includes('channels')) return (currentKey.startsWith('PROVIDER') || currentKey.startsWith('ADMIN')) ? 'CHANNEL_MGMT' : 'CHANNELS';
+                if (text.includes('requests')) return 'PROVIDER_REQUESTS';
+                if (text.includes('clients')) return 'PROVIDER_CLIENTS';
+                if (text.includes('earnings')) return 'PROVIDER_DASHBOARD'; // Default to dashboard for earnings in prototype
+                if (text.includes('users')) return 'ADMIN_MANAGE_USERS';
+                if (text.includes('settings')) return 'ADMIN_SETTINGS';
+
+                return null;
+            };
+
             useEffect(() => {
                 if (!loading && containerRef.current) {
                     const container = containerRef.current;
-
-                    // 1. Manually execute any script tags found in the HTML
-                    // Note: This is simplified for the demo/prototype
                     const scripts = container.querySelectorAll('script');
                     scripts.forEach(oldScript => {
-                        const newScript = document.createElement('script');
-                        Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
-                        newScript.appendChild(document.createTextNode(oldScript.innerHTML));
-                        oldScript.parentNode.replaceChild(newScript, oldScript);
+                        try {
+                            // Avoid re-loading scripts already in the shell head
+                            const src = oldScript.getAttribute('src');
+                            if (src && (src.includes('tailwind.config') || src.includes('react') || src.includes('babel') || src.includes('tailwindcss'))) {
+                                return;
+                            }
+
+                            const newScript = document.createElement('script');
+                            Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+                            if (oldScript.innerHTML) {
+                                newScript.text = oldScript.innerHTML;
+                            }
+                            oldScript.parentNode.replaceChild(newScript, oldScript);
+                        } catch (e) {
+                            console.error('Error executing script', e);
+                        }
                     });
 
-                    // 2. Attach Click Listeners for Navigation
                     const handleGlobalClick = (e) => {
-                        // Special handling for auth mode tabs to avoid browser issues with radio labels
+                        const currentKey = currentScreenKeyRef.current;
+
                         const tabLabel = e.target.closest('label');
                         if (tabLabel && tabLabel.querySelector('input[name="auth-mode"]')) {
                             const input = tabLabel.querySelector('input');
@@ -304,69 +390,31 @@
                             return;
                         }
 
-                        // Handle Back Navigation First
                         const backIcon = e.target.closest('.material-symbols-outlined, .material-icons-round');
-                        if (backIcon && (backIcon.innerText === 'arrow_back' || backIcon.innerText === 'chevron_left' || backIcon.innerText === 'arrow_back_ios')) {
+                        if (backIcon && ['arrow_back', 'chevron_left', 'arrow_back_ios', 'close'].includes(backIcon.innerText.trim())) {
                             window.dispatchEvent(new CustomEvent('goBack'));
                             return;
                         }
 
-                        const target = e.target.closest('button, a, [role="button"]');
+                        const target = e.target.closest('button, a, [role="button"], div.cursor-pointer');
                         if (!target) return;
 
                         const text = target.innerText.trim().toLowerCase().replace(/\s+/g, ' ');
+                        const nextScreen = resolveNavigation(target, text, currentKey);
 
-                        // Navigation Logic Heuristics
-                        if (text.includes('find services')) {
-                            onNavigate('FIND_SERVICES');
-                            return;
-                        }
-
-                        if (text.includes('sign up') || text.includes('create account')) {
-                            if (text.includes('as provider')) {
-                                if (screenKey === 'PROVIDER_WELCOME') onNavigate('PROVIDER_SETUP');
-                                else onNavigate('PROVIDER_WELCOME');
-                            }
-                            else onNavigate('SIGNUP');
-                        } else if (text.includes('log in') || text.includes('login') || text.includes('sign in')) {
-                            if (text.includes('admin')) onNavigate('ADMIN_LOGIN');
-                            else if (screenKey === 'ADMIN_LOGIN') onNavigate('ADMIN_DASHBOARD');
-                            else if (screenKey === 'WELCOME') onNavigate('LOGIN');
-                            else onNavigate('CLIENT_HOME');
-                        } else if (text.includes('continue as guest')) {
-                            onNavigate('CLIENT_HOME');
-                        } else if (text.includes('book now')) {
-                            onNavigate('BOOKING');
-                        } else if (text.includes('find services') || text.includes('explore')) {
-                            onNavigate('FIND_SERVICES');
-                        } else if (text.includes('view profile')) {
-                            onNavigate('PROVIDER_PROFILE');
-                        } else if (text.includes('get started')) {
-                            if (screenKey === 'PROVIDER_WELCOME') onNavigate('PROVIDER_SETUP');
-                            else onNavigate('SIGNUP');
-                        } else if (text.includes('complete setup') || text.includes('finish') || text.includes('save & continue')) {
-                            onNavigate('PROVIDER_DASHBOARD');
-                        } else if (text.includes('home') || target.querySelector('.material-symbols-outlined')?.innerText === 'home') {
-                            if (screenKey.startsWith('ADMIN')) onNavigate('ADMIN_DASHBOARD');
-                            else if (screenKey.startsWith('PROVIDER')) onNavigate('PROVIDER_DASHBOARD');
-                            else onNavigate('CLIENT_HOME');
-                        } else if (text.includes('bookings') || target.querySelector('.material-symbols-outlined')?.innerText === 'calendar_today') {
-                            onNavigate('MY_BOOKINGS');
-                        } else if (text.includes('messages') || target.querySelector('.material-symbols-outlined')?.innerText === 'mail') {
-                            onNavigate('MESSAGES');
-                        } else if (text.includes('profile') || target.querySelector('.material-symbols-outlined')?.innerText === 'person') {
-                            if (screenKey.startsWith('ADMIN')) onNavigate('ADMIN_PROFILE_EDIT');
-                            else onNavigate('PROFILE');
+                        if (nextScreen) {
+                            onNavigate(nextScreen);
                         }
                     };
 
                     container.addEventListener('click', handleGlobalClick);
                     return () => container.removeEventListener('click', handleGlobalClick);
                 }
-            }, [html, loading, screenKey]);
+            }, [html, loading, onNavigate]);
 
             return (
-                <div className={`h-full flex flex-col ${bodyClass}`}>
+                <div className={`h-full flex flex-col slide-in ${bodyClass}`}>
+                    {links.map(href => <link key={href} rel="stylesheet" href={href} />)}
                     <style dangerouslySetInnerHTML={{ __html: styles }} />
                     {loading ? (
                         <div className="flex-1 flex items-center justify-center">
@@ -414,7 +462,7 @@
 
             return (
                 <div className="app-shell">
-                    <div className="screen-container" key={screen}>
+                    <div className="screen-container" key={history.length}>
                         <Screen screenKey={screen} onNavigate={navigate} />
                     </div>
 
