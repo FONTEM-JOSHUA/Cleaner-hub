@@ -72,53 +72,57 @@
 <!-- Segmented Control -->
 <div class="mb-6">
 <div class="flex h-12 w-full items-center justify-center rounded-full bg-background-light dark:bg-background-dark p-1">
-<!-- Login Tab (Inactive Style) -->
-<label class="group flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-full px-4 relative transition-all duration-200">
+<!-- Login Tab -->
+<label id="login-tab" class="group flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-full px-4 relative transition-all duration-200 focus-within:ring-2 focus-within:ring-primary/50">
 <span class="z-10 text-sm font-medium text-text-subtle group-hover:text-text-main dark:text-gray-400 dark:group-hover:text-white transition-colors">Login</span>
-<input class="invisible absolute w-0 h-0" name="auth-mode" type="radio" value="login"/>
+<input class="sr-only" name="auth-mode" type="radio" value="login"/>
 </label>
-<!-- Sign Up Tab (Active Style) -->
-<label class="group flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-full px-4 relative shadow-sm transition-all duration-200 bg-primary">
+<!-- Sign Up Tab -->
+<label id="signup-tab" class="group flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-full px-4 relative shadow-sm transition-all duration-200 bg-[#88c8ec] focus-within:ring-2 focus-within:ring-white/50">
 <span class="z-10 text-sm font-semibold text-white">Sign Up</span>
-<input checked="" class="invisible absolute w-0 h-0" name="auth-mode" type="radio" value="signup"/>
+<input checked="" class="sr-only" name="auth-mode" type="radio" value="signup"/>
 </label>
 </div>
 </div>
 <!-- Form Fields (Signup Mode) -->
 <div class="flex flex-col gap-4">
 <!-- Full Name -->
-<div class="relative">
+<div id="field-name" class="relative">
+<label class="sr-only" for="name-input">Full Name</label>
 <div class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-text-subtle">
 <span class="material-symbols-outlined text-[20px]">person</span>
 </div>
-<input class="w-full bg-background-light dark:bg-background-dark text-text-main dark:text-white placeholder:text-text-subtle/70 rounded-full h-12 pl-11 pr-4 border-none focus:ring-2 focus:ring-primary/50 text-base" placeholder="Full Name" type="text"/>
+<input id="name-input" class="w-full bg-background-light dark:bg-background-dark text-text-main dark:text-white placeholder:text-text-subtle/70 rounded-full h-12 pl-11 pr-4 border-none focus:ring-2 focus:ring-primary/50 text-base" placeholder="Full Name" type="text"/>
 </div>
 <!-- Email -->
-<div class="relative">
+<div id="field-email" class="relative">
+<label class="sr-only" for="email-input">Email Address</label>
 <div class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-text-subtle">
 <span class="material-symbols-outlined text-[20px]">mail</span>
 </div>
-<input class="w-full bg-background-light dark:bg-background-dark text-text-main dark:text-white placeholder:text-text-subtle/70 rounded-full h-12 pl-11 pr-4 border-none focus:ring-2 focus:ring-primary/50 text-base" placeholder="Email Address" type="email"/>
+<input id="email-input" class="w-full bg-background-light dark:bg-background-dark text-text-main dark:text-white placeholder:text-text-subtle/70 rounded-full h-12 pl-11 pr-4 border-none focus:ring-2 focus:ring-primary/50 text-base" placeholder="Email Address" type="email"/>
 </div>
 <!-- Phone -->
-<div class="relative">
+<div id="field-phone" class="relative">
+<label class="sr-only" for="phone-input">Phone Number</label>
 <div class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-text-subtle">
 <span class="material-symbols-outlined text-[20px]">call</span>
 </div>
-<input class="w-full bg-background-light dark:bg-background-dark text-text-main dark:text-white placeholder:text-text-subtle/70 rounded-full h-12 pl-11 pr-4 border-none focus:ring-2 focus:ring-primary/50 text-base" placeholder="Phone Number" type="tel"/>
+<input id="phone-input" class="w-full bg-background-light dark:bg-background-dark text-text-main dark:text-white placeholder:text-text-subtle/70 rounded-full h-12 pl-11 pr-4 border-none focus:ring-2 focus:ring-primary/50 text-base" placeholder="Phone Number" type="tel"/>
 </div>
 <!-- Password -->
-<div class="relative">
+<div id="field-password" class="relative">
+<label class="sr-only" for="password-input">Password</label>
 <div class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-text-subtle">
 <span class="material-symbols-outlined text-[20px]">lock</span>
 </div>
-<input class="w-full bg-background-light dark:bg-background-dark text-text-main dark:text-white placeholder:text-text-subtle/70 rounded-full h-12 pl-11 pr-11 border-none focus:ring-2 focus:ring-primary/50 text-base" placeholder="Password" type="password"/>
-<button class="absolute right-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-text-subtle hover:text-primary transition-colors">
+<input id="password-input" class="w-full bg-background-light dark:bg-background-dark text-text-main dark:text-white placeholder:text-text-subtle/70 rounded-full h-12 pl-11 pr-11 border-none focus:ring-2 focus:ring-primary/50 text-base" placeholder="Password" type="password"/>
+<button aria-label="Toggle password visibility" id="toggle-password" class="absolute right-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-text-subtle hover:text-primary transition-colors">
 <span class="material-symbols-outlined text-[20px]">visibility_off</span>
 </button>
 </div>
 <!-- Terms & Conditions Checkbox -->
-<label class="flex items-start gap-3 mt-1 px-2 cursor-pointer group">
+<label id="field-terms" class="flex items-start gap-3 mt-1 px-2 cursor-pointer group">
 <div class="relative flex items-center">
 <input class="peer h-5 w-5 cursor-pointer appearance-none rounded-md border border-gray-300 dark:border-gray-600 bg-transparent checked:border-primary checked:bg-primary transition-all" type="checkbox"/>
 <span class="material-symbols-outlined pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[16px] text-white opacity-0 peer-checked:opacity-100">check</span>
@@ -130,9 +134,9 @@
 </div>
 <!-- Action Button -->
 <div class="mt-8">
-<button class="w-full h-12 bg-primary hover:bg-primary-dark active:scale-[0.98] transition-all text-white font-semibold text-base rounded-full shadow-lg shadow-primary/20 flex items-center justify-center gap-2">
-<span>Create Account</span>
-<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+<button id="main-action-btn" class="w-full h-12 bg-[#88c8ec] hover:bg-[#6FB3D9] active:scale-[0.98] transition-all text-white font-semibold text-base rounded-full shadow-lg shadow-blue-200/50 flex items-center justify-center gap-2">
+<span id="btn-text">Create Account</span>
+<span id="btn-icon" class="material-symbols-outlined text-[20px]">arrow_forward</span>
 </button>
 </div>
 <!-- Divider -->
@@ -171,4 +175,88 @@
 </div>
 </div>
 </div>
+<script>
+(function() {
+    const loginRadio = document.querySelector('input[value="login"]');
+    const signupRadio = document.querySelector('input[value="signup"]');
+    const loginTab = document.getElementById('login-tab');
+    const signupTab = document.getElementById('signup-tab');
+
+    const fieldName = document.getElementById('field-name');
+    const fieldPhone = document.getElementById('field-phone');
+    const fieldTerms = document.getElementById('field-terms');
+
+    const btnText = document.getElementById('btn-text');
+    const btnIcon = document.getElementById('btn-icon');
+    const mainBtn = document.getElementById('main-action-btn');
+
+    const togglePassword = document.getElementById('toggle-password');
+    const passwordInput = document.getElementById('password-input');
+
+    function updateMode() {
+        const isLogin = loginRadio.checked;
+
+        // Update Tabs UI
+        if (isLogin) {
+            loginTab.classList.add('bg-[#88c8ec]', 'shadow-sm');
+            loginTab.querySelector('span').classList.replace('text-text-subtle', 'text-white');
+            loginTab.querySelector('span').classList.add('font-semibold');
+
+            signupTab.classList.remove('bg-[#88c8ec]', 'shadow-sm');
+            signupTab.querySelector('span').classList.replace('text-white', 'text-text-subtle');
+            signupTab.querySelector('span').classList.remove('font-semibold');
+
+            fieldName.classList.add('hidden');
+            fieldPhone.classList.add('hidden');
+            fieldTerms.classList.add('hidden');
+            btnText.textContent = 'Login';
+        } else {
+            signupTab.classList.add('bg-[#88c8ec]', 'shadow-sm');
+            signupTab.querySelector('span').classList.replace('text-text-subtle', 'text-white');
+            signupTab.querySelector('span').classList.add('font-semibold');
+
+            loginTab.classList.remove('bg-[#88c8ec]', 'shadow-sm');
+            loginTab.querySelector('span').classList.replace('text-white', 'text-text-subtle');
+            loginTab.querySelector('span').classList.remove('font-semibold');
+
+            fieldName.classList.remove('hidden');
+            fieldPhone.classList.remove('hidden');
+            fieldTerms.classList.remove('hidden');
+            btnText.textContent = 'Create Account';
+        }
+    }
+
+    loginRadio.addEventListener('change', updateMode);
+    signupRadio.addEventListener('change', updateMode);
+
+    togglePassword.addEventListener('click', (e) => {
+        e.preventDefault();
+        const isPassword = passwordInput.type === 'password';
+        passwordInput.type = isPassword ? 'text' : 'password';
+        togglePassword.querySelector('span').textContent = isPassword ? 'visibility' : 'visibility_off';
+    });
+
+    mainBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation(); // Stop immediate shell navigation
+
+        mainBtn.disabled = true;
+        mainBtn.classList.add('opacity-80', 'cursor-not-allowed');
+        btnText.textContent = isLoginMode() ? 'Logging in...' : 'Creating Account...';
+        btnIcon.textContent = 'progress_activity';
+        btnIcon.classList.add('animate-spin');
+
+        setTimeout(() => {
+            window.dispatchEvent(new CustomEvent('navigate', {
+                detail: 'CLIENT_HOME'
+            }));
+        }, 1200);
+    });
+
+    function isLoginMode() { return loginRadio.checked; }
+
+    // Initial call
+    updateMode();
+})();
+</script>
 </body></html>
