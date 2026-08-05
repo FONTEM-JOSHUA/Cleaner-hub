@@ -78,7 +78,7 @@
 <input class="invisible absolute w-0 h-0" name="auth-mode" type="radio" value="login"/>
 </label>
 <!-- Sign Up Tab (Active Style) -->
-<label class="group flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-full px-4 relative shadow-sm transition-all duration-200 bg-primary">
+<label class="group flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-full px-4 relative shadow-sm transition-all duration-200 bg-blue-600">
 <span class="z-10 text-sm font-semibold text-white">Sign Up</span>
 <input checked="" class="invisible absolute w-0 h-0" name="auth-mode" type="radio" value="signup"/>
 </label>
@@ -91,29 +91,33 @@
 <div class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-text-subtle">
 <span class="material-symbols-outlined text-[20px]">person</span>
 </div>
-<input class="w-full bg-background-light dark:bg-background-dark text-text-main dark:text-white placeholder:text-text-subtle/70 rounded-full h-12 pl-11 pr-4 border-none focus:ring-2 focus:ring-primary/50 text-base" placeholder="Full Name" type="text"/>
+<label for="name-field" class="sr-only">Full Name</label>
+<input id="name-field" class="w-full bg-background-light dark:bg-background-dark text-text-main dark:text-white placeholder:text-text-subtle/70 rounded-full h-12 pl-11 pr-4 border-none focus:ring-2 focus:ring-blue-500/50 text-base" placeholder="Full Name" type="text"/>
 </div>
 <!-- Email -->
 <div class="relative">
 <div class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-text-subtle">
 <span class="material-symbols-outlined text-[20px]">mail</span>
 </div>
-<input class="w-full bg-background-light dark:bg-background-dark text-text-main dark:text-white placeholder:text-text-subtle/70 rounded-full h-12 pl-11 pr-4 border-none focus:ring-2 focus:ring-primary/50 text-base" placeholder="Email Address" type="email"/>
+<label for="email-field" class="sr-only">Email Address</label>
+<input id="email-field" class="w-full bg-background-light dark:bg-background-dark text-text-main dark:text-white placeholder:text-text-subtle/70 rounded-full h-12 pl-11 pr-4 border-none focus:ring-2 focus:ring-blue-500/50 text-base" placeholder="Email Address" type="email"/>
 </div>
 <!-- Phone -->
 <div class="relative">
 <div class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-text-subtle">
 <span class="material-symbols-outlined text-[20px]">call</span>
 </div>
-<input class="w-full bg-background-light dark:bg-background-dark text-text-main dark:text-white placeholder:text-text-subtle/70 rounded-full h-12 pl-11 pr-4 border-none focus:ring-2 focus:ring-primary/50 text-base" placeholder="Phone Number" type="tel"/>
+<label for="phone-field" class="sr-only">Phone Number</label>
+<input id="phone-field" class="w-full bg-background-light dark:bg-background-dark text-text-main dark:text-white placeholder:text-text-subtle/70 rounded-full h-12 pl-11 pr-4 border-none focus:ring-2 focus:ring-blue-500/50 text-base" placeholder="Phone Number" type="tel"/>
 </div>
 <!-- Password -->
 <div class="relative">
 <div class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-text-subtle">
 <span class="material-symbols-outlined text-[20px]">lock</span>
 </div>
-<input class="w-full bg-background-light dark:bg-background-dark text-text-main dark:text-white placeholder:text-text-subtle/70 rounded-full h-12 pl-11 pr-11 border-none focus:ring-2 focus:ring-primary/50 text-base" placeholder="Password" type="password"/>
-<button class="absolute right-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-text-subtle hover:text-primary transition-colors">
+<label for="password-field" class="sr-only">Password</label>
+<input id="password-field" class="w-full bg-background-light dark:bg-background-dark text-text-main dark:text-white placeholder:text-text-subtle/70 rounded-full h-12 pl-11 pr-11 border-none focus:ring-2 focus:ring-blue-500/50 text-base" placeholder="Password" type="password"/>
+<button aria-label="Toggle password visibility" onclick="this.previousElementSibling.type = this.previousElementSibling.type === 'password' ? 'text' : 'password'; this.querySelector('span').innerText = this.previousElementSibling.type === 'password' ? 'visibility_off' : 'visibility'" class="absolute right-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-text-subtle hover:text-blue-600 transition-colors">
 <span class="material-symbols-outlined text-[20px]">visibility_off</span>
 </button>
 </div>
@@ -130,7 +134,7 @@
 </div>
 <!-- Action Button -->
 <div class="mt-8">
-<button class="w-full h-12 bg-primary hover:bg-primary-dark active:scale-[0.98] transition-all text-white font-semibold text-base rounded-full shadow-lg shadow-primary/20 flex items-center justify-center gap-2">
+<button class="w-full h-12 bg-blue-600 hover:bg-blue-700 active:scale-[0.98] transition-all text-white font-semibold text-base rounded-full shadow-lg shadow-blue-200 flex items-center justify-center gap-2">
 <span>Create Account</span>
 <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
 </button>

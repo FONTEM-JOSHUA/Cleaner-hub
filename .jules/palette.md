@@ -1,0 +1,3 @@
+## 2025-01-24 - Accessible and Functional Form Inputs
+**Learning:** Screen-specific interactive features like password visibility toggles in this prototype require self-executing inline scripts or event handlers within the screen HTML, as the shell only handles global navigation. Also, using standard Tailwind color classes (like `bg-blue-600`) ensures visibility when custom theme configs in screen files are ignored by the shell.
+**Action:** Always use semantic HTML with `sr-only` labels for accessibility, and provide immediate tactile feedback with standard Tailwind classes and inline JS for micro-interactions.
