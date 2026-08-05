@@ -5,9 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cleaner Hub - Home Service Professional Platform</title>
     <!-- Load React, ReactDOM, and Babel from CDN -->
-    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Resource Hints for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://lh3.googleusercontent.com">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
     <script>
@@ -125,6 +132,10 @@
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
+        // ⚡ Bolt Performance Cache: Store screens to prevent redundant network requests and parsing
+        const screenCache = {};
+        const parser = new DOMParser();
+
         const SCREEN_MAP = {
             'WELCOME': 'welcome_screen/code.html',
             'SIGNUP': 'login/signup_screen/code.html',
@@ -192,20 +203,32 @@
 
             useEffect(() => {
                 const fetchContent = async () => {
+                    // ⚡ Bolt: Return cached content if available for instant navigation
+                    if (screenCache[screenKey]) {
+                        setHtml(screenCache[screenKey].html);
+                        setStyles(screenCache[screenKey].styles);
+                        setLoading(false);
+                        return;
+                    }
+
                     setLoading(true);
                     try {
                         const path = `extracted_code/stitch_cleaners_hub/${SCREEN_MAP[screenKey]}`;
                         const response = await fetch(path);
                         const text = await response.text();
 
-                        const parser = new DOMParser();
                         const doc = parser.parseFromString(text, 'text/html');
+
+                        // ⚡ Bolt: Optimize images with lazy loading and async decoding
+                        doc.querySelectorAll('img').forEach(img => {
+                            img.setAttribute('loading', 'lazy');
+                            img.setAttribute('decoding', 'async');
+                        });
 
                         // Extract Styles
                         const styleContent = Array.from(doc.querySelectorAll('style'))
                             .map(s => s.innerHTML)
                             .join('\n');
-                        setStyles(styleContent);
 
                         // Extract Body Classes
                         setBodyClass(doc.body.className);
@@ -267,6 +290,11 @@
 
                         // Extract Body Content
                         const bodyContent = doc.body.innerHTML;
+
+                        // ⚡ Bolt: Cache processed content
+                        screenCache[screenKey] = { html: bodyContent, styles: styleContent };
+
+                        setStyles(styleContent);
                         setHtml(bodyContent);
                     } catch (error) {
                         console.error('Failed to load screen:', error);
