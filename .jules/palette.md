@@ -1,0 +1,3 @@
+## 2026-02-17 - [Password Visibility Toggle & Contrast Fixes]
+**Learning:** In highly visual prototypes using light primary colors (like Sky Blue #88C8EC), standard white text often fails WCAG contrast requirements. Accessibility and interactivity (like password toggles) can be added to individual screens via self-executing inline script blocks, as the main shell only handles global navigation.
+**Action:** Always check contrast on primary-colored elements and use dark text (`text-text-main`) if the background is too light. Implement interactive features with inline scripts targeting specific IDs for reliability in the dynamic shell environment.

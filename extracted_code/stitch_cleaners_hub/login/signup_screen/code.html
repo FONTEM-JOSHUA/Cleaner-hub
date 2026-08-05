@@ -57,7 +57,7 @@
 <div class="absolute inset-0 bg-gradient-to-b from-transparent to-surface-light dark:to-surface-dark/90"></div>
 <div class="absolute bottom-4 left-0 right-0 text-center">
 <div class="flex items-center justify-center gap-2 mb-2">
-<span class="material-symbols-outlined text-primary text-4xl">cleaning_services</span>
+<span aria-hidden="true" class="material-symbols-outlined text-primary text-4xl">cleaning_services</span>
 </div>
 <h2 class="text-2xl font-bold tracking-tight text-text-main dark:text-white">ServiceMate</h2>
 </div>
@@ -79,7 +79,7 @@
 </label>
 <!-- Sign Up Tab (Active Style) -->
 <label class="group flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-full px-4 relative shadow-sm transition-all duration-200 bg-primary">
-<span class="z-10 text-sm font-semibold text-white">Sign Up</span>
+<span class="z-10 text-sm font-semibold text-text-main">Sign Up</span>
 <input checked="" class="invisible absolute w-0 h-0" name="auth-mode" type="radio" value="signup"/>
 </label>
 </div>
@@ -89,39 +89,39 @@
 <!-- Full Name -->
 <div class="relative">
 <div class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-text-subtle">
-<span class="material-symbols-outlined text-[20px]">person</span>
+<span aria-hidden="true" class="material-symbols-outlined text-[20px]">person</span>
 </div>
 <input class="w-full bg-background-light dark:bg-background-dark text-text-main dark:text-white placeholder:text-text-subtle/70 rounded-full h-12 pl-11 pr-4 border-none focus:ring-2 focus:ring-primary/50 text-base" placeholder="Full Name" type="text"/>
 </div>
 <!-- Email -->
 <div class="relative">
 <div class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-text-subtle">
-<span class="material-symbols-outlined text-[20px]">mail</span>
+<span aria-hidden="true" class="material-symbols-outlined text-[20px]">mail</span>
 </div>
 <input class="w-full bg-background-light dark:bg-background-dark text-text-main dark:text-white placeholder:text-text-subtle/70 rounded-full h-12 pl-11 pr-4 border-none focus:ring-2 focus:ring-primary/50 text-base" placeholder="Email Address" type="email"/>
 </div>
 <!-- Phone -->
 <div class="relative">
 <div class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-text-subtle">
-<span class="material-symbols-outlined text-[20px]">call</span>
+<span aria-hidden="true" class="material-symbols-outlined text-[20px]">call</span>
 </div>
 <input class="w-full bg-background-light dark:bg-background-dark text-text-main dark:text-white placeholder:text-text-subtle/70 rounded-full h-12 pl-11 pr-4 border-none focus:ring-2 focus:ring-primary/50 text-base" placeholder="Phone Number" type="tel"/>
 </div>
 <!-- Password -->
 <div class="relative">
 <div class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-text-subtle">
-<span class="material-symbols-outlined text-[20px]">lock</span>
+<span aria-hidden="true" class="material-symbols-outlined text-[20px]">lock</span>
 </div>
-<input class="w-full bg-background-light dark:bg-background-dark text-text-main dark:text-white placeholder:text-text-subtle/70 rounded-full h-12 pl-11 pr-11 border-none focus:ring-2 focus:ring-primary/50 text-base" placeholder="Password" type="password"/>
-<button class="absolute right-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-text-subtle hover:text-primary transition-colors">
-<span class="material-symbols-outlined text-[20px]">visibility_off</span>
+<input class="w-full bg-background-light dark:bg-background-dark text-text-main dark:text-white placeholder:text-text-subtle/70 rounded-full h-12 pl-11 pr-11 border-none focus:ring-2 focus:ring-primary/50 text-base" id="password-field" placeholder="Password" type="password"/>
+<button aria-label="Toggle password visibility" class="absolute right-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-text-subtle hover:text-primary transition-colors" id="password-toggle">
+<span aria-hidden="true" class="material-symbols-outlined text-[20px]">visibility_off</span>
 </button>
 </div>
 <!-- Terms & Conditions Checkbox -->
 <label class="flex items-start gap-3 mt-1 px-2 cursor-pointer group">
 <div class="relative flex items-center">
 <input class="peer h-5 w-5 cursor-pointer appearance-none rounded-md border border-gray-300 dark:border-gray-600 bg-transparent checked:border-primary checked:bg-primary transition-all" type="checkbox"/>
-<span class="material-symbols-outlined pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[16px] text-white opacity-0 peer-checked:opacity-100">check</span>
+<span aria-hidden="true" class="material-symbols-outlined pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[16px] text-text-main opacity-0 peer-checked:opacity-100">check</span>
 </div>
 <span class="text-xs text-text-subtle dark:text-gray-400 leading-tight pt-0.5">
                             I agree to the <a class="text-primary hover:underline" href="#">Terms of Service</a> and <a class="text-primary hover:underline" href="#">Privacy Policy</a>.
@@ -130,9 +130,9 @@
 </div>
 <!-- Action Button -->
 <div class="mt-8">
-<button class="w-full h-12 bg-primary hover:bg-primary-dark active:scale-[0.98] transition-all text-white font-semibold text-base rounded-full shadow-lg shadow-primary/20 flex items-center justify-center gap-2">
+<button class="w-full h-12 bg-primary hover:bg-primary-dark active:scale-[0.98] transition-all text-text-main font-semibold text-base rounded-full shadow-lg shadow-primary/20 flex items-center justify-center gap-2">
 <span>Create Account</span>
-<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+<span aria-hidden="true" class="material-symbols-outlined text-[20px]">arrow_forward</span>
 </button>
 </div>
 <!-- Divider -->
@@ -148,7 +148,7 @@
 <div class="flex justify-center gap-4">
 <button aria-label="Sign in with Google" class="flex h-12 w-12 items-center justify-center rounded-full bg-background-light dark:bg-background-dark border border-gray-100 dark:border-gray-800 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
 <!-- Generic Google-ish G -->
-<svg class="w-6 h-6" fill="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<svg aria-hidden="true" class="w-6 h-6" fill="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 <path d="M23.766 12.2764C23.766 11.4607 23.6999 10.6406 23.5588 9.83807H12.24V14.4591H18.7217C18.4528 15.9494 17.5885 17.2678 16.323 18.1056V21.1039H20.19C22.4608 19.0139 23.766 15.9274 23.766 12.2764Z" fill="#4285F4"></path>
 <path d="M12.24 24.0008C15.4765 24.0008 18.2059 22.9382 20.1945 21.1039L16.3275 18.1055C15.2517 18.8375 13.8627 19.252 12.2445 19.252C9.11388 19.252 6.45946 17.1399 5.50705 14.3003H1.5166V17.3912C3.55371 21.4434 7.7029 24.0008 12.24 24.0008Z" fill="#34A853"></path>
 <path d="M5.50253 14.3003C5.00236 12.8099 5.00236 11.1961 5.50253 9.70575V6.61481H1.5166C-0.18551 10.0056 -0.18551 14.0004 1.5166 17.3912L5.50253 14.3003Z" fill="#FBBC05"></path>
@@ -156,7 +156,7 @@
 </svg>
 </button>
 <button aria-label="Sign in with Apple" class="flex h-12 w-12 items-center justify-center rounded-full bg-background-light dark:bg-background-dark border border-gray-100 dark:border-gray-800 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-<svg class="w-6 h-6 text-black dark:text-white" fill="currentColor" viewbox="0 0 24 24">
+<svg aria-hidden="true" class="w-6 h-6 text-black dark:text-white" fill="currentColor" viewbox="0 0 24 24">
 <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-.36-.16-.7-.28-1.1-.28-.52 0-.96.16-1.42.36-1.1.48-2.04.56-2.92-.36-1.78-1.84-3.04-5.24-1.26-8.32 1.04-1.8 2.82-2.92 4.78-2.92 1.02 0 1.96.4 2.8.4.74 0 1.88-.44 3.16-.4 1.34.04 2.34.56 2.94 1.44-2.6 1.6-2.12 5.06.34 6.16-.54 1.6-1.34 3.02-2.3 4.16.5.6.94 1.16 1.94 1.16zm-3.32-15.6c.64-1.28 1.84-2.06 3.02-2.22.28 1.58-.94 3.02-2.16 3.66-.72.38-1.62.46-2.38-.1-.14-1.26.54-2.38 1.52-2.34z"></path>
 </svg>
 </button>
@@ -171,4 +171,22 @@
 </div>
 </div>
 </div>
+<script>
+(function() {
+    const passwordInput = document.getElementById('password-field');
+    const toggleBtn = document.getElementById('password-toggle');
+    if (passwordInput && toggleBtn) {
+        toggleBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const isPassword = passwordInput.type === 'password';
+            passwordInput.type = isPassword ? 'text' : 'password';
+            const icon = toggleBtn.querySelector('.material-symbols-outlined');
+            if (icon) {
+                icon.textContent = isPassword ? 'visibility' : 'visibility_off';
+            }
+        });
+    }
+})();
+</script>
 </body></html>
