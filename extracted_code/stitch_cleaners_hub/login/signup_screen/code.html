@@ -73,14 +73,14 @@
 <div class="mb-6">
 <div class="flex h-12 w-full items-center justify-center rounded-full bg-background-light dark:bg-background-dark p-1">
 <!-- Login Tab (Inactive Style) -->
-<label class="group flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-full px-4 relative transition-all duration-200">
+<label class="group flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-full px-4 relative transition-all duration-200 focus-within:ring-2 focus-within:ring-primary/50">
 <span class="z-10 text-sm font-medium text-text-subtle group-hover:text-text-main dark:text-gray-400 dark:group-hover:text-white transition-colors">Login</span>
-<input class="invisible absolute w-0 h-0" name="auth-mode" type="radio" value="login"/>
+<input class="sr-only" name="auth-mode" type="radio" value="login"/>
 </label>
 <!-- Sign Up Tab (Active Style) -->
-<label class="group flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-full px-4 relative shadow-sm transition-all duration-200 bg-primary">
-<span class="z-10 text-sm font-semibold text-white">Sign Up</span>
-<input checked="" class="invisible absolute w-0 h-0" name="auth-mode" type="radio" value="signup"/>
+<label class="group flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-full px-4 relative shadow-sm transition-all duration-200 bg-primary focus-within:ring-2 focus-within:ring-primary/50">
+<span class="z-10 text-sm font-semibold text-text-main">Sign Up</span>
+<input checked="" class="sr-only" name="auth-mode" type="radio" value="signup"/>
 </label>
 </div>
 </div>
@@ -112,8 +112,8 @@
 <div class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-text-subtle">
 <span class="material-symbols-outlined text-[20px]">lock</span>
 </div>
-<input class="w-full bg-background-light dark:bg-background-dark text-text-main dark:text-white placeholder:text-text-subtle/70 rounded-full h-12 pl-11 pr-11 border-none focus:ring-2 focus:ring-primary/50 text-base" placeholder="Password" type="password"/>
-<button class="absolute right-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-text-subtle hover:text-primary transition-colors">
+<input id="password-input" class="w-full bg-background-light dark:bg-background-dark text-text-main dark:text-white placeholder:text-text-subtle/70 rounded-full h-12 pl-11 pr-11 border-none focus:ring-2 focus:ring-primary/50 text-base" placeholder="Password" type="password"/>
+<button id="password-toggle" type="button" aria-label="Toggle password visibility" class="absolute right-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-text-subtle hover:text-primary transition-colors">
 <span class="material-symbols-outlined text-[20px]">visibility_off</span>
 </button>
 </div>
@@ -130,7 +130,7 @@
 </div>
 <!-- Action Button -->
 <div class="mt-8">
-<button class="w-full h-12 bg-primary hover:bg-primary-dark active:scale-[0.98] transition-all text-white font-semibold text-base rounded-full shadow-lg shadow-primary/20 flex items-center justify-center gap-2">
+<button id="create-account-btn" class="w-full h-12 bg-primary hover:bg-primary-dark active:scale-[0.98] transition-all text-text-main font-semibold text-base rounded-full shadow-lg shadow-primary/20 flex items-center justify-center gap-2">
 <span>Create Account</span>
 <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
 </button>
@@ -171,4 +171,40 @@
 </div>
 </div>
 </div>
+<script>
+(function() {
+    const passwordInput = document.getElementById('password-input');
+    const passwordToggle = document.getElementById('password-toggle');
+
+    if (passwordToggle && passwordInput) {
+        passwordToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isPassword = passwordInput.getAttribute('type') === 'password';
+            passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+            passwordToggle.querySelector('span').textContent = isPassword ? 'visibility' : 'visibility_off';
+        });
+    }
+
+    const createAccountBtn = document.getElementById('create-account-btn');
+    if (createAccountBtn) {
+        createAccountBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            createAccountBtn.disabled = true;
+            createAccountBtn.innerHTML = `
+                <svg class="animate-spin h-5 w-5 text-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span>Creating Account...</span>
+            `;
+
+            setTimeout(() => {
+                window.dispatchEvent(new CustomEvent('navigate', { detail: 'CLIENT_HOME' }));
+            }, 1200);
+        });
+    }
+})();
+</script>
 </body></html>
