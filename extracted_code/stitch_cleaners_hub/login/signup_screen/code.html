@@ -73,14 +73,14 @@
 <div class="mb-6">
 <div class="flex h-12 w-full items-center justify-center rounded-full bg-background-light dark:bg-background-dark p-1">
 <!-- Login Tab (Inactive Style) -->
-<label class="group flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-full px-4 relative transition-all duration-200">
+<label class="group flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-full px-4 relative transition-all duration-200 focus-within:ring-2 focus-within:ring-primary/50">
 <span class="z-10 text-sm font-medium text-text-subtle group-hover:text-text-main dark:text-gray-400 dark:group-hover:text-white transition-colors">Login</span>
-<input class="invisible absolute w-0 h-0" name="auth-mode" type="radio" value="login"/>
+<input class="sr-only" name="auth-mode" type="radio" value="login"/>
 </label>
 <!-- Sign Up Tab (Active Style) -->
-<label class="group flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-full px-4 relative shadow-sm transition-all duration-200 bg-primary">
+<label class="group flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-full px-4 relative shadow-sm transition-all duration-200 bg-primary focus-within:ring-2 focus-within:ring-primary/50">
 <span class="z-10 text-sm font-semibold text-white">Sign Up</span>
-<input checked="" class="invisible absolute w-0 h-0" name="auth-mode" type="radio" value="signup"/>
+<input checked="" class="sr-only" name="auth-mode" type="radio" value="signup"/>
 </label>
 </div>
 </div>
@@ -88,32 +88,36 @@
 <div class="flex flex-col gap-4">
 <!-- Full Name -->
 <div class="relative">
+<label for="full-name" class="sr-only">Full Name</label>
 <div class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-text-subtle">
 <span class="material-symbols-outlined text-[20px]">person</span>
 </div>
-<input class="w-full bg-background-light dark:bg-background-dark text-text-main dark:text-white placeholder:text-text-subtle/70 rounded-full h-12 pl-11 pr-4 border-none focus:ring-2 focus:ring-primary/50 text-base" placeholder="Full Name" type="text"/>
+<input id="full-name" class="w-full bg-background-light dark:bg-background-dark text-text-main dark:text-white placeholder:text-text-subtle/70 rounded-full h-12 pl-11 pr-4 border-none focus:ring-2 focus:ring-primary/50 text-base" placeholder="Full Name" type="text"/>
 </div>
 <!-- Email -->
 <div class="relative">
+<label for="email-address" class="sr-only">Email Address</label>
 <div class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-text-subtle">
 <span class="material-symbols-outlined text-[20px]">mail</span>
 </div>
-<input class="w-full bg-background-light dark:bg-background-dark text-text-main dark:text-white placeholder:text-text-subtle/70 rounded-full h-12 pl-11 pr-4 border-none focus:ring-2 focus:ring-primary/50 text-base" placeholder="Email Address" type="email"/>
+<input id="email-address" class="w-full bg-background-light dark:bg-background-dark text-text-main dark:text-white placeholder:text-text-subtle/70 rounded-full h-12 pl-11 pr-4 border-none focus:ring-2 focus:ring-primary/50 text-base" placeholder="Email Address" type="email"/>
 </div>
 <!-- Phone -->
 <div class="relative">
+<label for="phone-number" class="sr-only">Phone Number</label>
 <div class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-text-subtle">
 <span class="material-symbols-outlined text-[20px]">call</span>
 </div>
-<input class="w-full bg-background-light dark:bg-background-dark text-text-main dark:text-white placeholder:text-text-subtle/70 rounded-full h-12 pl-11 pr-4 border-none focus:ring-2 focus:ring-primary/50 text-base" placeholder="Phone Number" type="tel"/>
+<input id="phone-number" class="w-full bg-background-light dark:bg-background-dark text-text-main dark:text-white placeholder:text-text-subtle/70 rounded-full h-12 pl-11 pr-4 border-none focus:ring-2 focus:ring-primary/50 text-base" placeholder="Phone Number" type="tel"/>
 </div>
 <!-- Password -->
 <div class="relative">
+<label for="password-input" class="sr-only">Password</label>
 <div class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-text-subtle">
 <span class="material-symbols-outlined text-[20px]">lock</span>
 </div>
-<input class="w-full bg-background-light dark:bg-background-dark text-text-main dark:text-white placeholder:text-text-subtle/70 rounded-full h-12 pl-11 pr-11 border-none focus:ring-2 focus:ring-primary/50 text-base" placeholder="Password" type="password"/>
-<button class="absolute right-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-text-subtle hover:text-primary transition-colors">
+<input id="password-input" class="w-full bg-background-light dark:bg-background-dark text-text-main dark:text-white placeholder:text-text-subtle/70 rounded-full h-12 pl-11 pr-11 border-none focus:ring-2 focus:ring-primary/50 text-base" placeholder="Password" type="password"/>
+<button id="toggle-password" type="button" aria-label="Show password" aria-controls="password-input" class="absolute right-4 top-1/2 -translate-y-1/2 flex items-center justify-center text-text-subtle hover:text-primary transition-colors">
 <span class="material-symbols-outlined text-[20px]">visibility_off</span>
 </button>
 </div>
@@ -171,4 +175,42 @@
 </div>
 </div>
 </div>
+<script>
+(function() {
+    const passwordInput = document.getElementById('password-input');
+    const toggleButton = document.getElementById('toggle-password');
+    if (passwordInput && toggleButton) {
+        const icon = toggleButton.querySelector('.material-symbols-outlined');
+        toggleButton.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const isPassword = passwordInput.type === 'password';
+            passwordInput.type = isPassword ? 'text' : 'password';
+            icon.textContent = isPassword ? 'visibility' : 'visibility_off';
+            toggleButton.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
+        });
+    }
+
+    const authRadios = document.querySelectorAll('input[name="auth-mode"]');
+    const submitBtnSpan = document.querySelector('button.bg-primary span');
+
+    authRadios.forEach(radio => {
+        radio.addEventListener('change', () => {
+            authRadios.forEach(r => {
+                const label = r.closest('label');
+                const span = label.querySelector('span');
+                if (r.checked) {
+                    label.classList.add('bg-primary', 'shadow-sm');
+                    span.className = "z-10 text-sm font-semibold text-white";
+                    if (submitBtnSpan) {
+                        submitBtnSpan.textContent = r.value === 'login' ? 'Login' : 'Create Account';
+                    }
+                } else {
+                    label.classList.remove('bg-primary', 'shadow-sm');
+                    span.className = "z-10 text-sm font-medium text-text-subtle group-hover:text-text-main dark:text-gray-400 dark:group-hover:text-white transition-colors";
+                }
+            });
+        });
+    });
+})();
+</script>
 </body></html>
