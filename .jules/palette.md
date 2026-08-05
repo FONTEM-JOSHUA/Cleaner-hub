@@ -1,0 +1,3 @@
+## 2025-05-14 - Accessible Form Patterns
+**Learning:** For mobile-first prototypes using hidden inputs (e.g., in segmented controls or custom checkboxes), using `invisible` or `absolute w-0 h-0` removes them from the keyboard tab order. Nesting interactive elements like links inside a `<label>` can cause issues for screen readers.
+**Action:** Always use `sr-only` for inputs that should be visually hidden but keyboard-accessible. Use `focus-within:ring` on the parent label or container for focus states. Avoid nesting links inside `<label>`; use `<div>` for the container and associate labels with `id`/`for`.
