@@ -4,6 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cleaner Hub - Home Service Professional Platform</title>
+
+    <!-- Performance Optimization: Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://unpkg.com">
+    <link rel="preconnect" href="https://lh3.googleusercontent.com">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+    <link rel="dns-prefetch" href="https://unpkg.com">
+    <link rel="dns-prefetch" href="https://lh3.googleusercontent.com">
+
     <!-- Load React, ReactDOM, and Babel from CDN -->
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
@@ -183,6 +196,9 @@
             'CREATE_CHANNEL': 'create_new_channel_flow_(provider/admin_app)_/code.html',
         };
 
+        // Optimization: Global cache for screen content to prevent redundant network requests and DOM parsing
+        const screenCache = {};
+
         const Screen = ({ screenKey, onNavigate }) => {
             const [html, setHtml] = useState('');
             const [styles, setStyles] = useState('');
@@ -192,6 +208,14 @@
 
             useEffect(() => {
                 const fetchContent = async () => {
+                    // Check cache first
+                    if (screenCache[screenKey]) {
+                        setStyles(screenCache[screenKey].styles);
+                        setHtml(screenCache[screenKey].html);
+                        setLoading(false);
+                        return;
+                    }
+
                     setLoading(true);
                     try {
                         const path = `extracted_code/stitch_cleaners_hub/${SCREEN_MAP[screenKey]}`;
@@ -205,7 +229,6 @@
                         const styleContent = Array.from(doc.querySelectorAll('style'))
                             .map(s => s.innerHTML)
                             .join('\n');
-                        setStyles(styleContent);
 
                         // Extract Body Classes
                         setBodyClass(doc.body.className);
@@ -267,6 +290,14 @@
 
                         // Extract Body Content
                         const bodyContent = doc.body.innerHTML;
+
+                        // Save to cache
+                        screenCache[screenKey] = {
+                            styles: styleContent,
+                            html: bodyContent
+                        };
+
+                        setStyles(styleContent);
                         setHtml(bodyContent);
                     } catch (error) {
                         console.error('Failed to load screen:', error);
